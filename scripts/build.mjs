@@ -46,6 +46,7 @@ for (const [name, mime] of [
 if(/(?:src|href)="(?:src\/|public\/|styles\.css)/.test(html))throw Error('Unbundled runtime resource');
 await mkdir(new URL('dist/', root), { recursive: true });
 await writeFile(new URL('dist/Chaos-Kitchen.html', root), html);
+await writeFile(new URL('dist/index.html', root), html);
 console.log(
   'Built dist/Chaos-Kitchen.html — self-contained, no runtime network',
 );

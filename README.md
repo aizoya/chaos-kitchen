@@ -15,7 +15,7 @@ npm run build
 npm start
 ```
 
-Open http://127.0.0.1:4173. The build produces `dist/Chaos-Kitchen.html`, a standalone offline game for desktop browsers. Mobile file previews may not execute HTML; use a hosted version for phone testing. This source candidate is not a claim that the live site contains these changes.
+Open http://127.0.0.1:4173. Vercel serves `dist/index.html` at the root URL; its build runs asset checks and unit tests before bundling. The build also produces `dist/Chaos-Kitchen.html`, a standalone offline game for desktop browsers. Mobile file previews may not execute HTML; use a hosted version for phone testing. This source candidate is not a claim that the live site contains these changes.
 
 ## Play
 
@@ -35,7 +35,7 @@ Sound is optional and synthesized locally. No runtime AI, analytics, accounts, c
 
 ## Verification status
 
-46 unit tests pass on Node 24.19.0. Canonical asset and content checks pass; offline build succeeds. Browser harnesses are included but the latest receipt additions have not run: Chromium installation failed in the build workspace. Mobile Safari, actual speakers and physical controllers remain acceptance checks. Unit tests do not prove visual quality or fun.
+47 unit tests pass on Node 24.19.0. Canonical asset and content checks pass; offline build succeeds. Browser harnesses are included but the latest receipt additions have not run: Chromium installation failed in the build workspace. Mobile Safari, actual speakers and physical controllers remain acceptance checks. Unit tests do not prove visual quality or fun.
 
 For browser verification, install Playwright and its Chromium in your development environment, then run `node scripts/expanded-browser-test.mjs`. If needed, set PLAYWRIGHT_MODULE to Playwright's absolute ESM entry and CHROMIUM_PATH to the installed Chromium executable. DOM harnesses separately require jsdom. These are development tools, not gameplay dependencies.
 
