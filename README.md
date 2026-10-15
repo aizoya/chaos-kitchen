@@ -1,0 +1,50 @@
+# Chaos Kitchen — AIZOYA
+
+Read the chaos. Cook the order. Run the pass. Clock in again.
+
+A restaurant-rush browser game with fictional customer requests, method-specific cooking, multiple tables, Feeding Frenzy bonuses, original kitchen beats and a Chef Franklyn / Chaos Star introduction. Built for touch, keyboard and standard-mapped controllers. Chaos Star is a fictional game award.
+
+## Run
+
+Use Node 24 or later. No application dependency installation or API key is needed.
+
+```sh
+npm test
+npm run check
+npm run build
+npm start
+```
+
+Open http://127.0.0.1:4173. The build produces `dist/Chaos-Kitchen.html`, a standalone offline game for desktop browsers. Mobile file previews may not execute HTML; use a hosted version for phone testing. This source candidate is not a claim that the live site contains these changes.
+
+## Play
+
+- Choose classic plate-building or Chef mode (prep → cook → plate → serve).
+- Expanded service provides Easy/Medium/Hard with one/two/three tables and 210/180/150 seconds respectively. Classic service uses a 90-second shift.
+- Match the ticket, honor exclusions, and include its optional bonus for extra points.
+- Watch fictional READY gauges and stop cooking before food burns. This is entertainment, not cooking or dietary-safety instruction.
+- Feedback pauses the clocks. Pause and hidden-tab handling preserve the shift.
+- Practice removes deadlines; cooking can still burn. “Show me the ropes” is the safe first-plate tutorial.
+- The final receipt gives one recorded-outcome-based improvement under “We win or we learn.” Replay resets the shift.
+
+Sound is optional and synthesized locally. No runtime AI, analytics, accounts, cloud persistence or paid providers. Controller behavior has simulated coverage; physical PS5 acceptance is not established.
+
+## How it works
+
+`src/content.mjs` holds authored tickets and ingredients. `engine.mjs` owns deterministic rules and clocks. `service.mjs` coordinates tables. `showtime.mjs` owns intro, music and receipt coaching. `app.mjs` connects input to state and rendering. `art.mjs` contains original SVG illustrations. `devpost/app-map.html` explains the core flow; historical planning amendments are in scope.md, prd.md and spec.md.
+
+## Verification status
+
+46 unit tests pass on Node 24.19.0. Canonical asset and content checks pass; offline build succeeds. Browser harnesses are included but the latest receipt additions have not run: Chromium installation failed in the build workspace. Mobile Safari, actual speakers and physical controllers remain acceptance checks. Unit tests do not prove visual quality or fun.
+
+For browser verification, install Playwright and its Chromium in your development environment, then run `node scripts/expanded-browser-test.mjs`. If needed, set PLAYWRIGHT_MODULE to Playwright's absolute ESM entry and CHROMIUM_PATH to the installed Chromium executable. DOM harnesses separately require jsdom. These are development tools, not gameplay dependencies.
+
+## Build with AI
+
+Planning artifacts accompany the source. AI assisted scoping, implementation, authored art and tests. The required Devpost Learn workflow is documented by the official curriculum: https://github.com/challengepost/learn-ai-basics . Planning documents include historical scope and later founder-directed expansions; do not treat earlier boundaries as descriptions of the final build.
+
+## License and release status
+
+Game source and accompanying documentation are MIT-licensed; see LICENSE. The AIZOYA logo and Grace artwork are excluded and retain separate rights; see LICENSE-SCOPE.md and public/NOTICE.md. This exclusion also applies to their embedded bytes in the standalone build.
+
+This publication candidate has not been pushed or deployed. Browser acceptance remains open. Internal Git history and operational records are deliberately excluded.
