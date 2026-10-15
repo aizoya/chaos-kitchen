@@ -1,0 +1,52 @@
+import assert from 'node:assert/strict';
+import {makeServer} from './server.mjs';
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const server=makeServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,args:['--no-sandbox']});
+try {
+ const page=await browser.newPage({viewport:{width:390,height:844}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript(()=>{window.testPads=[];navigator.getGamepads=()=>window.testPads;});
+ await page.goto(`http://127.0.0.1:${server.address().port}`);
+ const set=async(down=[],connected=true)=>{await page.evaluate(({down,connected})=>{
+ window.testPads=connected?[{index:0,id:'fake-standard',mapping:'standard',connected:true,axes:[0,0],buttons:Array.from({length:16},(_,i)=>({pressed:down.includes(i)}))}]:[];
+ },{down,connected});await page.waitForTimeout(80);};
+ const press=async n=>{await set();await set([n]);await set();};
+ await set([0]);assert.equal(await page.locator('#welcome').isVisible(),true);
+ await press(0);assert.equal(await page.evaluate(()=>document.activeElement.id),'start');await press(0);
+ assert.equal(await page.locator('#game').isVisible(),true);
+ await page.locator('[data-ingredient="chicken"]').focus();await press(0);
+ assert.equal(await page.locator('[data-ingredient="chicken"]').getAttribute('aria-pressed'),'true');
+ await page.evaluate(()=>{
+ window.heldChanges=0;
+ window.heldObserver=new MutationObserver(records=>{window.heldChanges+=records.filter(r=>r.oldValue !== r.target.getAttribute('aria-pressed')).length;});
+ window.heldObserver.observe(document.querySelector('[data-ingredient="chicken"]'),{attributes:true,attributeFilter:['aria-pressed'],attributeOldValue:true});
+ });
+ await set([0]);await page.waitForTimeout(200);
+ assert.equal(await page.evaluate(()=>window.heldChanges),1);
+ await page.evaluate(()=>window.heldObserver.disconnect());
+ assert.equal(await page.locator('[data-ingredient="chicken"]').getAttribute('aria-pressed'),'false');
+ await set();await press(0);
+ await page.locator('[data-ingredient="rice"]').focus();await press(0);
+ await press(2);assert.equal(await page.locator('#feedback').isVisible(),true);
+ await press(0);assert.equal(await page.locator('#feedback').isVisible(),false);
+ await press(15);assert.equal(await page.evaluate(()=>document.activeElement.dataset.ingredient),'rice');
+ await press(9);assert.equal(await page.locator('#pause-layer').isVisible(),true);
+ await press(14);assert.equal(await page.evaluate(()=>document.activeElement.id),'quit');
+ await press(15);assert.equal(await page.evaluate(()=>document.activeElement.id),'resume');
+ await press(9);assert.equal(await page.locator('#pause-layer').isVisible(),false);
+ await set([],false);assert.equal(await page.locator('#pause-layer').isVisible(),true);
+ await set([9]);assert.equal(await page.locator('#pause-layer').isVisible(),true);
+ await press(9);assert.equal(await page.locator('#pause-layer').isVisible(),false);
+ await page.locator('[data-ingredient="rice"]').focus();await press(15);
+ assert.equal(await page.evaluate(()=>document.activeElement.dataset.ingredient),'chicken');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ await page.setViewportSize({width:320,height:740});
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ const hintBox=await page.locator('.controller-hint').boundingBox();
+ const headerBox=await page.locator('header').boundingBox();
+ assert.ok(hintBox.y >= headerBox.y + headerBox.height);
+ assert.ok(hintBox.x >= 0 && hintBox.x + hintBox.width <= 320);
+ assert.deepEqual(errors,[]);
+ console.log('Controller browser flow PASS: selection, hold, serve, next, pause, disconnect, reconnect, navigation, mobile overflow. Simulated input only.');
+} finally {await browser.close();await new Promise(r=>server.close(r));}

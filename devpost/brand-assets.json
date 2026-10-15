@@ -1,0 +1,14 @@
+[
+  {
+    "file": "aizoya-master-logo.png",
+    "sha256": "693c6e2d1a074f229dbf599c2947d42a3a8c66fb81f5223f33ed37f901002d91",
+    "bytes": 2267793,
+    "gitBlob": "ab077d63e0f01bd315d0718bc185a11d31b06e1c"
+  },
+  {
+    "file": "grace-avatar.webp",
+    "sha256": "8ebc1814cfdb9625c912e0c6ce0c8ee7970fd3511d56297aa0d3aaf60211deaf",
+    "bytes": 10722,
+    "gitBlob": "99e54491e8925a58df5297469938fc6a714c0f6b"
+  }
+]

@@ -47,4 +47,4 @@ Planning artifacts accompany the source. AI assisted scoping, implementation, au
 
 Game source and accompanying documentation are MIT-licensed; see LICENSE. The AIZOYA logo and Grace artwork are excluded and retain separate rights; see LICENSE-SCOPE.md and public/NOTICE.md. This exclusion also applies to their embedded bytes in the standalone build.
 
-This publication candidate has not been pushed or deployed. Browser acceptance remains open. Internal Git history and operational records are deliberately excluded.
+This source is published on a review branch. It has not been promoted to production. Browser acceptance remains open. Internal Git history and operational records are deliberately excluded.

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Chaos Kitchen — App Map</title
+  ><style>
+    body {
+      margin: 0;
+      background: #f5f0df;
+      color: #25271f;
+      font: 17px/1.6 system-ui;
+    }
+    main {
+      max-width: 850px;
+      margin: auto;
+      padding: 28px;
+    }
+    h1 {
+      font-size: clamp(36px, 8vw, 64px);
+      line-height: 1;
+      color: #c24220;
+    }
+    h2 {
+      margin-top: 40px;
+    }
+    article {
+      border-top: 3px solid;
+      padding: 20px 0;
+    }
+    code {
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    a {
+      color: #963316;
+    }
+    li {
+      margin: 10px 0;
+    }
+    .note {
+      border-left: 6px solid #ee582d;
+      padding: 12px 20px;
+      background: #fff9e8;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 15px;
+    }
+    td,
+    th {
+      padding: 12px 6px;
+      text-align: left;
+      border-bottom: 1px solid #b7b3a5;
+      vertical-align: top;
+    }
+    @media (max-width: 500px) {
+      main {
+        padding: 20px;
+      }
+      table {
+        font-size: 12px;
+      }
+    }
+  </style>
+  <main>
+    <p>AIZOYA / BUILD WITH AI: BASICS</p>
+    <h1>How the chaos works.</h1>
+    <p>
+      A small browser game, not an AI service. The jokes are written in advance.
+      The rules are deterministic. Your plate and score stay in this tab.
+    </p>
+    <p class="note">
+      Reference code tour. Franklyn’s hands-on learning and final approval are
+      still pending—not inferred from an automated test.
+    </p>
+    <nav>
+      <a href="#route">Follow one plate</a> ·
+      <a href="#boundaries">Boundaries</a> ·
+      <a href="#breaks">When it breaks</a>
+    </nav>
+    <h2 id="route">Follow one plate</h2>
+    <article>
+      <b>1 / Tap Chicken</b>
+      <p>
+        <code>index.html #pantry</code> contains semantic ingredient buttons
+        created by <code>src/app.mjs</code>. A click calls
+        <code>act({type:'TOGGLE', id:'chicken'})</code>. Number keys take the
+        same path.
+      </p>
+    </article>
+    <article>
+      <b>2 / Settle time, then change state</b>
+      <p>
+        <code>act → settle → dispatch</code>. Elapsed time is deducted first, so
+        a click cannot rescue an already-expired ticket. The pure engine toggles
+        Chicken in <code>selected</code> and enforces four ingredients maximum.
+      </p>
+    </article>
+    <article>
+      <b>3 / Draw the plate</b>
+      <p>
+        <code>render</code> updates pressed states and shows owned SVG food from
+        <code>src/art.mjs</code>. The recipe and exclusions come from
+        <code>src/content.mjs</code>, not a model or API.
+      </p>
+    </article>
+    <article>
+      <b>4 / Ring SERVICE!</b>
+      <p>
+        <code>dispatch(SERVE) → judgePlate</code> compares selected IDs with
+        required, optional and forbidden sets. Missing, excluded or unrequested
+        ingredients score zero. Correct plates receive base, flavor and speed
+        points, multiplied by the prior streak.
+      </p>
+    </article>
+    <article>
+      <b>5 / Reaction or receipt</b>
+      <p>
+        The engine enters feedback; clocks freeze. The screen explains the
+        result and announces it accessibly. Next Ticket advances the deck and
+        stage. Service expiry ends the run; restart creates fresh state.
+      </p>
+    </article>
+    <h2 id="boundaries">The useful boundaries</h2>
+    <table>
+      <tr>
+        <th>Piece</th>
+        <th>Owns</th>
+        <th>Does not own</th>
+      </tr>
+      <tr>
+        <td>content.mjs</td>
+        <td>Fictional tickets and ingredient IDs</td>
+        <td>Real dietary or allergy advice</td>
+      </tr>
+      <tr>
+        <td>engine.mjs</td>
+        <td>State, timing, scores</td>
+        <td>DOM, sound, network, wall clock</td>
+      </tr>
+      <tr>
+        <td>app.mjs</td>
+        <td>Inputs, rendering, focus, clock, optional sound</td>
+        <td>Accounts, storage, paid APIs</td>
+      </tr>
+      <tr>
+        <td>build.mjs</td>
+        <td>Known module + asset inlining</td>
+        <td>Arbitrary remote imports</td>
+      </tr>
+      <tr>
+        <td>server.mjs</td>
+        <td>Local allowlisted preview</td>
+        <td>Private files or public deployment</td>
+      </tr>
+    </table>
+    <h2 id="breaks">First place to inspect</h2>
+    <ul>
+      <li>
+        Wrong points or expiry: <code>engine.mjs</code> and
+        <code>tests/engine.test.mjs</code>.
+      </li>
+      <li>
+        Wrong joke or ingredient: <code>content.mjs</code>. Keep
+        required/optional/forbidden sets disjoint.
+      </li>
+      <li>
+        Button or pause trouble: <code>app.mjs</code> handlers and
+        <code>scripts/browser-test.mjs</code>.
+      </li>
+      <li>
+        Clipped text: responsive <code>styles.css</code>. Do not shrink touch
+        targets to fix layout.
+      </li>
+      <li>
+        Missing offline resource: <code>scripts/build.mjs</code>. Keep the game
+        self-contained.
+      </li>
+    </ul>
+    <h2>One safe experiment, later</h2>
+    <p>
+      Change one fictional reaction in <code>content.mjs</code>, run the tests
+      and build, then play that ticket. Explain why changing the reaction does
+      not change the score. Optional learning activity—not homework required
+      while driving.
+    </p>
+    <h2>Expanded service — October 9 candidate</h2>
+    <p>Reference route, not a completed founder code tour. Restored from 535a2d9; expansion branch build/chaos-star-expansion. This snapshot can drift.</p>
+    <ol>
+      <li><b>Switch table:</b> app.mjs renderTables → act → updateGame → service.mjs dispatchService(SWITCH_TABLE). Other tables keep their own plate, prep and pan.</li>
+      <li><b>Settle every clock:</b> service.mjs TICK advances all live tables only as far as the earliest deadline. Feedback and pause stop every table. Serving at a deadline cannot score.</li>
+      <li><b>See the result:</b> serviceView feeds app.mjs render. Every fourth issued ticket pays double for a valid plate. Bonus-perfect plates unlock a Chaos Star rim, Golden Plate and Chef Crown at 1/3/5. Rewards reset each shift.</li>
+    </ol>
+    <p>Menu and cooking methods: content.mjs COOKING. Phone tray: app.mjs trayFor (eight visible choices including required and bonus items). Intro/music: showtime.mjs. Safe tutorial: engine.mjs tutorial flag; READY never burns. No backend, stored identity, downloads or paid services.</p>
+    <p><b>Practice to reuse:</b> visible timers must match the engine's actual deadline. Review found a table could show 52 seconds although prep expires after 16. The rail now displays the earlier deadline. Test the rule and the displayed promise together.</p>
+    <p>Run: npm test; npm run check; npm run build; npm start. Interaction harnesses accept JSDOM_MODULE; browser scripts accept PLAYWRIGHT_MODULE and CHROMIUM_PATH. Browser layout and physical audio/controller acceptance are separate from rule tests.</p>
+    <h2>Known limits</h2>
+    <p>
+      No scores persist. Practice and timed scores are different. A hidden tab
+      pauses; return never resumes automatically. Canonical artwork licensing,
+      public release, physical iPhone/Safari and actual enjoyment remain human
+      checks. See README and devpost/verification.md.
+    </p>
+    <h2>Chef mode: follow one plate</h2>
+    <p>Welcome checkbox and difficulty button → createGame → prep station. Ingredient buttons and PREP actions track two tasks per item. HANDOFF locks the selection. COOK / STOP_COOK update one fictional pan; TICK enforces readiness, burning and deadlines. HANDOFF opens plating; PLATE reveals each component. SERVE uses the existing ticket judge. Feedback → NEXT resets the station.</p>
+    <p>Rules and clocks: src/engine.mjs. Stable controls, gauges and sound cues: src/app.mjs. Pantry order: pantryFor(seed, ticket index), also used by keyboard numbers. No backend or runtime AI. Tests: tests/chef.test.mjs and scripts/chef-dom-test.mjs. One pan now; simultaneous cooking later. Visual and phone acceptance remain open.</p>
+  </main>
+</html>
