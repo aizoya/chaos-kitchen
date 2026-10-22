@@ -1904,6 +1904,7 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
 /* Phone playfield: stable HUD and one current station, within the dynamic viewport. */
 .workbench { display:contents; }
 .mobile-tools, #mobile-plate { display:none; }
+#compact-clock { display:none; }
 .game-options > summary, .showtime-toggle { min-height:44px; padding:12px 0; cursor:pointer; font:700 16px/1.25 Arial,sans-serif; }
 #learn { min-height:44px; font-size:16px; margin-top:8px; }
 @media(max-width:620px) {
@@ -1944,7 +1945,7 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
   body[data-screen="playing"] #ticket { grid-area:ticket; position:relative; width:auto; margin:0; padding:6px 8px; transform:none; min-height:0; box-shadow:none; border-top-width:3px; }
   body[data-screen="playing"] .ticket-top { font-size:10px; }
   body[data-screen="playing"] #ticket h3 { font-size:18px; line-height:1.05; margin:3px 0; }
-  body[data-screen="playing"] .restriction { margin:3px 0; padding:4px 6px; font-size:13px; line-height:1.2; }
+  body[data-screen="playing"] .restriction { margin:3px 0; padding:4px 6px; font-size:14px; line-height:1.2; }
   body[data-screen="playing"] .recipe { margin:3px 0 0; padding:0 44px 0 0; position:relative; }
   body[data-screen="playing"] .recipe > .label, body[data-screen="playing"] .ticket-footer > span,
   body[data-screen="playing"] .ticket-timebar, body[data-screen="playing"] .ticket-tear { display:none; }
@@ -1952,7 +1953,8 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
   body[data-screen="playing"] #needs span { font-size:17px; }
   body[data-screen="playing"] #bonus { border:0; padding:0; margin:3px 0 0; font-size:14px; line-height:1.2; }
   body[data-screen="playing"] .ticket-footer { position:absolute; right:8px; bottom:6px; margin:0; }
-  body[data-screen="playing"] #order-clock { font-size:24px; }
+  body[data-screen="playing"] #order-clock { display:none; }
+  body[data-screen="playing"] #compact-clock { display:block; font-size:24px; }
   body[data-screen="playing"] .workbench { grid-area:work; display:flex; flex-direction:column; min-height:0; overflow:auto; overscroll-behavior:contain; }
   body[data-screen="playing"] .pantry-label { margin:0 0 4px; padding:0; font-size:12px; }
   body[data-screen="playing"] .pantry-label small, body[data-screen="playing"] .pantry-label > span:last-child { display:none; }
@@ -1964,7 +1966,8 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
   body[data-screen="playing"] .station { margin:0; padding:6px; border-width:2px; box-shadow:none; min-height:0; }
   body[data-screen="playing"] #station-title { margin:0 0 4px; font-size:17px; line-height:1.1; }
   body[data-screen="playing"] #station-instruction, body[data-screen="playing"] #handoff { display:none; }
-  body[data-screen="playing"] #station-time { margin:0 0 4px; padding:0; border:0; font-size:12px; line-height:1.2; }
+  body[data-screen="playing"] #station-time { margin:0 0 4px; padding:0; border:0; font-size:0; line-height:0; }
+  body[data-screen="playing"] #station-time::after { content:attr(data-compact); display:block; font-size:14px; line-height:1.2; }
   body[data-screen="playing"] #station-items { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px; }
   body[data-screen="playing"] .pan-row { display:grid; grid-template-columns:minmax(0,1fr); gap:3px; padding:4px; border:1px solid #8b715c; }
   body[data-screen="playing"] .pan-row strong { display:none; }

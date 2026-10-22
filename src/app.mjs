@@ -143,6 +143,7 @@ function render() {
   $('order-clock').textContent = game.practice
     ? '∞'
     : `${Math.ceil(game.orderRemainingMs / 1000)}s`;
+  $('compact-clock').textContent = game.practice ? '∞' : game.waiting ? 'WAIT' : `${Math.ceil(Math.min(game.orderRemainingMs, game.chefMode ? game.stationRemainingMs : Infinity) / 1000)}s`;
   $('order-bar').style.width =
     `${game.practice ? 100 : Math.min(100, (game.orderRemainingMs / ticketDuration(game)) * 100)}%`;
   $('order-bar').classList.toggle(
@@ -357,6 +358,7 @@ function renderStation() {
   $('station-title').textContent = { prep: '01 · PREP CREW', cook: '02 · HOT LINE', plate: '03 · THE PASS' }[step];
   $('station-instruction').textContent = { prep: 'Choose the ticket ingredients, then finish both prep tasks for each.', cook: 'One pan. Start cooking, then STOP in READY. Too early? Restart. Too late? Remake.', plate: 'Tap each finished ingredient to assemble the plate. Then ring SERVICE!' }[step];
   $('station-time').textContent = game.tutorial ? 'SAFE TUTORIAL · no deadline · food waits in READY' : game.practice ? 'PRACTICE · no station deadline · pans still burn' : game.waiting ? 'WAITING · select food to start · shift clock keeps running' : `${Math.ceil(game.stationRemainingMs / 1000)}s AT THIS STATION · order clock keeps running`;
+  $('station-time').dataset.compact = game.tutorial ? 'TRAINING · no rush' : game.practice ? 'PRACTICE · pans can burn' : game.waiting ? 'WAITING · choose ingredients' : `${Math.ceil(game.stationRemainingMs / 1000)}s · ${step.toUpperCase()}`;
   const key = `${game.index}:${step}:${game.selected.join(',')}`;
   if (key !== stationKey) {
     stationKey = key;
