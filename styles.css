@@ -939,6 +939,14 @@ footer {
     12px/1.5 'Courier New',
     monospace;
 }
+.feedback .feedback-rush {
+  margin: 12px 0;
+  padding: 10px 0;
+  border-top: 2px dashed currentColor;
+  border-bottom: 2px dashed currentColor;
+  font: 700 14px/1.4 'Courier New', monospace;
+  overflow-wrap: anywhere;
+}
 .feedback-bottom {
   display: flex;
   justify-content: space-between;
@@ -1677,9 +1685,9 @@ body[data-stage='4'] .rush-strip {
   }
   .feedback {
     position: fixed;
-    top: 50%;
+    top: calc((100dvh - 160px) / 2);
     width: calc(100% - 36px);
-    max-height: 85dvh;
+    max-height: calc(100dvh - 190px);
     overflow: auto;
     transform: translate(-50%, -50%) rotate(-1deg);
     padding: 23px;

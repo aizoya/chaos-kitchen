@@ -1,6 +1,10 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Feedback visibility follow-up — October 21 Pacific
+
+Claude reported the rush banner being covered by mobile feedback. The reaction overlay now includes the current service reward/Frenzy message inside its own card, and hides the background copy during feedback. Mobile card height/position reserve space above the action dock; long reactions can scroll within the card. The expanded Chromium harness checks all summary text lines are visible/uncovered, the unlocked reward is present, and the mobile card sits above the dock. Full CI for this presentation change is pending; earlier game receipts below remain historical. This does not establish human visual or actual Safari acceptance.
+
 ## Active balance remediation — supersedes prior gameplay clearance
 
 Latest tested game candidate: `7b129516a51b3e7b3c872ce553331e9a558bc252`. [CI run 39730841104](https://github.com/aizoya/chaos-kitchen/actions/runs/39730841104) completed successfully: 54/54 Node tests, canonical checks, build, classic/controller/expanded Chromium harnesses and both real-clock Easy touch cases. Raw job logs were retrieved; bundle SHA-256 is `bef7e36a5b11708cf149806e93e04d5a4a1e2026f1fb8821156ee60d4c5e8437`. No screenshots were retained/visually reviewed. This documentation-only receipt does not change tested game bytes. Human Medium/Hard balance, actual Safari/sound, hosted judge access, banner-overlap reproduction and submission gates remain open.

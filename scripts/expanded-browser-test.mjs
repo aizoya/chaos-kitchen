@@ -105,7 +105,24 @@ try {
         });
         assert.ok(rail.visible && rail.uncovered, 'table rail remains reachable while pantry is in view');
       }
-      await shot('prep'); await dish(false); await shot('reward'); await noOverflow('feedback');
+      await shot('prep'); await dish(false);
+      assert.equal(await page.locator('#rush-event').isVisible(), false, 'background rush banner moves into feedback');
+      await page.locator('#feedback-rush').scrollIntoViewIfNeeded();
+      assert.equal(await page.locator('#feedback-rush').textContent(), await page.locator('#rush-event').textContent());
+      assert.match(await page.locator('#feedback-rush').textContent(), /UNLOCKED: Chaos Star/);
+      const readable = await page.locator('#feedback-rush').evaluate(el => {
+        const range = document.createRange(); range.selectNodeContents(el);
+        return [...range.getClientRects()].filter(r => r.width && r.height).every(r => {
+          const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+          return r.top >= 0 && r.bottom <= innerHeight && (hit === el || el.contains(hit));
+        });
+      });
+      assert.equal(readable, true, 'every line of the reward summary is visible and uncovered');
+      if (width < 800) {
+        const separated = await page.locator('#feedback').evaluate(el => el.getBoundingClientRect().bottom < document.querySelector('#mobile-dock').getBoundingClientRect().top);
+        assert.equal(separated, true, 'feedback stays above mobile action dock');
+      }
+      await shot('reward'); await noOverflow('feedback');
       assert.ok((await state()).service.rewards.includes('Chaos Star'));
       await page.locator('#next').click(); await page.locator('#pause').click();
       const frozen = await state(); await tick(999999); assert.deepEqual(await state(), frozen);

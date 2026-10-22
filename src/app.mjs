@@ -297,7 +297,8 @@ function renderMobileAction() {
 function renderTables() {
   const rail = $('table-rail');
   rail.hidden = !service;
-  $('rush-event').hidden = !service;
+  $('rush-event').hidden = !service || game.status === 'feedback';
+  $('feedback-rush').hidden = !service;
   document.body.dataset.frenzy = String(Boolean(game.frenzy));
   $('plate').dataset.prize = service?.rewards.length ? String(service.rewards.length) : '0';
   if (!service) return;
@@ -319,6 +320,7 @@ function renderTables() {
   $('rush-event').textContent = game.frenzy
     ? 'FEEDING FRENZY! This ticket pays DOUBLE. Same rules. Same breathing room.'
     : `CHAOS STAR SERVICE · ${game.perfect} perfect plates${prize ? ' · UNLOCKED: ' + prize : ' · First perfect bonus plate wins a Chaos Star rim'} · Every fourth ticket pays double.`;
+  $('feedback-rush').textContent = $('rush-event').textContent;
 }
 $('mobile-action').onclick = () => {
   if (!game || !['playing','feedback'].includes(game.status)) return;
