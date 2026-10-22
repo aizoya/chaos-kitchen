@@ -20,6 +20,8 @@ Open http://127.0.0.1:4173. Vercel serves `dist/index.html` at the root URL; its
 ## Play
 
 - Choose classic plate-building or Chef mode (prep → cook → plate → serve).
+- On phones, the order stays above one workspace. Choose ingredients, tap PREP, finish the tasks, then use the bottom button for cooking, plating and serving. Ingredients ↩ returns to selection; Clear and Panic stay above the action bar. The compact countdown shows the next station/order deadline.
+- Clock In and the safe tutorial are the welcome screen's main actions. Open Game options for modes/difficulty. Chef Franklyn's current optional story is animated text/art; a filmed/generated video has not been supplied.
 - Expanded service provides Easy/Medium/Hard with one/two/three tables and 210/180/150 seconds respectively. Classic service uses a 90-second shift.
 - In expanded Chef mode, extra queued tables wait until you select their first ingredient. Selecting a table alone does not start its deadline. Once started, its clocks and pans run even while you work elsewhere; clearing a plate does not pause them. The overall shift clock always runs.
 - Match the ticket, honor exclusions, and include its optional bonus for extra points.

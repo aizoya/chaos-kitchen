@@ -18,7 +18,7 @@ Implements scope.md > The Unique Kernel and The POC Boundary. Approval basis: sc
 
 ## Screens and Layout
 
-One page, four states: welcome, playing, feedback, ended; plus a pause overlay. Desktop: dramatic title/plate on the left, paper ticket on the right, ingredient rail and serve bell below. Phone: compact masthead and HUD, ticket, plate, ingredient tray and serve control in one column. No modal marketing, sidebars or dashboard cards.
+One page, four states: welcome, playing, feedback, ended; plus a pause overlay. Desktop: dramatic title/plate on the left, paper ticket on the right, ingredient rail and serve bell below. October 21 founder feedback supersedes the original long phone column: keep HUD, compact order, current task, tools and primary action within the dynamic viewport. Phone Chef prep has ingredient selection followed by explicit prep tasks; cooking and plating replace that workspace. Restrictions, bonuses and the next deadline remain visible. Welcome prioritizes Clock In and a safe tutorial; modes/difficulty and the explicitly labeled animated story use expandable controls. No modal marketing, sidebars or dashboard cards.
 
 ## Look and Feel
 
