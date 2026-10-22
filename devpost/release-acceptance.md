@@ -1,6 +1,14 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Compact phone results and track discovery — October 22
+
+Founder reported finishing a full shift on iPhone and supplied result-screen screenshots (765 points, two happy tables, one bonus), but Replay required page scrolling. Founder also confirmed audible music, describing it as cute; no exact candidate/device/browser version was captured, so this is bounded founder evidence, not full device acceptance.
+
+Phone results now use a compact unrotated receipt, paired statistics and one 16px coaching tip. Replay and Menu occupy fixed grid rows outside the receipt overflow region. Decorations and duplicated coaching headings are omitted on phones; exceptionally short viewports or enlarged text retain internal receipt scrolling while actions stay reachable. Desktop retains the full receipt. The visible welcome music selector offers Pass percussion, Midnight simmer, Rush groove and OFF; the three instrumentals now differ in harmony, melody, tempo and articulation. These remain original local synthesis, not licensed recordings or vocals.
+
+Candidate `c0a5353419558c24333012c61d81e1029c7a23b6` passed [CI run 39745780922](https://github.com/aizoya/chaos-kitchen/actions/runs/39745780922): canonical checks/build, Node suite, all browser journeys and sustained-audio/mute checks. Expanded receipt checks at 320/390/430px × 650px verify no page scroll and hit-tested Replay/Menu bounds without scrolling; desktop 1440px also passes. Bundle SHA-256 `3c204baffae25e60288168970d880fbdabbb8add943467fde8cca7b2494dbd87`. No new actual iPhone result-layout acceptance or listening comparison of all three arrangements is claimed. This receipt-only change alters no tested game/build inputs.
+
 ## Phone sound and simplified welcome — October 22
 
 Founder reported duplicate story/video, silent background music and crowded Sound/Pause labels on an actual iPhone. Removed the mounted text story, kept the optional video and direct tutorial, moved track choices inside Game Options. Sound ON now starts the default instrumental track without a second track-selection gate. The original local Web Audio arrangement layers chord voicings, bass, melody and kick percussion; no commercial recordings, voice, network service or spending. Phone Sound/Pause use compact sans-serif labels, zero letter spacing and separated bounds.
