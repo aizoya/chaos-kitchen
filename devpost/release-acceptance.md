@@ -1,39 +1,59 @@
-# Release acceptance — updated October 21, 2026 Pacific
+# Chaos Kitchen — release acceptance
+Updated October 22, 2026 UTC.
 
-## Automated Chromium evidence added October 21
+## Candidate and artifact identity
 
-Source `aa6f4ce1a1cca071ac291249778bb0d5dc28928d` passed GitHub Actions run [39727785430](https://github.com/aizoya/chaos-kitchen/actions/runs/39727785430) on Node 24.19.0 and Chromium:
+Review baseline: `1232641f79844550cac91748ecb1fc79096e5e10` on `release/chaos-star-review` (draft PR #1). This is a review candidate, not an approved production release.
 
-- Canonical asset/content checks, all 50 Node tests, and build passed without placeholder artwork.
-- Classic browser journeys and simulated controller journey passed.
-- Expanded browser harness passed 20 cases: eight medium/hard gameplay cases at 320, 390, 430 and 1440px; twelve Clock In cases at 320, 390 and 430px with classic/expanded mode and intro open/skipped.
-- Expanded gameplay assertions cover cooking, table switching, reachable mobile controls, receipt and replay. Expanded cases use controlled clocks and do not establish real-time balancing.
-- Offline expanded cases reported zero external requests and zero page errors. Tested bundle SHA-256: `5ec5297cc5f4de26390e326f70727be68b5992ef9a402ebf664866cbedbd9802`.
-- Screenshots were produced on the ephemeral runner, not retained or visually reviewed. This is automated Chromium evidence, not real Safari, sound or hardware acceptance.
+Built bundle SHA-256 reported by the successful expanded-browser run: `5ec5297cc5f4de26390e326f70727be68b5992ef9a402ebf664866cbedbd9802`.
 
-## Historical startup evidence — October 15
+GitHub recursive tree comparison on October 22 verified:
+- From `aa6f4ce1a1cca071ac291249778bb0d5dc28928d` to `000d48420b7c099faee1fab944eec1dfbdd7a0b6`: only `.github/workflows/game-browser.yml` and new `scripts/real-clock-browser-test.mjs` changed.
+- From that real-clock candidate to `1232641f79844550cac91748ecb1fc79096e5e10`: only this acceptance document changed.
+- No files were removed. Game source, HTML, CSS, canonical assets, build scripts and package metadata are identical across all three snapshots. Later documentation-only reconciliation does not alter the game artifact.
 
-Additional source `000d48420b7c099faee1fab944eec1dfbdd7a0b6` passed [run 39728159090](https://github.com/aizoya/chaos-kitchen/actions/runs/39728159090), repeating the checks above and adding real-clock Chromium touch smoke at 390px for classic Chef and expanded Chef Easy. Both completed prep, cooking, plating, correct serving, positive score, receipt and replay with unmodified animation clocks and no injected game state. These cases use the local source server, not the deployed Vercel URL; expanded Easy has one table, so multi-table real-time balance remains unverified. Internal static review found no blocking harness issue. Real-device gates below remain open.
+This maps automated evidence to the review baseline by unchanged build inputs; it is not a claim that CI ran on every documentation commit or that hosted bytes were independently downloaded and hashed.
 
-Game candidate: `08507c02af366dfedb8676eebb3b953becdca203` (PR #1).
+## Verified automated evidence
 
-## Verified evidence
+| Source commit | Receipt | Result and limits |
+| --- | --- | --- |
+| `aa6f4ce…` | [39727785430](https://github.com/aizoya/chaos-kitchen/actions/runs/39727785430) | Canonical asset/content checks, 50/50 Node tests and build passed on Node 24.19.0. Classic browser and simulated controller journeys passed. Expanded harness passed 20 cases. |
+| `000d484…` | [39728159090](https://github.com/aizoya/chaos-kitchen/actions/runs/39728159090) | Repeated suite passed; real-clock Chromium touch smoke passed for classic Chef and expanded Chef Easy at 390px. |
 
-- 47/47 local Node 24.19.0 tests pass, including build-output equality and bundled JavaScript syntax.
-- Content and canonical image checks pass.
-- Build emits both `dist/index.html` and `dist/Chaos-Kitchen.html` with identical game bytes.
-- Vercel GitHub status reports successful preview deployment at 08:26 Pacific: `6MumEJjrXy6jek6dokPUXYdH86Wv`.
-- Founder confirmed at 09:01 Pacific that the updated preview opens and Clock In starts the game. This is a user-reported startup check; exact device/browser was not recorded.
+Run success and source SHAs were rechecked through GitHub on October 22. Raw job logs were retrieved in this development chat, including both passing real-clock cases; the independent documentation reviewer did not independently inspect those logs.
 
-## Remaining acceptance
+Expanded harness: eight Medium/Hard cases at 320, 390, 430 and 1440px, plus twelve Clock In cases at 320, 390 and 430px with classic/expanded and intro open/skipped. Assertions cover cooking, table switching, reachable controls, receipt and replay. These cases use controlled clocks; they do not prove real-time balancing. Offline cases reported no external requests or page errors.
 
-- [ ] Complete an order: Serve Plate responds and points are awarded.
-- [ ] Finish or quit a shift: receipt coaching matches the outcome; replay resets score and clocks.
-- [ ] Mobile controls and ticket remain readable and reachable during cooking and table switching.
-- [ ] Sound opt-in, track selection and mute work on an actual device.
-- [x] Automated Chromium harness completes, including receipt and replay checks (run above).
-- [ ] Physical controller acceptance (PS5 deferred; simulated coverage is not hardware acceptance).
+Real-clock smoke: normal animation clocks, public touch actions, no injected game state; prep, cooking, plating, correct serve, positive score, receipt and replay. It uses a local source server, not the hosted Vercel URL. Expanded Easy has one table; Medium/Hard real-time multi-table fairness remains unverified.
 
-Preview: https://aizoya-chaos-kitchen-git-release-chaos-star-review-aizoya.vercel.app
+Screenshots were generated on ephemeral CI runners but were not retained or visually reviewed. Automated Chromium is not actual iPhone Safari, real sound, physical-controller or enjoyment acceptance.
 
-Direct Vercel connector access remains denied (403). GitHub-triggered preview deployment succeeds. Neither the deployment success status nor the founder startup check proves the entire gameplay flow. Production promotion remains unapproved for this candidate; keep PR #1 draft until the applicable release checks are resolved.
+## Historical evidence — October 15 only
+
+Earlier candidate `08507c02af366dfedb8676eebb3b953becdca203` had 47/47 local tests, canonical checks and build equality passing. Vercel reported preview success (`6MumEJjrXy6jek6dokPUXYdH86Wv`). Founder reported the preview opened and Clock In started; device/browser was not recorded. These historical receipts are not the current candidate's primary test evidence.
+
+## Independent review record
+
+Perplexity documentation review received from the founder October 22: all four packet sections and terminal marker present; hackathon HOLD, commercial sign-off not ready. Reviewer inspected supplied documents and reported primary-source rule checks, not executable source, CI reproduction, screenshots or actual gameplay. Findings include candidate-evidence reconciliation, judge access, device acceptance, fairness/replay, rights and Skill Pack claim substantiation.
+
+Gemini documentation review also received from the founder October 22: hackathon HOLD and commercial planning only. It read the four-document packet, not source or live gameplay. Its statements that Perplexity had not reviewed, that judge access is currently broken, and that judges will immediately disqualify/down-score are not adopted: Perplexity's review is now received, the access observation is historical, and no such judging outcome has been established. Physical PS5 acceptance is conditional on advertising hardware support, not an unconditional hackathon gate. Presence of supplied blob IDs is not independent verification of Git objects or recomputed hashes.
+
+The candidate mapping and mixed historical headings are corrected here. Other findings remain open. Both Gemini and Perplexity documentation reviews are received; a completed Claude review of this snapshot is not received. No completed external source/gameplay review or completion of the ordered Gemini → Claude → Perplexity sequence is claimed. A later Perplexity reconciliation should use Claude's actual findings when available.
+
+## Remaining human/device and submission acceptance
+
+These checkboxes are hands-on or external-release requirements, distinct from passing automation:
+- [ ] Actual iPhone Safari: complete a shift, see points, understand receipt and replay; record device, browser, tested candidate and outcome.
+- [ ] Actual device: ticket/text readable; primary action and table switching reachable; pause/resume and tab-return recovery.
+- [ ] Actual device sound: opt-in, track switching and mute.
+- [ ] Real-time Medium/Hard multi-table fairness and uncoached voluntary replay observed; record failures as well as praise.
+- [ ] Desktop human journey and judge-facing anonymous access to exact approved source/play URLs.
+- [ ] Rights/provenance and Skill Pack claims reconciled against supplied source and workflow evidence.
+- [ ] Actual under-three-minute demo recorded and publicly accessible.
+- [ ] Owner attestations and saved Devpost submission confirmation.
+- [ ] Physical controller acceptance if that capability will be advertised; PS5 remains deferred.
+
+Review preview: https://aizoya-chaos-kitchen-git-release-chaos-star-review-aizoya.vercel.app
+
+A prior browser attempt encountered sign-in and direct Vercel connector access returned 403. Successful GitHub-triggered preview deployment does not establish anonymous judge access. No preview protection is to be weakened. Production promotion and submission remain separately gated; keep PR #1 draft.

@@ -1,6 +1,6 @@
 # Chaos Kitchen — final competition pass
 
-Prepared October 21, 2026 Pacific. Source reviewed: b98716ed7a1de19bcd4c588cfab72a0faa2270a4. This document does not approve production deployment or submission.
+Prepared October 21, 2026 Pacific; evidence reconciled October 22 UTC against review baseline 1232641f79844550cac91748ecb1fc79096e5e10. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
 
 ## Outcome
 
@@ -20,9 +20,9 @@ Design, Potential Impact, Innovation/Idea and Presentation are equally weighted.
 
 | Gate | Evidence now | Still needed |
 | --- | --- | --- |
-| Technical correctness | Earlier 47-test build/check receipt; current restored engine suite 45/45, plus three new full-service tests | Reproduce full asset/build/browser checks on this exact candidate |
+| Technical correctness | 50/50 Node tests, canonical asset/build checks, classic/controller and expanded Chromium harnesses, plus real-clock Easy touch smoke passed; unchanged game build inputs mapped to review baseline | Actual iPhone/Safari and sound acceptance; real-time Medium/Hard fairness; hosted artifact/access verification |
 | Competitive strength | Founder reports children enjoyed earlier play; distinctive authored tickets, cooking, tables, Frenzy and receipt coaching in source | Observe new players completing first plate and replay without coaching; record failures as well as praise |
-| Valid submission | Public source on review branch; scope, PRD, spec, app map and license included | Approved release/default-branch source, accessible judge play path, actual demo video, Skill Pack explanation, personal attestation and saved submission confirmation |
+| Valid submission | Public source on review branch; scope, PRD, spec, app map and license included | Approved functional judge-accessible source (default branch not itself a stated rules requirement), accessible judge play path, actual demo video, Skill Pack explanation, personal attestation and saved submission confirmation |
 
 The public repository's main branch was still initialization-only at inspection. PR #1 is draft. Do not hand judges an unqualified main-branch link until approved integration is complete. The last browser attempt hit Vercel sign-in; a successful deployment is not proof of anonymous access. Do not disable preview protection to resolve this. Verify the approved production release anonymously after promotion.
 
@@ -67,4 +67,4 @@ The public repository's main branch was still initialization-only at inspection.
 
 tests/full-service.test.mjs uses public engine actions, with no injected plates, scores or results: three difficulties × four seeds × ten orders = 12 complete practice shifts / 120 successful Chef orders. It checks unique issued orders, table selection, prep/cook/plate/serve, duplicate-serve rejection, frozen paused clocks, aggregate scores, reward completion and fresh initial replay state. All three tests passed on Node 24.19.0. This is not browser evidence and does not establish timed-mode balance or enjoyment.
 
-Scratch recovery excluded the two canonical binary artwork files; no placeholders were substituted. Consequently this pass does not repeat the canonical asset check, full build test or server asset test. Preserve the earlier dated evidence rather than relabeling it as a new run.
+Historical local recovery excluded the two canonical binary artwork files; no placeholders were substituted. That local pass could not repeat asset/build/server checks. Subsequent GitHub CI did run those checks against canonical assets and passed. See release-acceptance.md; do not treat the historical local limitation as the current CI status.
