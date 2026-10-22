@@ -1,6 +1,12 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Chef Franklyn animated poster video — current candidate pending CI
+
+Founder supplied a photograph and requested an anime chef with playful, child-friendly energy. OpenAI image generation produced the character artwork. A local renderer created a 12-second H.264/AAC MP4 (540×720, 458,183 bytes) with camera motion, rasterized captions and original synthesized audio; no voice cloning or generated full-character motion. Sampled frame inspected; ffprobe verified format/duration and volumedetect reported peak -21 dBFS. This is a technical/sample-frame check, not a speaker or full human viewing acceptance.
+
+Welcome has a collapsed Watch Chef Franklyn control with native video controls, inline playback, muted default, no autoplay and no required viewing. Closing it, hiding the tab or starting gameplay pauses it. Poster and video are bundled for offline use; gameplay never calls a video API. Source photograph remains outside the public repository. Provenance and SHA-256 values are in chef-intro-assets.json. Full CI, actual phone media playback and sound acceptance are pending for this new candidate; prior receipts remain historical.
+
 ## Phone playfield redesign — October 21 Pacific
 
 Founder supplied actual iPhone screenshots and reported excessive page scrolling and welcome text. Mobile presentation now uses a bounded dynamic-viewport playfield: compact HUD/order, persistent exclusions/bonus, ingredients then prep tasks, cooking, plating, fixed next action and mirrored Clear/Panic controls. Game options and the explicitly labeled animated story are collapsed on phone welcome; safe tutorial is a primary choice. Desktop retains its full workspace. Compact countdown shows the earlier station/order deadline, with a short station label, to remove the conflicting timer emphasis in the screenshots.

@@ -36,6 +36,8 @@ html = html
 for (const [name, mime] of [
   ['aizoya-master-logo.png', 'image/png'],
   ['grace-avatar.webp', 'image/webp'],
+  ['chef-franklyn-anime-v1.webp', 'image/webp'],
+  ['chef-franklyn-intro-v1.mp4', 'video/mp4'],
 ]) {
   const bytes = await readFile(new URL(`public/${name}`, root));
   html = html.replaceAll(

@@ -15,6 +15,8 @@ const allowed = new Set([
   'src/showtime.mjs',
   'public/aizoya-master-logo.png',
   'public/grace-avatar.webp',
+  'public/chef-franklyn-anime-v1.webp',
+  'public/chef-franklyn-intro-v1.mp4',
 ]);
 const types = {
   '.html': 'text/html; charset=utf-8',
@@ -22,6 +24,7 @@ const types = {
   '.mjs': 'text/javascript; charset=utf-8',
   '.png': 'image/png',
   '.webp': 'image/webp',
+  '.mp4': 'video/mp4',
 };
 export function makeServer() {
   return createServer(async (req, res) => {
@@ -44,7 +47,7 @@ export function makeServer() {
         'Cache-Control': 'no-store',
         'X-Content-Type-Options': 'nosniff',
         'Content-Security-Policy':
-          "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+          "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
       });
       res.end(req.method === 'HEAD' ? undefined : data);
     } catch {

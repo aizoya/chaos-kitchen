@@ -49,6 +49,8 @@ jobs:
         run: node scripts/expanded-browser-test.mjs
       - name: Real-clock touch cooking and replay
         run: node scripts/real-clock-browser-test.mjs
+      - name: Optional Chef video playback online and offline
+        run: node scripts/video-browser-test.mjs
       - name: Report bounded evidence
         if: always()
         run: |

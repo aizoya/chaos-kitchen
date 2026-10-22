@@ -1906,6 +1906,10 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
 .mobile-tools, #mobile-plate { display:none; }
 #compact-clock { display:none; }
 .game-options > summary, .showtime-toggle { min-height:44px; padding:12px 0; cursor:pointer; font:700 16px/1.25 Arial,sans-serif; }
+.chef-video-panel { margin:8px 0; }
+.chef-video-panel > summary { min-height:44px; padding:12px 0; cursor:pointer; font:700 16px/1.25 Arial,sans-serif; }
+.chef-video-panel video { display:block; max-width:100%; width:100%; max-height:55dvh; background:#25271f; border:2px solid #25271f; object-fit:contain; }
+.chef-video-panel p { font-size:14px; line-height:1.4; }
 #learn { min-height:44px; font-size:16px; margin-top:8px; }
 @media(max-width:620px) {
   body[data-screen="welcome"] .welcome-copy { padding:12px 0; }

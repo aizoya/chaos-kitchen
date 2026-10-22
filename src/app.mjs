@@ -77,6 +77,7 @@ function act(action) {
   render();
 }
 function begin(tutorial = false) {
+  if (!$('chef-intro').paused) $('chef-intro').pause();
   tutorial = tutorial === true;
   const options = {
     practice: $('practice').checked,
@@ -348,6 +349,9 @@ $('mobile-action').onclick = () => {
   }
 };
 $('learn').onclick = () => begin(true);
+$('chef-video-panel').addEventListener('toggle', () => {
+  if (!$('chef-video-panel').open && !$('chef-intro').paused) $('chef-intro').pause();
+});
 $('mobile-edit').onclick = () => { mobilePrepTasks = false; render(); };
 $('mobile-clear').onclick = () => { mobilePrepTasks = false; $('clear').click(); };
 $('mobile-panic').onclick = () => $('panic').click();
@@ -454,6 +458,7 @@ $('sound').onclick = () => {
   tone();
 };
 document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !$('chef-intro').paused) $('chef-intro').pause();
   if (document.hidden) {
     readController.rearm();
     settle();

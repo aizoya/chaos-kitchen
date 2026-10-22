@@ -20,6 +20,12 @@ for (const [file, hash] of [
   )
     throw Error('Canonical asset changed: ' + file);
 }
+const intro = JSON.parse(await readFile(new URL('devpost/chef-intro-assets.json', root), 'utf8'));
+for (const asset of intro.assets) {
+  const bytes = await readFile(new URL(asset.path, root));
+  if (bytes.length !== asset.bytes || createHash('sha256').update(bytes).digest('hex') !== asset.sha256)
+    throw Error('Chef intro asset changed: ' + asset.path);
+}
 for (const file of [
   'src/app.mjs',
   'src/controller.mjs',
