@@ -50,6 +50,12 @@ try {
  const headerBox=await page.locator('header').boundingBox();
  assert.ok(hintBox.y >= headerBox.y + headerBox.height);
  assert.ok(hintBox.x >= 0 && hintBox.x + hintBox.width <= 320);
+ await page.locator('.game-options > summary').focus();await press(0);
+ assert.equal(await page.locator('.game-options').evaluate(el=>el.open),true);
+ await page.locator('#chef-mode').focus();await press(0);
+ assert.equal(await page.locator('#chef-mode').isChecked(),true);
+ await page.locator('#start').focus();await press(0);
+ assert.equal(await page.locator('body').getAttribute('data-workstep'),'choose');
  assert.deepEqual(errors,[]);
  console.log('Controller browser flow PASS: selection, hold, serve, next, pause, disconnect, reconnect, navigation, mobile overflow. Simulated input only.');
 } finally {await browser.close();await new Promise(r=>server.close(r));}

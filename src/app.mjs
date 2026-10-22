@@ -338,6 +338,7 @@ $('mobile-action').onclick = () => {
   if (target === 'stop') act({type:'STOP_COOK'});
   else if (['next','serve','handoff'].includes(target)) $(target).click();
   else {
+    if (target === 'pantry') { mobilePrepTasks = false; render(); }
     if (target === 'station' && game.chefMode && game.station === 'prep') { mobilePrepTasks = true; render(); }
     const region = $(target);
     region.scrollIntoView({block:'center',behavior:'instant'});
@@ -347,7 +348,7 @@ $('mobile-action').onclick = () => {
 };
 $('learn').onclick = () => begin(true);
 $('mobile-edit').onclick = () => { mobilePrepTasks = false; render(); };
-$('mobile-clear').onclick = () => $('clear').click();
+$('mobile-clear').onclick = () => { mobilePrepTasks = false; $('clear').click(); };
 $('mobile-panic').onclick = () => $('panic').click();
 function renderStation() {
   $('station').hidden = !game.chefMode;
@@ -508,7 +509,7 @@ function pollController() {
       if (game?.status === 'playing') $('serve').click();
       continue;
     }
-    const controls = [...document.querySelectorAll('button, input[type="checkbox"]')]
+    const controls = [...document.querySelectorAll('button, input[type="checkbox"], summary')]
       .filter(el => !el.disabled && !el.closest('[inert]') && el.getClientRects().length);
     const index = controls.indexOf(document.activeElement);
     const entry = controls.find(el => el.matches('#start, #pantry button, #station button, #next, #resume, #restart')) ?? controls[0];

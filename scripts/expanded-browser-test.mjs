@@ -38,9 +38,10 @@ try {
     const screenFits = async () => {
       if (width >= 620) return;
       assert.equal(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1), true, 'phone game fits one viewport without page scrolling');
-      const visible = await page.locator('#ticket, #pantry button:visible, #station-items button:visible').evaluateAll(nodes => nodes.every(el => {
+      const visible = await page.locator('#ticket, #pantry button:visible, #station-items button:visible, .mobile-tools button:visible').evaluateAll(nodes => nodes.every(el => {
         const r = el.getBoundingClientRect(), dock = document.querySelector('#mobile-dock').getBoundingClientRect();
-        return r.top >= 0 && r.bottom <= dock.top && r.left >= 0 && r.right <= innerWidth;
+        const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+        return r.top >= 0 && r.bottom <= dock.top && r.left >= 0 && r.right <= innerWidth && (el.id === 'ticket' || hit === el || el.contains(hit));
       }));
       assert.equal(visible, true, 'order and current task controls fit above the dock');
     };
@@ -64,6 +65,12 @@ try {
       for (const id of ids) if (!(await state()).game.selected.includes(id)) await pantry(id).click();
       await screenFits();
       if (width < 620) await page.locator('#mobile-action').click();
+      if (width < 620 && !tutorial) {
+        await page.locator('#mobile-clear').click();
+        assert.equal(await page.locator('#pantry').isVisible(), true, 'Clear returns to ingredient choice');
+        for (const id of ids) await pantry(id).click();
+        await page.locator('#mobile-action').click();
+      }
       for (const id of ids) { await station(id).click(); await station(id).click(); }
       await screenFits();
       await touchTargets('#station-items button, #handoff, #mobile-action');
@@ -182,6 +189,7 @@ try {
       await page.waitForFunction(() => Boolean(window.expansionQA));
       assert.equal(await page.locator('#start').isEnabled(), true, 'Clock In enabled after initialization');
       assert.equal(await page.locator('#startup-status').isVisible(), false, 'startup fallback hidden after initialization');
+      await page.locator('.game-options > summary').click();
       if (expanded) await page.locator('#expanded-mode').check(); else await page.locator('#expanded-mode').uncheck();
       if (!introOpen) {
         await page.locator('.showtime-toggle').click();
