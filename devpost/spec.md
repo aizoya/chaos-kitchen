@@ -88,3 +88,7 @@ No new learner uncertainty invented. Useful engineering risk: clock correctness 
 
 ### October 14 — Receipt lesson
 `showtime.mjs::shiftLesson` is a pure presentation function over aggregate counters. `app.mjs` writes its title, evidence and tip through textContent into the final receipt. No scoring or timer changes. `tests/lesson.test.mjs` verifies branch priority, zero-plate behavior and no invented failure diagnosis.
+
+## October 22 — competition focus update
+Founder authorized the benchmark fixes. Optional Chef Franklyn inspection uses three fixed Chef Easy tickets (date, critic, chef), one table and 216 seconds of active time; it ends after three resolved tickets. A fictional Chaos Star requires all three correct, at least two bonuses and zero misses. Timers, prep/cook/plate and exclusions remain enforced. Ordinary shifts receive a fixed in-session goal at start; the receipt derives a next goal from recorded outcomes. No persistent storage, accounts or purchased rewards. Plate placement animates unless reduced motion is requested; warming pans show decorative steam and READY has a clear outline. Video replaces the duplicate mounted text story; the founder supplied the likeness reference. Three visible music styles remain original local synthesis. Current acceptance and provenance limits are in release-acceptance.md and final-owner-check.md. These amendments describe the final implementation, not retrospective proof of initial Skill Pack generation.
+

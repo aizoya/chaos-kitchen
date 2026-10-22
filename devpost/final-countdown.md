@@ -1,6 +1,6 @@
 # Chaos Kitchen — final competition pass
 
-Prepared October 21, 2026 Pacific; current tested game candidate cc428fcdf064eb86d410633b304e3e3de3485560. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
+Updated October 22, 2026 Pacific; current tested game candidate 86aa9d20c2eb518396799036010d4c45515321a2. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
 
 ## Outcome
 
@@ -20,11 +20,11 @@ Design, Potential Impact, Innovation/Idea and Presentation are equally weighted.
 
 | Gate | Evidence now | Still needed |
 | --- | --- | --- |
-| Technical correctness | 54/54 Node tests, canonical asset/build checks, classic/controller/expanded Chromium and real-clock Easy touch smoke passed at cc428fc; compact phone checks at 320/390/430px × 650px | Actual iPhone/Safari and sound acceptance; real-time Medium/Hard fairness; hosted artifact/access verification |
+| Technical correctness | 59/59 Node tests, canonical checks/build, all browser journeys, inspection completion/replay/early-exit and audio/video checks passed in CI 39749109317; phone geometry at 320/390/430px × 650px | Actual iPhone/Safari and sound acceptance; real-time Medium/Hard fairness; hosted artifact/access verification |
 | Competitive strength | Founder reports children enjoyed earlier play; distinctive authored tickets, cooking, tables, Frenzy and receipt coaching in source | Observe new players completing first plate and replay without coaching; record failures as well as praise |
 | Valid submission | Public source on review branch; scope, PRD, spec, app map and license included | Approved functional judge-accessible source (default branch not itself a stated rules requirement), accessible judge play path, actual demo video, Skill Pack explanation, personal attestation and saved submission confirmation |
 
-The public repository's main branch was still initialization-only at inspection. PR #1 is draft. Do not hand judges an unqualified main-branch link until approved integration is complete. The last browser attempt hit Vercel sign-in; a successful deployment is not proof of anonymous access. Do not disable preview protection to resolve this. Verify the approved production release anonymously after promotion.
+At October 22 inspection, main had a substantial README but src/app.mjs and LICENSE returned 404; the review branch contains the working source and license. PR #1 is draft. Do not hand judges an unqualified main-branch link until approved integration is complete. A previous browser attempt hit Vercel sign-in and the latest public retrieval tool could not access the URL; a successful deployment is not proof of anonymous access. Do not disable preview protection to resolve this. Verify the approved production release anonymously after promotion.
 
 ## Product-first use of the stack
 
@@ -33,6 +33,8 @@ The public repository's main branch was still initialization-only at inspection.
 - Use GitHub for reproducible source and review; Vercel for the approved hosted release.
 - Use actual game footage and an authentic founder explanation for the demo. No film footage, borrowed critic identity, unlicensed music, or paid avatar dependency.
 - Do not add AWS, NVIDIA, Supabase, runtime agents, analytics or authentication merely to display provider names. These are candidates only if a specific player outcome justifies them, their access/cost is verified, and they do not delay the complete loop. No new provider connections or spend are approved here.
+
+Current owner check sheet and demo plan: final-owner-check.md. Skill Pack chronology remains unsubstantiated by recovered documents alone; an organizer question is prepared, not sent. The optional inspection and replay-goal implementation do not resolve that gate.
 
 ## Ordered remaining work
 

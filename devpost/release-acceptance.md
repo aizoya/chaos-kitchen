@@ -1,6 +1,12 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Inspection and replay goals — current tested game
+
+Candidate `86aa9d20c2eb518396799036010d4c45515321a2` passed [CI run 39749109317](https://github.com/aizoya/chaos-kitchen/actions/runs/39749109317): 59/59 Node tests, canonical checks/build and every browser step. Bundle SHA-256 `e0bd62c64ef9f9927dd89a21f089b8f3e04ab78150d80a5e8a0fae34c45d147c`. New public-action engine cases cover inspection success, missing bonuses, a timeout, early exit, three-ticket termination and replay; browser journeys complete the inspection at 320/390/430/1440px and verify earned star, replay reset and early-exit retry result. Browser clocks are controlled for these inspection cases; the separate real-clock smoke covers existing Easy journeys. Audio-signal/mute and online/offline media checks also pass. Visual steam/plate motion have implementation and page-error coverage, not retained-frame/human visual acceptance.
+
+Inspection and ordinary goals are in-session only; no persistence, purchase, real award, backend or runtime AI was added. Founder acceptance of the earlier mobile receipt/music is recorded below; new inspection, first-time-player performance, real-time Medium/Hard fairness, enlarged-text/landscape, exact hosted/anonymous access and final submission remain open. Skill Pack chronology cannot be established from the recovered spec assertion alone. final-owner-check.md contains blank test records, a prepared unsent organizer question and the demo checklist. This documentation-only follow-up changes no tested game/build inputs.
+
 ## Compact phone results and track discovery — October 22
 
 Founder reported finishing a full shift on iPhone and supplied result-screen screenshots (765 points, two happy tables, one bonus), but Replay required page scrolling. Founder also confirmed audible music, describing it as cute; no exact candidate/device/browser version was captured, so this is bounded founder evidence, not full device acceptance.
