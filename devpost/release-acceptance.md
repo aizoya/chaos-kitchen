@@ -1,11 +1,23 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Current hosted candidate and access — October 22
+
+Current game/build candidate: `fd6d97b2fdef4b5d6c58bc124e7e8b2b8195118e`. Both [CI run 39832924641](https://github.com/aizoya/chaos-kitchen/actions/runs/39832924641) and [run 39832914732](https://github.com/aizoya/chaos-kitchen/actions/runs/39832914732) completed successfully. Vercel commit status is success. This supersedes earlier "current candidate" wording below; prior candidate results and hashes remain historical.
+
+- Internal company motto removed from public game; result label is NEXT SHIFT (f739a044, included in current candidate).
+- Standard Web Analytics enabled with explicit owner approval of displayed overage rate; Plus left off. Hosted-only integration verified on the deployed page. Dashboard received one US desktop/Linux visitor/pageview matching the assistant's cloud-browser check. This is technical collection evidence, not outside-player traction. No completed-shift or custom gameplay events are collected. Offline download remains analytics-free. See analytics.md.
+- Owner explicitly approved public access for only `aizoya-chaos-kitchen-git-release-chaos-star-review-aizoya.vercel.app`. Vercel lists it under Unprotected Domains. An unauthenticated HTTP request returned 200 at that exact URL with CLOCK IN game content, without a login redirect. This closes the prior access-wall finding for this preview URL at the time checked; production and other preview settings were not changed.
+- Live cloud desktop browser actions: Clock In entered the first ticket; Pause opened its dialog; Resume returned to gameplay; after a ticket timed out, End this shift opened the receipt with one miss; One More Shift reset score to zero, service clock to 1:30, empty plate and ticket #001. This was an early-ended shift, not a completed successful shift, an iPhone test, or a human balance study.
+- Vercel Agent draft PR #2 targeted main and generated placeholder app files. It was inspected and not merged. The actual integration was applied to the complete review branch.
+
+Open gates: exact-candidate full iPhone shift and replay; unassisted new-player observations; real-time Medium/Hard fairness; enlarged text/short landscape; audio listening on the target device; rights/owner attestations; actual public demo video and saved Devpost submission. Main merge and production promotion have not occurred. Analytics visits alone do not establish gameplay completion or retention.
+
 ## Original curriculum recovered — October 22
 
-Recovered the retained original source archive labeled 73e3b90 and inspected its original planning documents, decisions and skills-lock.json. Fresh comparison finds 14/14 installed curriculum files identical to pinned official tree 6984209dd33f12ab8781d8caf0c16a5de2343657. See skill-pack-provenance.md for archive SHA-256, six skill blob IDs, supported conclusions and limits. This supersedes the narrower earlier observation that only a later spec assertion was available. No original interview transcript, complete checkpoint execution or organizer eligibility clearance is claimed. The exact game remains 86aa9d20; documentation follow-up CI at 8f43cb9 also passed (run 39749715301). No runtime/build inputs change here.
+Recovered the retained original source archive labeled 73e3b90 and inspected its original planning documents, decisions and skills-lock.json. Fresh comparison finds 14/14 installed curriculum files identical to pinned official tree 6984209dd33f12ab8781d8caf0c16a5de2343657. See skill-pack-provenance.md for archive SHA-256, six skill blob IDs, supported conclusions and limits. This supersedes the narrower earlier observation that only a later spec assertion was available. No original interview transcript, complete checkpoint execution or organizer eligibility clearance is claimed. At that historical recovery pass, the game was 86aa9d20; documentation follow-up CI at 8f43cb9 also passed (run 39749715301). No runtime/build inputs change here.
 
-## Inspection and replay goals — current tested game
+## Inspection and replay goals — historical tested game
 
 Candidate `86aa9d20c2eb518396799036010d4c45515321a2` passed [CI run 39749109317](https://github.com/aizoya/chaos-kitchen/actions/runs/39749109317): 59/59 Node tests, canonical checks/build and every browser step. Bundle SHA-256 `e0bd62c64ef9f9927dd89a21f089b8f3e04ab78150d80a5e8a0fae34c45d147c`. New public-action engine cases cover inspection success, missing bonuses, a timeout, early exit, three-ticket termination and replay; browser journeys complete the inspection at 320/390/430/1440px and verify earned star, replay reset and early-exit retry result. Browser clocks are controlled for these inspection cases; the separate real-clock smoke covers existing Easy journeys. Audio-signal/mute and online/offline media checks also pass. Visual steam/plate motion have implementation and page-error coverage, not retained-frame/human visual acceptance.
 
