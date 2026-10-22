@@ -1,6 +1,6 @@
 # Chaos Kitchen — final competition pass
 
-Prepared October 21, 2026 Pacific; evidence reconciled October 22 UTC against review baseline 1232641f79844550cac91748ecb1fc79096e5e10. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
+Prepared October 21, 2026 Pacific; current tested game candidate cc428fcdf064eb86d410633b304e3e3de3485560. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
 
 ## Outcome
 
@@ -20,7 +20,7 @@ Design, Potential Impact, Innovation/Idea and Presentation are equally weighted.
 
 | Gate | Evidence now | Still needed |
 | --- | --- | --- |
-| Technical correctness | 50/50 Node tests, canonical asset/build checks, classic/controller and expanded Chromium harnesses, plus real-clock Easy touch smoke passed; unchanged game build inputs mapped to review baseline | Actual iPhone/Safari and sound acceptance; real-time Medium/Hard fairness; hosted artifact/access verification |
+| Technical correctness | 54/54 Node tests, canonical asset/build checks, classic/controller/expanded Chromium and real-clock Easy touch smoke passed at cc428fc; compact phone checks at 320/390/430px × 650px | Actual iPhone/Safari and sound acceptance; real-time Medium/Hard fairness; hosted artifact/access verification |
 | Competitive strength | Founder reports children enjoyed earlier play; distinctive authored tickets, cooking, tables, Frenzy and receipt coaching in source | Observe new players completing first plate and replay without coaching; record failures as well as praise |
 | Valid submission | Public source on review branch; scope, PRD, spec, app map and license included | Approved functional judge-accessible source (default branch not itself a stated rules requirement), accessible judge play path, actual demo video, Skill Pack explanation, personal attestation and saved submission confirmation |
 
@@ -54,6 +54,56 @@ The public repository's main branch was still initialization-only at inspection.
 | 2:05–2:30 | Return to gameplay and finish on one memorable reaction | “Built with AI, shaped by real chef experience, made for play. We win or we learn.” Show the tested play link and source. |
 
 ## Submission copy — draft, owner review required
+
+### Recording-ready phone walkthrough
+
+Use the tested review candidate, then confirm the exact hosted build before recording. Start with Game options → Chef mode → Easy; expanded service is optional. Keep the first completed plate continuous in the recording. A retake is allowed; do not disguise a failed or simulated serve as successful live gameplay.
+
+1. Open the title screen and show Clock In plus Show me the ropes. Briefly open Game options, choose Chef Easy, and Clock In.
+2. Keep the order in view. Select Chicken, Rice and Chili; tap PREP INGREDIENTS. Complete each prep task, then tap TO COOKING.
+3. Start one ingredient, wait for READY, stop it, then cook the next. Show a real gauge and the shared next-action button.
+4. Tap TO PLATING, add each finished ingredient, SERVE, then show the customer reaction and points.
+5. Show the next order. Pause → quit, read the actual receipt, replay, and show that the score resets.
+6. Briefly show scope, PRD, spec and app map from the tested source. Finish on gameplay and the accessible play/source links.
+
+Spoken script, with pauses for the actual actions:
+
+“I'm Franklyn Rosario, Founder and CEO of AIZOYA, and an executive chef. Welcome to Chaos Kitchen.
+
+Read the ticket. Respect the request. Then run the kitchen.
+
+Choose the ingredients, prep them, and move to the hot line. Watch the gauge—stop when it's ready. Now plate it and ring the bell.
+
+The customers have opinions. Your score does too.
+
+The phone layout keeps the order and current task together. New players can learn one safe plate, then choose a timed shift and tougher service.
+
+At the end, the receipt gives you one next step based on what happened. We win or we learn. Then we clock in again.
+
+AI helped us plan, build, test and challenge the game. Our repository includes the scope, product requirements, technical specification and app map. Gameplay runs locally with authored tickets and original synthesized sound.
+
+Built with AI. Shaped by real chef experience. Made for play.”
+
+Do not add claims of measured education, retention, physical-controller acceptance or iPhone certification. Record actual iPhone results before describing them as tested. Reconcile Skill Pack use evidence before answering that required form field.
+
+### Chef Franklyn cinematic intro — production brief, not rendered
+
+Target: an original optional 12–15-second clip. This intro is separate from the competition's under-three-minute demo. It must not delay Clock In or require an API call to play.
+
+| Time | Image/action | Audio/caption |
+| --- | --- | --- |
+| 0–3s | Warm restaurant pass; a ticket prints; staff notice an arrival | One original bell. Caption: “THE INSPECTOR IS HERE.” |
+| 3–7s | Chef Franklyn enters; brief composed look toward the kitchen | Restaurant ambience; no borrowed music |
+| 7–11s | Close-up of an original fictional Chaos Star token, then the pass | Franklyn: “Your kitchen. Your shift. Impress me.” |
+| 11–15s | Title and kitchen lights flare into the game palette | Caption: “CHAOS KITCHEN · CLOCK IN.” |
+
+Reference prompt for an approved video-production route:
+
+Create an original, playful cinematic introduction for AIZOYA's Chaos Kitchen using the supplied authorized photograph/video of Franklyn Rosario as the identity reference. Preserve his likeness; do not invent a different face or imitate a celebrity. Show him as a composed, demanding fictional restaurant inspector arriving at a warm, energetic kitchen pass. Use stainless steel, cream paper tickets, orange heat, gentle steam and tactile kitchen details. Follow the four shots above. Humor comes from staff urgency and his calm expression. No movie footage, copied characters, restaurant-rating logos, branded uniforms, real certification claim or watermarks. Leave text/captions for local editing so spelling is exact. Deliver a clean master that can be cropped for portrait and landscape. Dialogue is the founder's approved recording if supplied; do not claim a cloned voice exists.
+
+Required input: a verified photo/clip selected by Franklyn. Choose an existing authorized production route and verify its cost/watermark limits before rendering. No paid rendering, subscription or new voice model has been authorized for this clip.
+
+Integration acceptance: local MP4 plus poster; user-initiated playback; inline phone playback; muted default with captions and explicit sound control; immediate Skip/Clock In; no repeated compulsory viewing on replay; poster fallback on unsupported playback; reduced-motion users can skip straight to play. Measure real-device startup and asset size before merging. These are future acceptance requirements, not shipped capabilities.
 
 **Pitch:** Read the ticket. Run the kitchen. Survive the rush. Chaos Kitchen is a playful browser game shaped by an executive chef's experience: prep ingredients, time the cooking, plate the order, and earn a fictional Chaos Star while the dinner rush escalates.
 

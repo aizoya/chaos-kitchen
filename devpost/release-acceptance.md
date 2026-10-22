@@ -17,7 +17,7 @@ Candidate `c59aaefc3502e16754445b0ca1cb9f50ba9a12da` passed [CI run 39731906302]
 
 ## Active balance remediation — supersedes prior gameplay clearance
 
-Latest tested game candidate: `7b129516a51b3e7b3c872ce553331e9a558bc252`. [CI run 39730841104](https://github.com/aizoya/chaos-kitchen/actions/runs/39730841104) completed successfully: 54/54 Node tests, canonical checks, build, classic/controller/expanded Chromium harnesses and both real-clock Easy touch cases. Raw job logs were retrieved; bundle SHA-256 is `bef7e36a5b11708cf149806e93e04d5a4a1e2026f1fb8821156ee60d4c5e8437`. No screenshots were retained/visually reviewed. This documentation-only receipt does not change tested game bytes. Human Medium/Hard balance, actual Safari/sound, hosted judge access, banner-overlap reproduction and submission gates remain open.
+Historical balance candidate: `7b129516a51b3e7b3c872ce553331e9a558bc252`. [CI run 39730841104](https://github.com/aizoya/chaos-kitchen/actions/runs/39730841104) completed successfully: 54/54 Node tests, canonical checks, build, classic/controller/expanded Chromium harnesses and both real-clock Easy touch cases. Raw job logs were retrieved; bundle SHA-256 is `bef7e36a5b11708cf149806e93e04d5a4a1e2026f1fb8821156ee60d4c5e8437`. No screenshots were retained/visually reviewed. This historical receipt does not clear newer presentation changes; the current phone candidate is recorded above. Human Medium/Hard balance, actual Safari/sound, hosted judge access and submission gates remain open.
 
 Claude's source/automated-play review was supplied by the founder: reviewed aa6f4ce, reported real-clock Chromium successes on Easy but excessive unattended station timeouts on Medium/Hard. This is an external source and scripted-browser review, not real iPhone or uncoached human testing. Its claims that Gemini/Perplexity were unavailable apply to that review session; their documentation outputs have separately been received here. The sequence is not retroactively treated as ordered.
 
@@ -25,11 +25,11 @@ Change: extra initial tables and replacement tickets in expanded Chef Medium/Har
 
 New regression coverage uses one simulated second before each public action and actual cooking durations, including a one-second reaction after READY. Across four seeds, initial Medium/Hard table sets can all serve bonus plates without station misses. Separate tests cover waiting clocks, arming, deselection, offscreen expiry and shift progress. This is deterministic paced simulation, not proof that novices can do it or that all authored tickets are balanced. Full CI on the changed candidate passed as recorded above; all older bundle hashes and browser receipts below remain historical.
 
-Claude also reported a feedback/banner overlap at 390px. This remains an open visual reproduction item, not fixed by the timing change. Demo, rights/Skill Pack evidence, judge access and real-device gates remain open.
+Claude also reported a feedback/banner overlap at 390px. The later feedback-visibility and phone-playfield changes above address it with automated checks. Actual human visual acceptance remains open. Demo, rights/Skill Pack evidence, judge access and real-device gates remain open.
 
 Internal read-only challenge found no blocking waiting-ticket logic defect; it identified misleading active-station copy, now corrected to explain that only the shift clock continues while waiting. Regression assertions also cover replacement waiting, invalid food not arming, all-waiting global expiry, and a started pan burning while another table waits. This internal check is not external-provider re-review of the fix.
 
-## Candidate and artifact identity
+## Historical four-document review baseline and artifact identity
 
 Review baseline: `1232641f79844550cac91748ecb1fc79096e5e10` on `release/chaos-star-review` (draft PR #1). This is a review candidate, not an approved production release.
 
