@@ -313,7 +313,7 @@ function renderTables() {
     b.disabled = game.status !== 'playing' || !table || table.status === 'ended';
     b.setAttribute('aria-pressed', String(service.active === index));
     const deadline = table ? Math.min(table.orderRemainingMs, table.chefMode ? table.stationRemainingMs : Infinity) : 0;
-    b.textContent = !table || table.status === 'ended' ? `PASS ${index + 1} · CLOSED` : `TABLE ${ticketFor(table).table}${table.frenzy ? ' ×2' : ''} · ${table.practice ? '∞' : Math.ceil(deadline / 1000) + 's'}${table.activePan ? ' · ' + nameOf(table.activePan) + ' ' + table.cooking[table.activePan].state : ' · ' + (table.chefMode ? table.station : 'order')}`;
+    b.textContent = !table || table.status === 'ended' ? `PASS ${index + 1} · CLOSED` : `TABLE ${ticketFor(table).table}${table.frenzy ? ' ×2' : ''} · ${table.waiting ? 'WAITING · select food to start' : (table.practice ? '∞' : Math.ceil(deadline / 1000) + 's') + (table.activePan ? ' · ' + nameOf(table.activePan) + ' ' + table.cooking[table.activePan].state : ' · ' + (table.chefMode ? table.station : 'order'))}`;
   });
   const prize = service.rewards.at(-1);
   $('rush-event').textContent = game.frenzy

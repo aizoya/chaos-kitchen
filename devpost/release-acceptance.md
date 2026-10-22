@@ -1,6 +1,16 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Active balance remediation — supersedes prior gameplay clearance
+
+Claude's source/automated-play review was supplied by the founder: reviewed aa6f4ce, reported real-clock Chromium successes on Easy but excessive unattended station timeouts on Medium/Hard. This is an external source and scripted-browser review, not real iPhone or uncoached human testing. Its claims that Gemini/Perplexity were unavailable apply to that review session; their documentation outputs have separately been received here. The sequence is not retroactively treated as ordered.
+
+Change: extra initial tables and replacement tickets in expanded Chef Medium/Hard wait until first ingredient selection. Navigation does not arm a waiting ticket. Once armed, clearing or leaving it never pauses its deadlines; pans still cook/burn offscreen. Global shift time always runs. Initial active ticket, Easy and classic rules remain unchanged. This removes automatic prep expiry on untouched queued work without granting unlimited time to started work.
+
+New regression coverage uses one simulated second before each public action and actual cooking durations, including a one-second reaction after READY. Across four seeds, initial Medium/Hard table sets can all serve bonus plates without station misses. Separate tests cover waiting clocks, arming, deselection, offscreen expiry and shift progress. This is deterministic paced simulation, not proof that novices can do it or that all authored tickets are balanced. Full CI on the changed candidate is pending; all prior bundle hashes and browser receipts below are historical until rebuilt and rerun.
+
+Claude also reported a feedback/banner overlap at 390px. This remains an open visual reproduction item, not fixed by the timing change. Demo, rights/Skill Pack evidence, judge access and real-device gates remain open.
+
 ## Candidate and artifact identity
 
 Review baseline: `1232641f79844550cac91748ecb1fc79096e5e10` on `release/chaos-star-review` (draft PR #1). This is a review candidate, not an approved production release.

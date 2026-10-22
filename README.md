@@ -21,6 +21,7 @@ Open http://127.0.0.1:4173. Vercel serves `dist/index.html` at the root URL; its
 
 - Choose classic plate-building or Chef mode (prep → cook → plate → serve).
 - Expanded service provides Easy/Medium/Hard with one/two/three tables and 210/180/150 seconds respectively. Classic service uses a 90-second shift.
+- In expanded Chef mode, extra queued tables wait until you select their first ingredient. Selecting a table alone does not start its deadline. Once started, its clocks and pans run even while you work elsewhere; clearing a plate does not pause them. The overall shift clock always runs.
 - Match the ticket, honor exclusions, and include its optional bonus for extra points.
 - Watch fictional READY gauges and stop cooking before food burns. This is entertainment, not cooking or dietary-safety instruction.
 - Feedback pauses the clocks. Pause and hidden-tab handling preserve the shift.
@@ -35,7 +36,7 @@ Sound is optional and synthesized locally. No runtime AI, analytics, accounts, c
 
 ## Verification status
 
-47 unit tests pass on Node 24.19.0. Canonical asset and content checks pass; offline build succeeds. Browser harnesses are included but the latest receipt additions have not run: Chromium installation failed in the build workspace. Mobile Safari, actual speakers and physical controllers remain acceptance checks. Unit tests do not prove visual quality or fun.
+The pre-balance candidate passed 50 Node tests, canonical asset checks, build, classic/controller/expanded Chromium harnesses and real-clock Easy touch smoke in GitHub CI. The waiting-ticket balance change adds paced Medium/Hard regressions; its current verification is recorded in devpost/release-acceptance.md. Older browser results do not clear changed gameplay. Mobile Safari, actual speakers, physical controllers and human difficulty acceptance remain open. Automated checks do not prove visual quality or fun.
 
 For browser verification, install Playwright and its Chromium in your development environment, then run `node scripts/expanded-browser-test.mjs`. If needed, set PLAYWRIGHT_MODULE to Playwright's absolute ESM entry and CHROMIUM_PATH to the installed Chromium executable. DOM harnesses separately require jsdom. These are development tools, not gameplay dependencies.
 

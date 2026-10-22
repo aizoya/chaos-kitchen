@@ -5,12 +5,12 @@ export const SERVICE_MS = { easy: 210000, medium: 180000, hard: 150000 };
 const CAPACITY = { easy: 1, medium: 2, hard: 3 };
 function newTable(s, index) {
   const t = createGame(s);
-  return { ...t, index, orderRemainingMs: ticketDuration({ ...t, index }), remainingMs: s.remainingMs, frenzy: index % 4 === 3 };
+  return { ...t, index, waiting: s.chefMode && s.difficulty !== 'easy', orderRemainingMs: ticketDuration({ ...t, index }), remainingMs: s.remainingMs, frenzy: index % 4 === 3 };
 }
 export function createService({ difficulty = 'easy', seed = 1, practice = false, chefMode = true } = {}) {
   if (!Object.hasOwn(CAPACITY, difficulty)) difficulty = 'easy';
   const s = { difficulty, seed, practice, chefMode, remainingMs: SERVICE_MS[difficulty], status: 'playing', active: 0, score: 0, streak: 0, bestStreak: 0, served: 0, perfect: 0, missed: 0, completed: 0, issued: CAPACITY[difficulty], rewards: [], pending: [], panicUsed: false };
-  return { ...s, tables: Array.from({ length: CAPACITY[difficulty] }, (_, i) => newTable(s, i)) };
+  return { ...s, tables: Array.from({ length: CAPACITY[difficulty] }, (_, i) => ({ ...newTable(s, i), waiting: chefMode && i > 0 })) };
 }
 export const activeTable = s => s.tables[s.active];
 export const serviceView = s => ({ ...activeTable(s), ...Object.fromEntries(['status', 'remainingMs', 'score', 'streak', 'bestStreak', 'served', 'perfect', 'missed', 'practice', 'panicUsed', 'rewards', 'completed'].map(k => [k, s[k]])), serviceMode: true, tableIndex: s.active, tableCount: s.tables.length });
@@ -45,22 +45,25 @@ export function dispatchService(s, a) {
   if (s.status !== 'playing') return s;
   if (a.type === 'TICK') {
     if (!Number.isFinite(a.ms) || a.ms < 0) return s;
-    const playing = s.tables.filter(t => t.status === 'playing');
+    // Unstarted queued tickets wait for ingredient selection. Started tables and
+    // their pans keep running offscreen; the overall shift never waits.
+    const playing = s.tables.filter(t => t.status === 'playing' && !t.waiting);
     const elapsed = s.practice ? a.ms : Math.min(a.ms, s.remainingMs, ...playing.map(t => Math.min(t.orderRemainingMs, t.chefMode ? t.stationRemainingMs : Infinity)));
     const remainingMs = s.practice ? s.remainingMs : Math.max(0, s.remainingMs - elapsed);
-    const tables = s.tables.map(t => t.status !== 'playing' ? t : dispatch({ ...t, remainingMs: s.remainingMs, streak: s.streak }, { type: 'TICK', ms: elapsed }));
+    const tables = s.tables.map(t => t.status !== 'playing' || t.waiting ? t : dispatch({ ...t, remainingMs: s.remainingMs, streak: s.streak }, { type: 'TICK', ms: elapsed }));
     const next = { ...s, remainingMs, tables };
     if (!s.practice && remainingMs === 0) return { ...next, status: 'ended' };
     const pending = tables.flatMap((t, i) => t.status === 'feedback' ? [i] : []);
     if (pending.length) return feedback({ ...next, pending: pending.slice(1) }, pending[0]);
     return next;
   }
-  const due = !s.practice && (s.remainingMs <= 0 || s.tables.some(t => t.status === 'playing' && (t.orderRemainingMs <= 0 || (t.chefMode && t.stationRemainingMs <= 0))));
+  const due = !s.practice && (s.remainingMs <= 0 || s.tables.some(t => t.status === 'playing' && !t.waiting && (t.orderRemainingMs <= 0 || (t.chefMode && t.stationRemainingMs <= 0))));
   if (due) return settled(s);
   if (a.type === 'SWITCH_TABLE') return Number.isInteger(a.index) && s.tables[a.index]?.status === 'playing' ? { ...s, active: a.index } : s;
   if (a.type === 'PANIC' && s.panicUsed) return s;
   const current = activeTable(s);
-  const table = dispatch({ ...current, remainingMs: s.remainingMs, streak: s.streak, panicUsed: s.panicUsed }, a);
+  let table = dispatch({ ...current, remainingMs: s.remainingMs, streak: s.streak, panicUsed: s.panicUsed }, a);
+  if (table.waiting && table.selected.length) table = { ...table, waiting: false };
   const next = { ...s, panicUsed: table.panicUsed, tables: s.tables.map((t, i) => i === s.active ? table : t) };
   return table.status === 'feedback' ? feedback(next, s.active) : next;
 }

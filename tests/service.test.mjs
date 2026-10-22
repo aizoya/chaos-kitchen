@@ -28,6 +28,10 @@ test('switching preserves each plate and rejects invalid slots', () => {
 });
 test('all table clocks stop exactly at earliest timeout; simultaneous expiries queue once', () => {
   let s = createService({ difficulty: 'hard' });
+  for (let index = 0; index < 3; index++) {
+    s = act(s, { type: 'SWITCH_TABLE', index });
+    s = act(s, { type: 'TOGGLE', id: 'rice' });
+  }
   s = act(s, { type: 'TICK', ms: 99999 });
   assert.equal(s.remainingMs, 134000);
   assert.equal(s.completed, 1);
@@ -100,7 +104,7 @@ test('global expiry wins ties and disallows late serving', () => {
 });
 test('an offscreen earlier expiry selects that table without overspending any clock', () => {
   let s = createService({ difficulty: 'medium' });
-  s.tables[1] = { ...s.tables[1], stationRemainingMs: 500 };
+  s.tables[1] = { ...s.tables[1], waiting: false, stationRemainingMs: 500 };
   s = act(s, { type: 'TICK', ms: 5000 });
   assert.equal(s.active, 1);
   assert.equal(s.remainingMs, 179500);
