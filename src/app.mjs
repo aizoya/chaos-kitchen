@@ -542,7 +542,7 @@ function frame(now) {
   }
   requestAnimationFrame(frame);
 }
-mountShowtime({onTutorial: () => begin(true)});
+mountShowtime();
 render();
 $('start').disabled = false;
 $('startup-status').hidden = true;

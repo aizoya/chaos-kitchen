@@ -97,8 +97,8 @@ try {
   assert.equal(p.state().service.completed, 10);
   assert.equal(p.state().game.status, 'ended');
 
-  click($('home')); click(d.querySelector('.showtime-skip'));
-  click(d.querySelector('.showtime-tutorial'));
+  click($('home'));
+  click($('learn'));
   assert.equal(p.state().game.tutorial, true);
   assert.equal(p.state().service, null);
   assert.match($('station-time').textContent, /SAFE TUTORIAL/);

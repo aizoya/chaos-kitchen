@@ -14,8 +14,6 @@ try {
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
     await page.goto('http://127.0.0.1:' + server.address().port);
-    await page.locator('.showtime-toggle').click();
-    await page.locator('.showtime-skip').click();
     await page.locator('.game-options > summary').click();
     await page.locator('#chef-mode').check();
     await page.locator('#practice').uncheck();

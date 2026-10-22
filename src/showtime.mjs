@@ -7,60 +7,31 @@ export function shiftLesson({ served = 0, perfect = 0, missed = 0, tutorial = fa
   return { title: 'MAKE THEM ASK FOR SECONDS.', evidence: `${served} happy table${served === 1 ? '' : 's'} · a flavor bonus on every completed plate.`, tip: 'Replay and build a longer streak, or choose a tougher difficulty from the menu.' };
 }
 
-// Original, local-only scene and synthesized music. No recordings or network assets.
-export const SHOWTIME_SCENES = Object.freeze([
-  { title: 'THE PHONE RINGS.', copy: 'Chef… the Chaos Star inspector is here. Hide the panic. Not the seasoning.' },
-  { title: 'CHEF FRANKLYN HAS ARRIVED.', copy: '“I’ve run a kitchen. Let’s see how you run yours.” One important guest. Your spectacularly questionable composure.' },
-  { title: 'YOUR STAR STARTS HERE.', copy: 'Read it. Cook it. Plate it. A perfect service deserves a Chaos Star. A burnt one deserves an open window.' },
-]);
+// Original, local-only instrumental music. No recordings or network assets.
 export const SHOWTIME_TRACKS = Object.freeze(['OFF', 'Pass percussion', 'Midnight simmer', 'Rush groove']);
 let showtimeInstance = null;
 
 export function setShowtimeSound(enabled) { showtimeInstance?.setSound(Boolean(enabled)); }
 export function setShowtimePaused(paused) { showtimeInstance?.setPaused(Boolean(paused)); }
 
-export function mountShowtime({ onTutorial = () => {}, document: doc = globalThis.document, window: win = globalThis.window } = {}) {
+export function mountShowtime({ document: doc = globalThis.document, window: win = globalThis.window } = {}) {
   if (showtimeInstance || !doc?.getElementById('welcome')) return showtimeInstance;
-  const panel = doc.createElement('details');
-  panel.open = !win.matchMedia?.('(max-width: 620px)').matches;
-  panel.className = 'showtime-panel';
-  panel.setAttribute('aria-label', 'Chaos Star inspector introduction');
-  panel.innerHTML = `<summary class="showtime-toggle">Chef Franklyn · animated story</summary><div class="showtime-scene"><p class="showtime-kicker">★ THE CHAOS STAR INSPECTION</p><h2 class="showtime-title"></h2><p class="showtime-copy" aria-live="polite"></p><p class="showtime-step"></p><div class="showtime-actions"><button type="button" class="showtime-next">Next scene →</button><button type="button" class="showtime-skip">Skip intro</button></div></div><div class="showtime-after" hidden><strong>THE INSPECTOR IS WAITING.</strong><div class="showtime-actions"><button type="button" class="showtime-replay">Replay intro</button><button type="button" class="showtime-tutorial">Show me the ropes</button></div></div><p class="showtime-disclaimer">Chaos Star is a fictional game award. This original inspector scene is not affiliated with a restaurant rating organization.</p>`;
   const welcome = doc.getElementById('welcome');
-  (welcome.querySelector('.welcome-copy') || welcome).append(panel);
   const music = doc.createElement('div');
   music.className = 'showtime-music';
-  music.innerHTML = `<button type="button" class="showtime-track">Music: OFF</button><span class="showtime-music-note" aria-live="polite">Original kitchen beats · no downloads</span>`;
+  music.innerHTML = `<button type="button" class="showtime-track">Music: Pass percussion</button><span class="showtime-music-note" aria-live="polite">Original kitchen beats · no downloads</span>`;
   // Its own row avoids squeezing the existing 320px masthead or mobile action dock.
   const header = doc.querySelector('.masthead');
-  if (header) header.after(music); else welcome.before(music);
+  const options = welcome.querySelector('.game-options');
+  if (options) options.append(music); else if (header) header.after(music); else welcome.before(music);
   const style = doc.createElement('style');
-  style.textContent = `.showtime-panel{margin:20px 0;padding:16px;border:3px solid #27291e;background:#f8efd8;color:#27291e;max-width:100%;box-sizing:border-box;box-shadow:5px 5px 0 #f15425}.showtime-kicker{font-weight:900;letter-spacing:.08em;font-size:12px}.showtime-title{font-size:clamp(21px,5vw,30px)!important;line-height:1.1!important;margin:8px 0!important}.showtime-copy{font-size:16px;line-height:1.45}.showtime-step,.showtime-disclaimer{font-size:14px;line-height:1.4}.showtime-actions{display:flex;flex-wrap:wrap;gap:8px}.showtime-actions button,.showtime-track{min-height:44px;padding:10px 12px;border:2px solid #27291e;background:#27291e;color:#fff9e9;cursor:pointer;font:700 15px monospace;white-space:normal;max-width:100%}.showtime-actions button:focus-visible,.showtime-track:focus-visible{outline:3px solid #f15425;outline-offset:3px}.showtime-music{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 0;max-width:100%;box-sizing:border-box}.showtime-music-note{font-size:14px;overflow-wrap:anywhere}.showtime-disclaimer{opacity:.8}.showtime-panel [hidden]{display:none!important}body[data-screen="playing"] .showtime-music-note{display:none}@media(max-width:360px){.showtime-panel{padding:12px}.showtime-music-note{font-size:14px}}`;
+  style.textContent = '.showtime-track{min-height:44px;padding:10px 12px;border:2px solid #27291e;background:#27291e;color:#fff9e9;cursor:pointer;font:700 15px Arial,sans-serif;white-space:normal;max-width:100%}.showtime-track:focus-visible{outline:3px solid #f15425;outline-offset:3px}.showtime-music{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 0;max-width:100%;box-sizing:border-box}.showtime-music-note{font-size:14px;overflow-wrap:anywhere}';
   doc.head.append(style);
-  const find = (selector) => panel.querySelector(selector);
-  let scene = 0, track = 0, soundEnabled = false, paused = false, unavailable = false;
+  let track = 1, soundEnabled = false, paused = false, unavailable = false;
   let context = null, timer = null, step = 0;
   const voices = new Set();
   const trackButton = music.querySelector('button');
   const note = music.querySelector('span');
-  const drawScene = () => {
-    find('.showtime-title').textContent = SHOWTIME_SCENES[scene].title;
-    find('.showtime-copy').textContent = SHOWTIME_SCENES[scene].copy;
-    find('.showtime-step').textContent = `SCENE ${scene + 1} / ${SHOWTIME_SCENES.length}`;
-    find('.showtime-next').textContent = scene === 2 ? 'Let’s cook →' : 'Next scene →';
-  };
-  const finish = () => {
-    find('.showtime-scene').hidden = true;
-    find('.showtime-after').hidden = false;
-    doc.getElementById('start')?.focus();
-  };
-  find('.showtime-next').onclick = () => { if (scene < 2) { scene++; drawScene(); } else finish(); };
-  find('.showtime-skip').onclick = finish;
-  find('.showtime-replay').onclick = () => {
-    scene = 0; drawScene(); find('.showtime-scene').hidden = false;
-    find('.showtime-after').hidden = true; find('.showtime-next').focus();
-  };
-  find('.showtime-tutorial').onclick = () => onTutorial();
   const label = () => {
     trackButton.textContent = unavailable ? 'Music unavailable' : `Music: ${SHOWTIME_TRACKS[track]}`;
     note.textContent = unavailable ? 'Your browser could not start audio. Gameplay still works.' : track && !soundEnabled ? 'Turn SOUND ON to hear this track.' : 'Original kitchen beats · no downloads';
@@ -74,20 +45,41 @@ export function mountShowtime({ onTutorial = () => {}, document: doc = globalThi
   const allowed = () => track > 0 && soundEnabled && !paused && !doc.hidden && !unavailable;
   const playBeat = () => {
     if (!allowed() || context?.state !== 'running') return;
-    const now = context.currentTime, oscillator = context.createOscillator(), gain = context.createGain();
-    const melodies = [[110, 0, 220, 0, 146.83, 0, 220, 164.81], [130.81, 164.81, 196, 164.81, 146.83, 174.61, 220, 174.61], [110, 220, 164.81, 220, 146.83, 293.66, 196, 220]];
-    const frequency = melodies[track - 1][step++ % 8];
-    if (!frequency) return;
-    oscillator.type = track === 1 ? 'triangle' : 'sine';
-    oscillator.frequency.setValueAtTime(frequency, now);
-    if (track === 1) oscillator.frequency.exponentialRampToValueAtTime(45, now + .1);
-    gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(.018, now + .012);
-    gain.gain.exponentialRampToValueAtTime(.0001, now + .16);
-    oscillator.connect(gain); gain.connect(context.destination);
-    voices.add(oscillator);
-    oscillator.onended = () => { voices.delete(oscillator); oscillator.disconnect(); gain.disconnect(); };
-    oscillator.start(now); oscillator.stop(now + .18);
+    const now = context.currentTime;
+    // Eight-bar original arrangement: warm plucked chords, bass, melody and drums.
+    const beat = step++, tempo = track === 2 ? .3 : track === 3 ? .22 : .26;
+    const root = [48, 53, 55, 48][Math.floor(beat / 16) % 4];
+    const hz = midi => 440 * 2 ** ((midi - 69) / 12);
+    const note = (midi, duration, volume, type = 'sine', delay = 0) => {
+      const oscillator = context.createOscillator(), gain = context.createGain();
+      const at = now + delay;
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(hz(midi), at);
+      gain.gain.setValueAtTime(0, at);
+      gain.gain.linearRampToValueAtTime(volume, at + .008);
+      gain.gain.exponentialRampToValueAtTime(.0001, at + duration);
+      oscillator.connect(gain); gain.connect(context.destination);
+      voices.add(oscillator);
+      oscillator.onended = () => { voices.delete(oscillator); oscillator.disconnect(); gain.disconnect(); };
+      oscillator.start(at); oscillator.stop(at + duration + .03);
+    };
+    if (beat % 4 === 0) [0, 4, 7, 11].forEach((offset, i) => {
+      note(root + 12 + offset, tempo * 3.5, .025, 'triangle', i * .012);
+      note(root + 24 + offset, tempo * 2, .006, 'sine', i * .012);
+    });
+    if (beat % 2 === 0) note(root - 12 + (beat % 8 === 6 ? 7 : 0), tempo * 1.7, .08);
+    const melody = [12, 16, 19, 21, 19, 16, 14, 16, 12, 0, 19, 16, 14, 12, 7, 0];
+    const pitch = melody[beat % melody.length];
+    if (pitch) note(root + 12 + pitch, tempo * 1.3, .035, 'sine');
+    if (beat % 4 === 0) {
+      const drum = context.createOscillator(), envelope = context.createGain();
+      drum.frequency.setValueAtTime(130, now); drum.frequency.exponentialRampToValueAtTime(45, now + .12);
+      envelope.gain.setValueAtTime(.12, now); envelope.gain.exponentialRampToValueAtTime(.0001, now + .16);
+      drum.connect(envelope); envelope.connect(context.destination); voices.add(drum);
+      drum.onended = () => { voices.delete(drum); drum.disconnect(); envelope.disconnect(); };
+      drum.start(now); drum.stop(now + .18);
+    }
+
   };
   const sync = () => {
     label();
@@ -99,18 +91,18 @@ export function mountShowtime({ onTutorial = () => {}, document: doc = globalThi
       context ??= new Audio();
       Promise.resolve(context.resume()).then(() => {
         if (!allowed() || timer !== null) return;
-        timer = win.setInterval(() => { try { playBeat(); } catch { unavailable = true; stop(); label(); } }, track === 2 ? 300 : track === 3 ? 170 : 230);
+        timer = win.setInterval(() => { try { playBeat(); } catch { unavailable = true; stop(); label(); } }, track === 2 ? 300 : track === 3 ? 220 : 260);
       }).catch(() => { unavailable = true; stop(); label(); });
     } catch { unavailable = true; stop(); label(); }
   };
   trackButton.onclick = () => { track = (track + 1) % SHOWTIME_TRACKS.length; step = 0; stop(); sync(); };
   const visibility = () => sync();
   doc.addEventListener('visibilitychange', visibility);
-  drawScene();
+  label();
   showtimeInstance = {
     setSound(value) { soundEnabled = value; sync(); },
     setPaused(value) { if (paused !== value) { paused = value; trackButton.disabled = value; sync(); } },
-    destroy() { stop(); context?.close().catch(() => {}); doc.removeEventListener('visibilitychange', visibility); panel.remove(); music.remove(); style.remove(); showtimeInstance = null; },
+    destroy() { stop(); context?.close().catch(() => {}); doc.removeEventListener('visibilitychange', visibility); music.remove(); style.remove(); showtimeInstance = null; },
   };
   return showtimeInstance;
 }

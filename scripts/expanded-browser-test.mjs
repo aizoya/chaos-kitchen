@@ -96,9 +96,7 @@ try {
       await page.waitForFunction(() => Boolean(window.expansionQA));
       await noOverflow('welcome');
       if (difficulty === 'medium') {
-        if (width < 620) await page.locator('.showtime-toggle').click();
-        await page.locator('.showtime-skip').click();
-        await page.locator('.showtime-tutorial').click();
+        await page.locator('#learn').click();
         await dish(true); await noOverflow('tutorial'); await shot('tutorial');
         await page.locator('#next').click();
         assert.equal((await state()).game.status, 'ended');
@@ -191,10 +189,7 @@ try {
       assert.equal(await page.locator('#startup-status').isVisible(), false, 'startup fallback hidden after initialization');
       await page.locator('.game-options > summary').click();
       if (expanded) await page.locator('#expanded-mode').check(); else await page.locator('#expanded-mode').uncheck();
-      if (!introOpen) {
-        await page.locator('.showtime-toggle').click();
-        await page.locator('.showtime-skip').click();
-      }
+      if (!introOpen) assert.equal(await page.locator('.showtime-panel').count(), 0);
       await page.locator('#start').scrollIntoViewIfNeeded();
       const unblocked = await page.locator('#start').evaluate(el => {
         const r = el.getBoundingClientRect(), top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);

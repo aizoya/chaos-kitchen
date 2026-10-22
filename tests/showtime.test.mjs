@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mountShowtime, SHOWTIME_SCENES, SHOWTIME_TRACKS } from '../src/showtime.mjs';
+import { mountShowtime, SHOWTIME_TRACKS } from '../src/showtime.mjs';
 
 // Tiny purpose-built DOM/audio doubles: actual browser layout is tested separately.
 function fixture(withAudio = true) {
@@ -45,32 +45,18 @@ function fixture(withAudio = true) {
   return { doc, win, copy, elements, listeners, timers, get contexts() { return contexts; }, get suspends() { return suspends; } };
 }
 
-test('intro is three explicit, skippable original scenes and can replay', () => {
-  const f = fixture(); let tutorials = 0;
-  const instance = mountShowtime({ document: f.doc, window: f.win, onTutorial: () => tutorials++ });
-  try {
-    const panel = f.copy.children[0], get = selector => panel.querySelector(selector);
-    assert.equal(SHOWTIME_SCENES.length, 3);
-    assert.equal(get('.showtime-title').textContent, SHOWTIME_SCENES[0].title);
-    get('.showtime-next').onclick();
-    assert.equal(get('.showtime-title').textContent, SHOWTIME_SCENES[1].title);
-    get('.showtime-skip').onclick();
-    assert.equal(get('.showtime-scene').hidden, true);
-    assert.equal(f.elements.get('start').focused, true);
-    get('.showtime-replay').onclick();
-    assert.equal(get('.showtime-scene').hidden, false);
-    assert.equal(get('.showtime-title').textContent, SHOWTIME_SCENES[0].title);
-    get('.showtime-tutorial').onclick(); assert.equal(tutorials, 1);
-    assert.equal(f.contexts, 0);
-  } finally { instance.destroy(); }
+test('welcome uses the video instead of a duplicate text story', () => {
+  const f = fixture(), instance = mountShowtime({ document: f.doc, window: f.win });
+  try { assert.equal(f.copy.children.length, 0); assert.equal(f.contexts, 0); }
+  finally { instance.destroy(); }
 });
 
-test('music requires track selection plus master sound; hidden and pause stop scheduling', async () => {
+test('master sound starts the default music; hidden and pause stop scheduling', async () => {
   const f = fixture(), instance = mountShowtime({ document: f.doc, window: f.win });
   try {
     const button = f.elements.get('music').querySelector('button');
     assert.equal(SHOWTIME_TRACKS.length, 4);
-    button.onclick(); assert.equal(f.contexts, 0);
+    assert.equal(button.textContent, 'Music: Pass percussion'); assert.equal(f.contexts, 0);
     instance.setSound(true); await Promise.resolve();
     assert.equal(f.contexts, 1); assert.equal(f.timers.size, 1);
     f.doc.hidden = true; f.listeners.get('visibilitychange')();
@@ -86,7 +72,7 @@ test('audio unavailable remains a labelled non-fatal state', () => {
   const f = fixture(false), instance = mountShowtime({ document: f.doc, window: f.win });
   try {
     const button = f.elements.get('music').querySelector('button');
-    button.onclick(); instance.setSound(true);
+    instance.setSound(true);
     assert.equal(button.textContent, 'Music unavailable');
     assert.equal(f.timers.size, 0);
   } finally { instance.destroy(); }

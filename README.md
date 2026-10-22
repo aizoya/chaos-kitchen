@@ -34,7 +34,7 @@ Sound is optional and synthesized locally. No runtime AI, analytics, accounts, c
 
 ## How it works
 
-`src/content.mjs` holds authored tickets and ingredients. `engine.mjs` owns deterministic rules and clocks. `service.mjs` coordinates tables. `showtime.mjs` owns intro, music and receipt coaching. `app.mjs` connects input to state and rendering. `art.mjs` contains original SVG illustrations. `devpost/app-map.html` explains the core flow; historical planning amendments are in scope.md, prd.md and spec.md.
+`src/content.mjs` holds authored tickets and ingredients. `engine.mjs` owns deterministic rules and clocks. `service.mjs` coordinates tables. `showtime.mjs` owns original instrumental music and receipt coaching. Sound ON starts the default track; Game Options offers other tracks or music OFF. The optional Chef video replaces the older text story. `app.mjs` connects input to state and rendering. `art.mjs` contains original SVG illustrations. `devpost/app-map.html` explains the core flow; historical planning amendments are in scope.md, prd.md and spec.md.
 
 ## Verification status
 

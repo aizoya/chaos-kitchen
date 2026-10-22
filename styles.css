@@ -1928,13 +1928,13 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
   body[data-screen="playing"] .masthead .maker,
   body[data-screen="playing"] .masthead .edition,
   body[data-screen="playing"] footer { display:none; }
-  body[data-screen="playing"] #sound { position:fixed; top:4px; right:80px; z-index:15; min-height:44px; width:82px; padding:4px; font-size:11px; }
+  body[data-screen="playing"] #sound { position:fixed; top:4px; right:84px; z-index:15; min-height:44px; width:88px; padding:4px; font:700 12px/1.15 Arial,sans-serif; letter-spacing:0; white-space:normal; overflow-wrap:anywhere; }
   body[data-screen="playing"] .game { display:grid; height:100%; min-height:0; padding:0; gap:4px;
     grid-template-areas:"top" "score" "tables" "ticket" "work" "tools";
     grid-template-rows:44px 34px auto auto minmax(0,1fr) 44px; }
   body[data-screen="playing"] .game-top { grid-area:top; margin:0; padding:0; min-height:44px; }
-  body[data-screen="playing"] .game-top h2 { font-size:18px; max-width:calc(100% - 166px); line-height:1; }
-  body[data-screen="playing"] #pause { min-height:44px; width:68px; padding:4px; font-size:12px; }
+  body[data-screen="playing"] .game-top h2 { font-size:18px; max-width:calc(100% - 178px); line-height:1; }
+  body[data-screen="playing"] #pause { min-height:44px; width:68px; padding:4px; font:700 12px/1.15 Arial,sans-serif; letter-spacing:0; white-space:normal; }
   body[data-screen="playing"] .scoreboard { grid-area:score; margin:0; height:34px; }
   body[data-screen="playing"] .scoreboard > div { padding:2px 6px; display:flex; align-items:center; justify-content:space-between; gap:4px; }
   body[data-screen="playing"] .scoreboard .label { font-size:9px; letter-spacing:0; line-height:1.1; }
