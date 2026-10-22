@@ -173,6 +173,25 @@ try {
       assert.match(await page.locator('#lesson-tip').textContent(), /Show me the ropes/);
       await page.locator('#home').click();
       assert.equal(await page.locator('#welcome').isVisible(), true);
+      if (difficulty === 'medium') {
+        await page.locator('#inspection').click();
+        assert.equal((await state()).game.inspection,true);
+        assert.equal((await state()).service,null);
+        assert.equal((await state()).game.practice,false);
+        for (let n=0;n<3;n++) {
+          assert.ok((await page.locator('#shift-goal').textContent()).includes('/3 plates'));
+          await dish(false);
+          await page.locator('#next').click();
+        }
+        assert.equal((await state()).game.status,'ended');
+        assert.equal(await page.locator('#end-title').textContent(),'CHAOS STAR EARNED!');
+        await page.locator('#restart').click();
+        assert.equal((await state()).game.inspection,true);
+        assert.equal((await state()).game.score,0);
+        await page.locator('#pause').click();await page.locator('#quit').click();
+        assert.equal(await page.locator('#end-title').textContent(),'THE INSPECTOR WILL RETURN.');
+        await page.locator('#home').click();
+      }
       assert.deepEqual(errors, []); assert.deepEqual(external, []);
       record.passed = true;
     } catch (error) {

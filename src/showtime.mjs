@@ -1,3 +1,15 @@
+// Goals are fixed before play and use recorded counters only.
+export function nextShiftGoal(previous) {
+  if (!previous || previous.tutorial) return { metric:'served', target:3, label:'Serve 3 plates' };
+  if (previous.missed || !previous.served) return { metric:'served', target:Math.min(3, Math.max(1, previous.served)), label:'Serve ' + Math.min(3, Math.max(1, previous.served)) + ' correct plates' };
+  const target = Math.min(5, previous.perfect + 1);
+  return { metric:'perfect', target, label:'Earn ' + target + ' flavor bonus' + (target === 1 ? '' : 'es') };
+}
+export function inspectionResult(s) {
+  const earned = s.inspection && s.status === 'ended' && s.served === 3 && s.perfect >= 2 && s.missed === 0;
+  return { earned:Boolean(earned), title:earned ? 'CHAOS STAR EARNED!' : 'THE INSPECTOR WILL RETURN.', tip:earned ? 'Three correct plates. At least two flavor bonuses. Chef Franklyn approves.' : 'For a Chaos Star: serve all 3 plates correctly, earn 2 flavor bonuses, and avoid missed orders. Retry when ready.' };
+}
+
 // Receipt coaching uses only recorded outcomes; it never invents a cause of failure.
 export function shiftLesson({ served = 0, perfect = 0, missed = 0, tutorial = false } = {}) {
   if (tutorial) return { title: 'FIRST PLATE. FIRST LESSON.', evidence: 'You tried the safe tutorial.', tip: 'Next: try a full shift on Easy. Read the ticket before touching the pantry.' };

@@ -33,10 +33,13 @@ export function makeDeck(seed = 1) {
 }
 export const ticketFor = (s) =>
   TICKETS.find((t) => t.id === s.deck[s.index % s.deck.length]);
-export function createGame({ practice = false, seed = 1, chefMode = false, difficulty = 'easy', tutorial = false } = {}) {
+export function createGame({ practice = false, seed = 1, chefMode = false, difficulty = 'easy', tutorial = false, inspection = false } = {}) {
+  inspection = inspection === true && !tutorial;
+  if (inspection) { chefMode = true; difficulty = 'easy'; practice = false; }
   if (!Object.hasOwn(DIFFICULTY, difficulty)) difficulty = 'easy';
   return {
     status: 'playing',
+    inspection,
     practice: practice || tutorial,
     tutorial,
     chefMode: chefMode || tutorial,
@@ -48,10 +51,10 @@ export function createGame({ practice = false, seed = 1, chefMode = false, diffi
     seed,
     cooking: {},
     activePan: null,
-    deck: makeDeck(seed),
+    deck: inspection ? ['date', 'critic', 'chef'] : makeDeck(seed),
     index: 0,
     selected: [],
-    remainingMs: SHIFT_MS,
+    remainingMs: inspection ? 216000 : SHIFT_MS,
     orderRemainingMs: chefMode ? DIFFICULTY[difficulty].reduce((a, b) => a + b, 0) : 18000,
     score: 0,
     streak: 0,
@@ -138,7 +141,7 @@ export function dispatch(s, a) {
     return { ...s, status: s.resumeStatus, resumeStatus: null };
   if (a.type === 'NEXT' && s.status === 'feedback') {
     const index = s.index + 1;
-    if (s.remainingMs <= 0 || (s.practice && index >= (s.tutorial ? 1 : 10)))
+    if (s.remainingMs <= 0 || (s.inspection && index >= 3) || (s.practice && index >= (s.tutorial ? 1 : 10)))
       return { ...s, status: 'ended' };
     return {
       ...s,

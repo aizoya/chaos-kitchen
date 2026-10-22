@@ -12,7 +12,7 @@ const allowedImports = new Set([
   "import {INGREDIENTS, STAGES, nameOf, COOKING} from './content.mjs';",
   "import {createGame, dispatch, ticketDuration} from './engine.mjs';",
   "import {createService, dispatchService, serviceView} from './service.mjs';",
-  "import {mountShowtime, setShowtimePaused, setShowtimeSound, shiftLesson} from './showtime.mjs';",
+  "import {mountShowtime, setShowtimePaused, setShowtimeSound, shiftLesson, nextShiftGoal, inspectionResult} from './showtime.mjs';",
   "import {createGame, dispatch, ticketFor, stageFor, multiplier, HEAT, pantryFor, ticketDuration} from './engine.mjs';",
   "import {FOOD, BELL} from './art.mjs';",
 ]);

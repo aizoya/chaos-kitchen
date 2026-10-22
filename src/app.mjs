@@ -1,7 +1,7 @@
 import { createControllerReader } from './controller.mjs';
 import { INGREDIENTS, STAGES, nameOf, COOKING } from './content.mjs';
 import { createService, dispatchService, serviceView } from './service.mjs';
-import { mountShowtime, setShowtimePaused, setShowtimeSound, shiftLesson } from './showtime.mjs';
+import { mountShowtime, setShowtimePaused, setShowtimeSound, shiftLesson, nextShiftGoal, inspectionResult } from './showtime.mjs';
 import {
   createGame,
   dispatch,
@@ -13,7 +13,7 @@ import {
 import { FOOD, BELL } from './art.mjs';
 
 const $ = (id) => document.getElementById(id);
-let service = null;
+let service = null, activeGoal = null;
 function updateGame(action) {
   if (service) { service = dispatchService(service, action); game = serviceView(service); }
   else if (game) game = dispatch(game, action);
@@ -76,7 +76,9 @@ function act(action) {
   if (action.type === 'COOK' && game?.activePan === action.id) tone(false);
   render();
 }
-function begin(tutorial = false) {
+function begin(tutorial = false, inspection = false) {
+  inspection = inspection === true && tutorial !== true;
+  activeGoal = inspection ? {metric:'perfect',target:2,label:'Inspection: 3 plates · 2 bonuses · no misses'} : nextShiftGoal(game);
   if (!$('chef-intro').paused) $('chef-intro').pause();
   tutorial = tutorial === true;
   const options = {
@@ -85,8 +87,9 @@ function begin(tutorial = false) {
     difficulty,
     seed: Date.now() >>> 0,
     tutorial,
+    inspection,
   };
-  service = !tutorial && $('expanded-mode').checked ? createService(options) : null;
+  service = !tutorial && !inspection && $('expanded-mode').checked ? createService(options) : null;
   game = service ? serviceView(service) : createGame(options);
   drawnTicket = -1;
   stationKey = ''; panNotice = '';
@@ -107,6 +110,7 @@ function render() {
     welcome = !game;
   const prepKey = game ? `${game.index}:${service?.active ?? 0}` : '';
   if (prepKey !== mobilePrepKey) { mobilePrepKey = prepKey; mobilePrepTasks = false; }
+  document.body.dataset.inspection = String(Boolean(game?.inspection));
   document.body.dataset.workstep = !game?.chefMode ? 'classic' : game.station === 'prep' ? (mobilePrepTasks ? 'prep' : 'choose') : game.station;
   document.body.dataset.screen = welcome
     ? 'welcome'
@@ -127,6 +131,7 @@ function render() {
     ticket = ticketFor(game),
     feedback = status === 'feedback';
   document.body.dataset.stage = stage;
+  $('shift-goal').textContent = game.inspection ? 'INSPECTION · ' + game.served + '/3 plates · ' + game.perfect + '/2 bonuses · ' + game.missed + ' misses' : activeGoal.label + ' · ' + (game[activeGoal.metric] || 0) + '/' + activeGoal.target;
   $('score').textContent = String(game.score).padStart(5, '0');
   $('clock-label').textContent = game.tutorial ? 'TUTORIAL' : game.practice ? 'PRACTICE' : 'SERVICE LEFT';
   const seconds = Math.ceil(game.remainingMs / 1000);
@@ -198,6 +203,9 @@ function render() {
     drawnPlate = plate;
     $('plate-food').innerHTML = visibleFood.map((id) => FOOD[id]).join('');
     $('mobile-plate').innerHTML = visibleFood.map((id) => FOOD[id]).join('');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && visibleFood.length) {
+      for (const plate of [$('plate-food'), $('mobile-plate')]) plate.animate([{transform:'scale(.94)',opacity:.6},{transform:'scale(1)',opacity:1}],{duration:180});
+    }
   }
   $('empty-plate').hidden = visibleFood.length > 0;
   $('plate-count').textContent = `${visibleFood.length} / 4 ON THE PLATE`;
@@ -230,7 +238,7 @@ function render() {
     $('reason').textContent = r.reason;
     $('points').textContent = `+${r.points}`;
     $('next').textContent =
-      game.tutorial || (game.practice && (service ? service.completed >= 10 : game.index === 9))
+      game.inspection && game.index === 2 || game.tutorial || (game.practice && (service ? service.completed >= 10 : game.index === 9))
         ? 'CLOSE THE KITCHEN →'
         : 'NEXT TICKET →';
   }
@@ -246,9 +254,17 @@ function render() {
     $('lesson-title').textContent = lesson.title;
     $('lesson-evidence').textContent = lesson.evidence;
     $('lesson-tip').textContent = lesson.tip;
+    if (game.inspection) {
+      const verdict = inspectionResult(game);
+      $('end-title').textContent = verdict.title;
+      $('lesson-tip').textContent = verdict.tip;
+    } else {
+      const goal = nextShiftGoal(game);
+      $('lesson-tip').textContent = lesson.tip + ' Next goal: ' + goal.label + '.';
+    }
     $('end-score').textContent = game.score.toLocaleString();
     const stats = [
-      ['Mode', game.tutorial ? 'Safe first-plate tutorial' : `${game.chefMode ? 'Chef / ' + game.difficulty + ' / ' : ''}${game.practice ? 'Untimed practice' : service ? 'Expanded service' : '90-second service'}`],
+      ['Mode', game.inspection ? 'Chaos Star inspection' : game.tutorial ? 'Safe first-plate tutorial' : `${game.chefMode ? 'Chef / ' + game.difficulty + ' / ' : ''}${game.practice ? 'Untimed practice' : service ? 'Expanded service' : '90-second service'}`],
       ['Happy tables', game.served],
       ['Flavor bonuses', game.perfect],
       ['Best streak', game.bestStreak],
@@ -349,6 +365,7 @@ $('mobile-action').onclick = () => {
   }
 };
 $('learn').onclick = () => begin(true);
+$('inspection').onclick = () => begin(false, true);
 $('chef-video-panel').addEventListener('toggle', () => {
   if (!$('chef-video-panel').open && !$('chef-intro').paused) $('chef-intro').pause();
 });
@@ -379,6 +396,7 @@ function renderStation() {
     const id = row.dataset.food, pan = game.cooking[id], button = row.querySelector('button'), gauge = row.querySelector('progress');
     const state = step === 'prep' ? ['NEEDS PREP', 'ONE TASK LEFT', 'PREPPED'][game.prepped[id] || 0] : step === 'plate' ? (game.plated.includes(id) ? 'ON THE PLATE' : 'READY TO PLATE') : !HEAT[id] ? 'FINISHING INGREDIENT' : (pan?.state || 'WAITING').toUpperCase();
     row.dataset.state = state;
+    row.dataset.cooking = String(pan?.state === 'warming');
     row.querySelector('.pan-state').textContent = state === 'READY' ? 'STEAM’S UP · READY! STOP NOW' : state;
     gauge.hidden = step !== 'cook' || !HEAT[id];
     gauge.value = HEAT[id] ? (pan?.ms || 0) / (HEAT[id] + 1600) * 100 : 0;
@@ -423,7 +441,7 @@ for (const [index, item] of INGREDIENTS.entries()) {
   $('pantry').append(button);
 }
 $('start').onclick = begin;
-$('restart').onclick = begin;
+$('restart').onclick = () => begin(false, game?.inspection === true);
 $('home').onclick = () => {
   game = null;
   service = null;

@@ -1901,6 +1901,12 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
 .shift-lesson .lesson-motto { color:#a62c0b; font-size:18px; font-weight:900; }
 .shift-lesson h3 { font-size:22px; line-height:1.2; margin:12px 0; }
 .shift-lesson p { font-family:system-ui,sans-serif; font-size:16px; line-height:1.5; overflow-wrap:anywhere; }
+.inspection-brief{font:15px/1.35 Arial,sans-serif;max-width:40em;margin:4px 0 12px;}
+.shift-goal{font:700 13px/1.2 Arial,sans-serif;color:#8a2d12;margin:0 0 6px;}
+.pan-row[data-cooking="true"] .pan-state::after{content:' ≋';display:inline-block;animation:kitchen-steam 1s ease-in-out infinite;}
+.pan-row[data-state="READY"]{outline:3px solid #38784a;outline-offset:-3px;}
+@keyframes kitchen-steam{50%{transform:translateY(-4px);opacity:.4;}}
+@media(prefers-reduced-motion:reduce){.pan-row[data-cooking="true"] .pan-state::after{animation:none;}}
 @media(max-width:620px){
   body[data-screen="ending"]{height:100dvh;overflow:hidden;}
   body[data-screen="ending"] .app-shell{height:100dvh;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;}

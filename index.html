@@ -36,6 +36,8 @@
             </button>
             <p id="startup-status" class="startup-status" role="status">Opening the kitchen… If this stays here, open the game in Safari or Chrome; a file preview may not run it.</p>
             <button id="learn" class="plain-button" type="button">Show me the ropes →</button>
+            <button id="inspection" class="plain-button" type="button">★ Chef Franklyn’s inspection · 3 tickets</button>
+            <p class="inspection-brief">Earn a fictional Chaos Star: 3 correct plates, 2 flavor bonuses, no missed orders. Chef Easy · one table · up to 3:36.</p>
             <details id="chef-video-panel" class="chef-video-panel">
               <summary>Watch Chef Franklyn · 12 seconds</summary>
               <video id="chef-intro" controls playsinline muted preload="none" poster="public/chef-franklyn-anime-v1.webp" aria-label="Chef Franklyn animated poster introduction">
@@ -149,6 +151,7 @@
               id="ticket"
               aria-label="Current order"
             >
+              <p id="shift-goal" class="shift-goal"></p>
               <div class="ticket-top">
                 <span id="ticket-number">ORDER #001</span
                 ><span id="table">TABLE 11</span>
