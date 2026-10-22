@@ -30,7 +30,7 @@ Open http://127.0.0.1:4173. Vercel serves `dist/index.html` at the root URL; its
 - Watch fictional READY gauges and stop cooking before food burns. This is entertainment, not cooking or dietary-safety instruction.
 - Feedback pauses the clocks. Pause and hidden-tab handling preserve the shift.
 - Practice removes deadlines; cooking can still burn. “Show me the ropes” is the safe first-plate tutorial.
-- The final receipt gives one recorded-outcome-based improvement under “We win or we learn.” Replay resets the shift.
+- The final receipt gives one recorded-outcome-based improvement with one next-shift tip. Replay resets the shift.
 
 Sound is optional and synthesized locally. No runtime AI, analytics, accounts, cloud persistence or paid providers. Controller behavior has simulated coverage; physical PS5 acceptance is not established.
 

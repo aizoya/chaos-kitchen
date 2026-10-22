@@ -53,9 +53,9 @@ Current owner check sheet and demo plan: final-owner-check.md. Skill Pack chrono
 | 0:00–0:12 | Open game and start immediately | “I'm Franklyn Rosario, Founder and CEO of AIZOYA—and an executive chef. Chaos Kitchen turns dinner-service pressure into a game you can play on your phone.” |
 | 0:12–0:50 | Complete a real ticket, including cooking and plating | Explain only the next visible action. Show the successful serve and points without hiding failures behind edits. |
 | 0:50–1:15 | Demonstrate tables and Feeding Frenzy in actual play | Show prioritization, a bonus and a customer reaction. If this cannot be captured reliably, show the verified simpler mode instead. |
-| 1:15–1:35 | Receipt, “We win or we learn,” then replay | Show the outcome-based tip and reset. Explain that the feedback uses recorded game outcomes, not runtime AI. |
+| 1:15–1:35 | Receipt, next-shift coaching, then replay | Show the outcome-based tip and reset. Explain that the feedback uses recorded game outcomes, not runtime AI. |
 | 1:35–2:05 | Planning documents and app map, briefly | Explain the actual Skill Pack workflow and founder feedback: mobile actions, legible bonuses, difficulty, cooking, tables. Do not claim installation or generation evidence beyond what the records establish. |
-| 2:05–2:30 | Return to gameplay and finish on one memorable reaction | “Built with AI, shaped by real chef experience, made for play. We win or we learn.” Show the tested play link and source. |
+| 2:05–2:30 | Return to gameplay and finish on one memorable reaction | “Built with AI, shaped by real chef experience, made for play.” Show the tested play link and source. |
 
 ## Submission copy — draft, owner review required
 
@@ -82,7 +82,7 @@ The customers have opinions. Your score does too.
 
 The phone layout keeps the order and current task together. New players can learn one safe plate, then choose a timed shift and tougher service.
 
-At the end, the receipt gives you one next step based on what happened. We win or we learn. Then we clock in again.
+At the end, the receipt gives you one next step based on what happened. Then we clock in again.
 
 AI helped us plan, build, test and challenge the game. Our repository includes the scope, product requirements, technical specification and app map. Gameplay runs locally with authored tickets and original synthesized sound.
 

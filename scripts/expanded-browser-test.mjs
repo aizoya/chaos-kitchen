@@ -153,7 +153,7 @@ try {
       // End-of-shift coaching is wired to actual aggregate outcomes, then replay resets them.
       await page.locator('#pause').click(); await page.locator('#quit').click();
       assert.equal((await state()).game.status, 'ended');
-      assert.equal(await page.locator('.lesson-motto').textContent(), 'WE WIN OR WE LEARN.');
+      assert.equal(await page.locator('.lesson-label').textContent(), 'NEXT SHIFT');
       assert.match(await page.locator('#lesson-evidence').textContent(), /every completed plate/);
       await noOverflow('receipt');
       if (width < 620) {

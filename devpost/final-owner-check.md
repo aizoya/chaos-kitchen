@@ -59,7 +59,7 @@ Proposed usability target: 4/5 first plates within 60 seconds without coaching. 
 
 1:40–2:10: Actual planning artifacts and substantiated AI-development workflow. Show a mobile problem and its implemented correction. Do not claim runtime AI or measured educational outcomes.
 
-2:10–2:30: Return to play. State audience hypothesis and observed testing results only. “Built with AI. Shaped by real chef experience. We win or we learn.” Show actual play/source links.
+2:10–2:30: Return to play. State audience hypothesis and observed testing results only. “Built with AI. Shaped by real chef experience.” Show actual play/source links.
 
 ## Release boundary
 

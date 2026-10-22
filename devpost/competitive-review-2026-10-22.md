@@ -97,6 +97,6 @@ October 23 internal target: close material defects, verify source/assets/license
 
 ## Proposed pitch
 
-“I'm Franklyn Rosario, executive chef and Founder of AIZOYA. Chaos Kitchen turns the pressure of dinner service into a short phone game: read the ticket, prep, cook, plate and survive the rush. Finish with one practical tip and try again. Built with AI, shaped by real player feedback. We win or we learn.”
+“I'm Franklyn Rosario, executive chef and Founder of AIZOYA. Chaos Kitchen turns the pressure of dinner service into a short phone game: read the ticket, prep, cook, plate and survive the rush. Finish with one practical tip and try again. Built with AI, shaped by real player feedback.”
 
 This is positioning, not proof of retention, educational effectiveness, uniqueness, sales or prize probability. The highest-value outcome is a coherent, accessible working entry with truthful process evidence and a strong demonstration. The $1,250 is not guaranteed income.

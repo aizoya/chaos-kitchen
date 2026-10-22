@@ -1898,7 +1898,7 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
 
 /* The receipt's next-step coaching stays readable on a phone. */
 .shift-lesson { text-align:left; border-top:3px solid var(--ink, #27291e); margin:20px 0; padding:16px 0; }
-.shift-lesson .lesson-motto { color:#a62c0b; font-size:18px; font-weight:900; }
+.shift-lesson .lesson-label { color:#a62c0b; font-size:18px; font-weight:900; }
 .shift-lesson h3 { font-size:22px; line-height:1.2; margin:12px 0; }
 .shift-lesson p { font-family:system-ui,sans-serif; font-size:16px; line-height:1.5; overflow-wrap:anywhere; }
 .inspection-brief{font:15px/1.35 Arial,sans-serif;max-width:40em;margin:4px 0 12px;}
@@ -1924,7 +1924,7 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
   body[data-screen="ending"] #end-stats dd{margin:0;text-align:right;overflow-wrap:anywhere;}
   body[data-screen="ending"] #end-comment,body[data-screen="ending"] .receipt-signoff,body[data-screen="ending"] .barcode,body[data-screen="ending"] .ticket-dashes,body[data-screen="ending"] .ticket-tear{display:none;}
   body[data-screen="ending"] .shift-lesson{margin:8px 0 0;padding:8px 0 0;}
-  body[data-screen="ending"] .shift-lesson .lesson-motto{font-size:16px;margin:0 0 6px;}
+  body[data-screen="ending"] .shift-lesson .lesson-label{font-size:16px;margin:0 0 6px;}
   body[data-screen="ending"] .shift-lesson h3,body[data-screen="ending"] #lesson-evidence{display:none;}
   body[data-screen="ending"] #lesson-tip{font-size:16px;line-height:1.3;margin:0;}
   body[data-screen="ending"] #restart,body[data-screen="ending"] #home{max-width:none;width:100%;margin:0;min-height:44px;}

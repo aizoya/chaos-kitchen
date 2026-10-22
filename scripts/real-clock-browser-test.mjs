@@ -45,7 +45,7 @@ try {
     await page.locator('#pause').tap();
     await page.locator('#quit').tap();
     assert.equal(await page.locator('#ending').isVisible(), true);
-    assert.equal(await page.locator('.lesson-motto').textContent(), 'WE WIN OR WE LEARN.');
+    assert.equal(await page.locator('.lesson-label').textContent(), 'NEXT SHIFT');
     await page.locator('#restart').tap();
     assert.equal(await page.locator('#score').textContent(), '00000');
     assert.equal(await page.locator('#game').isVisible(), true);
