@@ -1,6 +1,12 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Phone sound and simplified welcome — October 22
+
+Founder reported duplicate story/video, silent background music and crowded Sound/Pause labels on an actual iPhone. Removed the mounted text story, kept the optional video and direct tutorial, moved track choices inside Game Options. Sound ON now starts the default instrumental track without a second track-selection gate. The original local Web Audio arrangement layers chord voicings, bass, melody and kick percussion; no commercial recordings, voice, network service or spending. Phone Sound/Pause use compact sans-serif labels, zero letter spacing and separated bounds.
+
+Candidate `b9bce21f3c5b551ea63e32dbbf45f2c391718482` passed [CI run 39743052072](https://github.com/aizoya/chaos-kitchen/actions/runs/39743052072): 55 Node tests, canonical checks/build and all browser journeys. Online/offline Chromium checks measure nonzero audio signal 1.2 seconds after Sound ON (past the one-shot effect), verify mute silence, absence of the duplicate story, and Sound/Pause gap and label fit at 390px. Expanded journeys also pass at 320/390/430/1440px. Bundle SHA-256 `b6a39ec72bfd03bf60ae5e59f171f005ccc3e42da0fcbf695ccd89e0237ef4a4`. This is signal/geometry automation, not a listening review, actual iPhone audio recovery acceptance or proof of musical quality. Founder listening and device reacceptance remain open. This receipt-only update changes no game/build inputs.
+
 ## Chef Franklyn animated poster video — automated playback verified
 
 Final follow-up candidate `4b85298e92b5626371600081fc4ec5f28b27e2c2` passed [CI run 39736975086](https://github.com/aizoya/chaos-kitchen/actions/runs/39736975086): 55/55 Node tests, canonical checks/build, classic/controller/expanded journeys, real-clock touch smoke and online/offline video playback. Source-server byte-range/HEAD regression is included. Bundle hash remains `35927a2533819776b0f00c00d64988d668f8ae7dac9885839c50dabf84dbcaaa`. Vercel's commit status reports preview deployment success; anonymous access and actual iPhone playback/sound remain unverified. This receipt-only update changes no runtime/build inputs. Earlier pending-CI wording below describes the prior checkpoint and is superseded by this receipt.
