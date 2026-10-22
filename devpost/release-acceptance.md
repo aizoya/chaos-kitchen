@@ -3,7 +3,9 @@ Updated October 22, 2026 UTC.
 
 ## Feedback visibility follow-up — October 21 Pacific
 
-Claude reported the rush banner being covered by mobile feedback. The reaction overlay now includes the current service reward/Frenzy message inside its own card, and hides the background copy during feedback. Mobile card height/position reserve space above the action dock; long reactions can scroll within the card. The expanded Chromium harness checks all summary text lines are visible/uncovered, the unlocked reward is present, and the mobile card sits above the dock. Full CI for this presentation change is pending; earlier game receipts below remain historical. This does not establish human visual or actual Safari acceptance.
+Claude reported the rush banner being covered by mobile feedback. The reaction overlay now includes the current service reward/Frenzy message inside its own card, and hides the background copy during feedback. Mobile card height/position reserve space above the action dock; long reactions can scroll within the card. The expanded Chromium harness checks all summary text lines are visible/uncovered, the unlocked reward is present, and the mobile card sits above the dock.
+
+Candidate `c59aaefc3502e16754445b0ca1cb9f50ba9a12da` passed [CI run 39731906302](https://github.com/aizoya/chaos-kitchen/actions/runs/39731906302): canonical checks, 54 Node tests, build, classic/controller/expanded Chromium and both real-clock Easy touch cases. Expanded cases include the new readability/dock assertions at 320, 390, 430 and 1440px (dock assertion applies to mobile widths). Raw logs report bundle SHA-256 `86b23fd645ec9d28f6560d863bf126134f9f540801cc0d72fc20859d18e9b3df`. Earlier bundle receipts below are historical. This establishes automated geometry/hit-testing, with no retained screenshots or human visual/actual Safari acceptance. This receipt-only documentation change does not alter the tested game bytes.
 
 ## Active balance remediation — supersedes prior gameplay clearance
 
