@@ -156,6 +156,13 @@ try {
       assert.equal(await page.locator('.lesson-motto').textContent(), 'WE WIN OR WE LEARN.');
       assert.match(await page.locator('#lesson-evidence').textContent(), /every completed plate/);
       await noOverflow('receipt');
+      if (width < 620) {
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollHeight <= innerHeight + 1),true,'results fit the phone viewport');
+        for (const id of ['restart','home']) assert.equal(await page.locator('#'+id).evaluate(el=>{
+          const r=el.getBoundingClientRect(), hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
+          return r.top>=0 && r.bottom<=innerHeight && (hit===el || el.contains(hit));
+        }),true,id+' visible and reachable without scrolling');
+      }
       assert.ok(await page.locator('#lesson-tip').evaluate(el => parseFloat(getComputedStyle(el).fontSize) >= 16));
       await shot('receipt');
       await page.locator('#restart').click();

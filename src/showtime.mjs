@@ -19,11 +19,11 @@ export function mountShowtime({ document: doc = globalThis.document, window: win
   const welcome = doc.getElementById('welcome');
   const music = doc.createElement('div');
   music.className = 'showtime-music';
-  music.innerHTML = `<button type="button" class="showtime-track">Music: Pass percussion</button><span class="showtime-music-note" aria-live="polite">Original kitchen beats · no downloads</span>`;
+  music.innerHTML = `<button type="button" class="showtime-track">Music: Pass percussion</button><span class="showtime-music-note" aria-live="polite">3 styles · tap Music to change</span>`;
   // Its own row avoids squeezing the existing 320px masthead or mobile action dock.
   const header = doc.querySelector('.masthead');
-  const options = welcome.querySelector('.game-options');
-  if (options) options.append(music); else if (header) header.after(music); else welcome.before(music);
+  const videoPanel = doc.getElementById('chef-video-panel');
+  if (videoPanel) videoPanel.before(music); else if (header) header.after(music); else welcome.before(music);
   const style = doc.createElement('style');
   style.textContent = '.showtime-track{min-height:44px;padding:10px 12px;border:2px solid #27291e;background:#27291e;color:#fff9e9;cursor:pointer;font:700 15px Arial,sans-serif;white-space:normal;max-width:100%}.showtime-track:focus-visible{outline:3px solid #f15425;outline-offset:3px}.showtime-music{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 0;max-width:100%;box-sizing:border-box}.showtime-music-note{font-size:14px;overflow-wrap:anywhere}';
   doc.head.append(style);
@@ -34,7 +34,7 @@ export function mountShowtime({ document: doc = globalThis.document, window: win
   const note = music.querySelector('span');
   const label = () => {
     trackButton.textContent = unavailable ? 'Music unavailable' : `Music: ${SHOWTIME_TRACKS[track]}`;
-    note.textContent = unavailable ? 'Your browser could not start audio. Gameplay still works.' : track && !soundEnabled ? 'Turn SOUND ON to hear this track.' : 'Original kitchen beats · no downloads';
+    note.textContent = unavailable ? 'Your browser could not start audio. Gameplay still works.' : track && !soundEnabled ? 'Turn SOUND ON to hear this track.' : '3 styles · tap Music to change';
   };
   const stop = () => {
     if (timer !== null) { win.clearInterval(timer); timer = null; }
@@ -48,7 +48,8 @@ export function mountShowtime({ document: doc = globalThis.document, window: win
     const now = context.currentTime;
     // Eight-bar original arrangement: warm plucked chords, bass, melody and drums.
     const beat = step++, tempo = track === 2 ? .3 : track === 3 ? .22 : .26;
-    const root = [48, 53, 55, 48][Math.floor(beat / 16) % 4];
+    const progressions = [[48, 53, 55, 48], [57, 53, 48, 55], [50, 55, 57, 50]];
+    const root = progressions[track - 1][Math.floor(beat / 16) % 4];
     const hz = midi => 440 * 2 ** ((midi - 69) / 12);
     const note = (midi, duration, volume, type = 'sine', delay = 0) => {
       const oscillator = context.createOscillator(), gain = context.createGain();
@@ -63,14 +64,15 @@ export function mountShowtime({ document: doc = globalThis.document, window: win
       oscillator.onended = () => { voices.delete(oscillator); oscillator.disconnect(); gain.disconnect(); };
       oscillator.start(at); oscillator.stop(at + duration + .03);
     };
-    if (beat % 4 === 0) [0, 4, 7, 11].forEach((offset, i) => {
+    if (beat % (track === 3 ? 2 : 4) === 0) (track === 2 ? [0, 3, 7, 10] : [0, 4, 7, 11]).forEach((offset, i) => {
       note(root + 12 + offset, tempo * 3.5, .025, 'triangle', i * .012);
       note(root + 24 + offset, tempo * 2, .006, 'sine', i * .012);
     });
     if (beat % 2 === 0) note(root - 12 + (beat % 8 === 6 ? 7 : 0), tempo * 1.7, .08);
-    const melody = [12, 16, 19, 21, 19, 16, 14, 16, 12, 0, 19, 16, 14, 12, 7, 0];
+    const melodies = [[12,16,19,21,19,16,14,16,12,0,19,16,14,12,7,0], [12,0,15,0,19,0,22,19,0,17,15,0,14,12,0,0], [12,19,24,19,16,19,21,19,14,21,26,21,17,21,24,19]];
+    const melody = melodies[track - 1];
     const pitch = melody[beat % melody.length];
-    if (pitch) note(root + 12 + pitch, tempo * 1.3, .035, 'sine');
+    if (pitch) note(root + 12 + pitch, tempo * (track === 2 ? 2.2 : .9), .035, track === 3 ? 'triangle' : 'sine');
     if (beat % 4 === 0) {
       const drum = context.createOscillator(), envelope = context.createGain();
       drum.frequency.setValueAtTime(130, now); drum.frequency.exponentialRampToValueAtTime(45, now + .12);
