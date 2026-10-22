@@ -1,6 +1,12 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Phone playfield redesign — October 21 Pacific
+
+Founder supplied actual iPhone screenshots and reported excessive page scrolling and welcome text. Mobile presentation now uses a bounded dynamic-viewport playfield: compact HUD/order, persistent exclusions/bonus, ingredients then prep tasks, cooking, plating, fixed next action and mirrored Clear/Panic controls. Game options and the explicitly labeled animated story are collapsed on phone welcome; safe tutorial is a primary choice. Desktop retains its full workspace. Browser acceptance must prove all order/task controls fit above the dock at 320/390/430px × 650px; full CI is pending for this changed candidate.
+
+Founder expected an actual Chef Franklyn video. The current story is text/art animation, explicitly labeled accordingly. A cinematic video is not delivered by this change. Production needs a verified founder photo/clip and an authorized video route; no paid generation or invented likeness is implied. Video direction: original 12–15 second restaurant inspection scene, chef enters, ticket bell, close-up of a fictional Chaos Star, then “Your kitchen. Your shift. Impress me.” Skip control, captions, muted playback by default, and a local poster fallback. No film footage, borrowed critic identity or restaurant-rating affiliation.
+
 ## Feedback visibility follow-up — October 21 Pacific
 
 Claude reported the rush banner being covered by mobile feedback. The reaction overlay now includes the current service reward/Frenzy message inside its own card, and hides the background copy during feedback. Mobile card height/position reserve space above the action dock; long reactions can scroll within the card. The expanded Chromium harness checks all summary text lines are visible/uncovered, the unlocked reward is present, and the mobile card sits above the dock.

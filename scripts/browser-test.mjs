@@ -140,6 +140,7 @@ try {
     assert.equal(await page.locator('#pause-layer').isVisible(), true);
     await page.locator('#quit').click();
     await page.locator('#home').click();
+    await page.locator('.game-options > summary').click();
     await page.locator('#practice').check();
     await page.locator('#start').click();
     assert.equal(await page.locator('#panic').isDisabled(), true);

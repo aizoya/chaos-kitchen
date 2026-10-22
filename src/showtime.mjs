@@ -21,10 +21,11 @@ export function setShowtimePaused(paused) { showtimeInstance?.setPaused(Boolean(
 
 export function mountShowtime({ onTutorial = () => {}, document: doc = globalThis.document, window: win = globalThis.window } = {}) {
   if (showtimeInstance || !doc?.getElementById('welcome')) return showtimeInstance;
-  const panel = doc.createElement('section');
+  const panel = doc.createElement('details');
+  panel.open = !win.matchMedia?.('(max-width: 620px)').matches;
   panel.className = 'showtime-panel';
   panel.setAttribute('aria-label', 'Chaos Star inspector introduction');
-  panel.innerHTML = `<div class="showtime-scene"><p class="showtime-kicker">★ THE CHAOS STAR INSPECTION</p><h2 class="showtime-title"></h2><p class="showtime-copy" aria-live="polite"></p><p class="showtime-step"></p><div class="showtime-actions"><button type="button" class="showtime-next">Next scene →</button><button type="button" class="showtime-skip">Skip intro</button></div></div><div class="showtime-after" hidden><strong>THE INSPECTOR IS WAITING.</strong><div class="showtime-actions"><button type="button" class="showtime-replay">Replay intro</button><button type="button" class="showtime-tutorial">Show me the ropes</button></div></div><p class="showtime-disclaimer">Chaos Star is a fictional game award. This original inspector scene is not affiliated with a restaurant rating organization.</p>`;
+  panel.innerHTML = `<summary class="showtime-toggle">Chef Franklyn · animated story</summary><div class="showtime-scene"><p class="showtime-kicker">★ THE CHAOS STAR INSPECTION</p><h2 class="showtime-title"></h2><p class="showtime-copy" aria-live="polite"></p><p class="showtime-step"></p><div class="showtime-actions"><button type="button" class="showtime-next">Next scene →</button><button type="button" class="showtime-skip">Skip intro</button></div></div><div class="showtime-after" hidden><strong>THE INSPECTOR IS WAITING.</strong><div class="showtime-actions"><button type="button" class="showtime-replay">Replay intro</button><button type="button" class="showtime-tutorial">Show me the ropes</button></div></div><p class="showtime-disclaimer">Chaos Star is a fictional game award. This original inspector scene is not affiliated with a restaurant rating organization.</p>`;
   const welcome = doc.getElementById('welcome');
   (welcome.querySelector('.welcome-copy') || welcome).append(panel);
   const music = doc.createElement('div');

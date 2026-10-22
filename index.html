@@ -15,7 +15,7 @@
             >AIZOYA<span class="arcade">AFTER HOURS / 001</span></span
           ></a
         >
-        <div class="edition">SMALL GAME.<br />BIG DINNER ENERGY.</div>
+        <div class="edition">CHAOS KITCHEN.<br />BIG DINNER ENERGY.</div>
         <button id="sound" class="utility" aria-pressed="false">
           ♪ SOUND OFF
         </button>
@@ -29,14 +29,15 @@
             <h1>CHAOS<br /><span>KITCHEN</span><i>!</i></h1>
             <div class="handwritten intro-note">Yes, chef. Oh no, chef.</div>
             <p class="intro">
-              Ridiculous requests. Questionable composure.<br />One very
-              important dinner bell.
+              Read it. Cook it. Serve it. Survive the rush.
             </p>
             <button id="start" class="start-button" disabled aria-describedby="startup-status">
               CLOCK IN <span>↗</span>
             </button>
             <p id="startup-status" class="startup-status" role="status">Opening the kitchen… If this stays here, open the game in Safari or Chrome; a file preview may not run it.</p>
+            <button id="learn" class="plain-button" type="button">Show me the ropes →</button>
             <div class="start-meta">90 SECONDS. MAKE EVERY PLATE COUNT.</div>
+            <details class="game-options"><summary>Game options · modes &amp; difficulty</summary>
             <label class="practice-option"
               ><input id="practice" type="checkbox" /> Just browsing the menu?
               Play untimed.</label
@@ -51,6 +52,7 @@
             <p class="howto">Expanded service: Easy 1 table / 3:30. Medium 2 / 3:00. Hard 3 / 2:30. Every table has its own clock. Start with Easy to learn the new menu. Cosmetic prizes last this shift; no money or purchases.</p>
             <label class="practice-option"><input id="backwards" type="checkbox" /> Silly tickets: backwards ingredient names on Hard</label>
             <p class="howto">Chef mode: one pan at a time. Practice removes deadlines, but food can still burn. Fictional game gauges—not cooking instructions.</p>
+            </details>
           </div>
           <div class="welcome-art" aria-hidden="true">
             <div class="circle-sticker">
@@ -150,6 +152,7 @@
               <div class="recipe">
                 <span class="label">ON THE TICKET</span>
                 <div id="needs"></div>
+                <div id="mobile-plate" aria-hidden="true"></div>
                 <p id="bonus"></p>
               </div>
               <div class="ticket-footer">
@@ -162,6 +165,7 @@
               <span class="ticket-tear" aria-hidden="true"></span>
             </article>
           </div>
+          <div class="workbench">
           <div class="pantry-label">
             <span
               >THE LINEUP <small>Tap to add. Tap again to remove.</small></span
@@ -178,6 +182,12 @@
             <p id="station-time"></p><div id="station-items"></div>
             <button id="handoff" class="start-button" type="button">HAND IT OVER →</button>
           </section>
+          </div>
+          <div class="mobile-tools">
+            <button id="mobile-edit" type="button">Ingredients ↩</button>
+            <button id="mobile-clear" type="button">Clear plate</button>
+            <button id="mobile-panic" type="button">Panic +5s</button>
+          </div>
           <div class="actions">
             <button id="panic" class="panic-button">
               <strong>DON’T PANIC</strong

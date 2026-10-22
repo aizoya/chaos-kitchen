@@ -9,24 +9,27 @@ let browser;
 try {
   browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH, headless: true });
   for (const expanded of [false, true]) {
-    const page = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true, reducedMotion: 'reduce' });
+    const page = await browser.newPage({ viewport: { width: 390, height: 650 }, hasTouch: true, reducedMotion: 'reduce' });
     page.setDefaultTimeout(7000);
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
     await page.goto('http://127.0.0.1:' + server.address().port);
+    await page.locator('.showtime-toggle').click();
     await page.locator('.showtime-skip').click();
+    await page.locator('.game-options > summary').click();
     await page.locator('#chef-mode').check();
     await page.locator('#practice').uncheck();
     await page.locator('#expanded-mode').setChecked(expanded);
     await page.locator('#start').tap();
     const clock = await page.locator('#clock').textContent();
     for (const id of ['chicken', 'rice', 'chili']) await page.locator('[data-ingredient="' + id + '"]').tap();
+    await page.locator('#mobile-action').tap();
     for (const id of ['chicken', 'rice', 'chili']) {
       const button = page.locator('[data-food="' + id + '"] button');
       await button.tap();
       await button.tap();
     }
-    await page.locator('#handoff').tap();
+    await page.locator('#mobile-action').tap();
     for (const id of ['chicken', 'rice', 'chili'].filter(id => HEAT[id])) {
       const row = page.locator('[data-food="' + id + '"]');
       await row.locator('button').tap();
@@ -34,7 +37,7 @@ try {
       await row.locator('button').tap();
       assert.equal(await row.locator('.pan-state').textContent(), 'DONE');
     }
-    await page.locator('#handoff').tap();
+    await page.locator('#mobile-action').tap();
     for (const id of ['chicken', 'rice', 'chili']) await page.locator('[data-food="' + id + '"] button').tap();
     await page.locator('#mobile-action').tap();
     assert.equal(await page.locator('#feedback-title').textContent(), 'CHEF’S KISS!');

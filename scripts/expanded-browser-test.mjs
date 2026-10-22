@@ -19,7 +19,7 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PAT
 const results = [];
 try {
   for (const width of [320, 390, 430, 1440]) for (const difficulty of ['medium', 'hard']) {
-    const context = await browser.newContext({ viewport: { width, height: width === 1440 ? 1000 : 844 }, reducedMotion: 'reduce', hasTouch: width < 800 });
+    const context = await browser.newContext({ viewport: { width, height: width === 1440 ? 1000 : 650 }, reducedMotion: 'reduce', hasTouch: width < 800 });
     await context.setOffline(true);
     const page = await context.newPage(), errors = [], external = [];
     page.setDefaultTimeout(5000);
@@ -34,6 +34,16 @@ try {
     const tick = ms => page.evaluate(ms => window.expansionQA.tick(ms), ms);
     const pantry = id => page.locator(`[data-ingredient="${id}"]`);
     const station = id => page.locator(`[data-food="${id}"] button`);
+    const handoff = () => page.locator(width < 620 ? '#mobile-action' : '#handoff').click();
+    const screenFits = async () => {
+      if (width >= 620) return;
+      assert.equal(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1), true, 'phone game fits one viewport without page scrolling');
+      const visible = await page.locator('#ticket, #pantry button:visible, #station-items button:visible').evaluateAll(nodes => nodes.every(el => {
+        const r = el.getBoundingClientRect(), dock = document.querySelector('#mobile-dock').getBoundingClientRect();
+        return r.top >= 0 && r.bottom <= dock.top && r.left >= 0 && r.right <= innerWidth;
+      }));
+      assert.equal(visible, true, 'order and current task controls fit above the dock');
+    };
     const noOverflow = async name => assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${name}: horizontal overflow at ${width}`);
     const touchTargets = async selectors => {
       const boxes = await page.locator(selectors).evaluateAll(nodes => nodes.filter(n => n.checkVisibility()).map(n => ({ text: n.textContent.trim(), w: n.getBoundingClientRect().width, h: n.getBoundingClientRect().height })));
@@ -52,9 +62,12 @@ try {
     const dish = async tutorial => {
       const t = await page.evaluate(() => window.expansionQA.ticket()), ids = [...new Set([...t.required, ...t.optional])];
       for (const id of ids) if (!(await state()).game.selected.includes(id)) await pantry(id).click();
+      await screenFits();
+      if (width < 620) await page.locator('#mobile-action').click();
       for (const id of ids) { await station(id).click(); await station(id).click(); }
-      await touchTargets('#station-items button, #handoff');
-      await page.locator('#handoff').click();
+      await screenFits();
+      await touchTargets('#station-items button, #handoff, #mobile-action');
+      await handoff();
       for (const id of ids) {
         const heat = await page.evaluate(id => window.expansionQA.heat(id), id);
         if (!heat) continue;
@@ -62,8 +75,10 @@ try {
         assert.equal((await state()).game.cooking[id].state, 'ready');
         await dock(); await station(id).click();
       }
-      await page.locator('#handoff').click();
+      await screenFits();
+      await handoff();
       for (const id of ids) await station(id).click();
+      await screenFits();
       await dock();
       await page.locator(width < 800 ? '#mobile-action' : '#serve').click();
       assert.equal((await state()).game.result.correct, true);
@@ -74,6 +89,7 @@ try {
       await page.waitForFunction(() => Boolean(window.expansionQA));
       await noOverflow('welcome');
       if (difficulty === 'medium') {
+        if (width < 620) await page.locator('.showtime-toggle').click();
         await page.locator('.showtime-skip').click();
         await page.locator('.showtime-tutorial').click();
         await dish(true); await noOverflow('tutorial'); await shot('tutorial');
@@ -82,6 +98,7 @@ try {
         assert.equal((await state()).game.served, 1);
         await page.locator('#home').click();
       }
+      await page.locator('.game-options > summary').click();
       await page.locator('#difficulty').click();
       if (difficulty === 'hard') await page.locator('#difficulty').click();
       await page.locator('#chef-mode').check(); await page.locator('#practice').check(); await page.locator('#expanded-mode').check();
@@ -166,7 +183,10 @@ try {
       assert.equal(await page.locator('#start').isEnabled(), true, 'Clock In enabled after initialization');
       assert.equal(await page.locator('#startup-status').isVisible(), false, 'startup fallback hidden after initialization');
       if (expanded) await page.locator('#expanded-mode').check(); else await page.locator('#expanded-mode').uncheck();
-      if (!introOpen) await page.locator('.showtime-skip').click();
+      if (!introOpen) {
+        await page.locator('.showtime-toggle').click();
+        await page.locator('.showtime-skip').click();
+      }
       await page.locator('#start').scrollIntoViewIfNeeded();
       const unblocked = await page.locator('#start').evaluate(el => {
         const r = el.getBoundingClientRect(), top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);

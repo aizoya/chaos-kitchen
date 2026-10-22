@@ -26,6 +26,7 @@ function trayFor(state) {
   return order.filter(id => pool.has(id));
 }
 let difficulty = 'easy', stationKey = '', panNotice = '', feedbackKey = '';
+let mobilePrepTasks = false, mobilePrepKey = '';
 let game = null,
   lastTime = performance.now(),
   drawnTicket = -1,
@@ -103,6 +104,9 @@ function render() {
     paused = status === 'paused',
     ended = status === 'ended',
     welcome = !game;
+  const prepKey = game ? `${game.index}:${service?.active ?? 0}` : '';
+  if (prepKey !== mobilePrepKey) { mobilePrepKey = prepKey; mobilePrepTasks = false; }
+  document.body.dataset.workstep = !game?.chefMode ? 'classic' : game.station === 'prep' ? (mobilePrepTasks ? 'prep' : 'choose') : game.station;
   document.body.dataset.screen = welcome
     ? 'welcome'
     : ended
@@ -191,6 +195,7 @@ function render() {
   if (plate !== drawnPlate) {
     drawnPlate = plate;
     $('plate-food').innerHTML = visibleFood.map((id) => FOOD[id]).join('');
+    $('mobile-plate').innerHTML = visibleFood.map((id) => FOOD[id]).join('');
   }
   $('empty-plate').hidden = visibleFood.length > 0;
   $('plate-count').textContent = `${visibleFood.length} / 4 ON THE PLATE`;
@@ -202,9 +207,13 @@ function render() {
     button.disabled = status !== 'playing' || (game.chefMode && game.station !== 'prep');
   }
   $('clear').disabled = status !== 'playing' || !game.selected.length || (game.chefMode && game.station !== 'prep');
+  $('mobile-clear').disabled = $('clear').disabled;
+  $('mobile-edit').hidden = !game.chefMode || game.station !== 'prep' || !mobilePrepTasks;
+  $('mobile-edit').disabled = status !== 'playing';
   $('serve').disabled = status !== 'playing' || !game.selected.length || (game.chefMode && (game.station !== 'plate' || game.plated.length !== game.selected.length));
   renderStation();
   $('panic').disabled = status !== 'playing' || game.panicUsed || game.practice;
+  $('mobile-panic').disabled = $('panic').disabled;
   $('panic').querySelector('small').textContent = game.practice
     ? 'off-duty in practice'
     : game.panicUsed
@@ -291,6 +300,7 @@ function renderMobileAction() {
   const target = next ? 'next' : ready ? 'serve' : pan ? 'stop' : handoff ? 'handoff' : game.chefMode && game.selected.length ? 'station' : 'pantry';
   button.dataset.target = target;
   button.textContent = next ? 'Next ticket →' : ready ? 'SERVE PLATE 🔔' : pan ? `STOP ${nameOf(pan)} · ${game.cooking[pan].state.toUpperCase()}` : handoff ? (game.station === 'prep' ? 'TO COOKING →' : 'TO PLATING →') : target === 'pantry' ? 'Choose ingredients ↓' : `Finish ${game.station} tasks ↓`;
+  if (target === 'station' && game.station === 'prep' && !mobilePrepTasks) button.textContent = `PREP ${game.selected.length} INGREDIENT${game.selected.length === 1 ? '' : 'S'} →`;
   const t = ticketFor(game);
   $('mobile-summary').textContent = next ? `${game.result.title} · +${game.result.points}` : `${t.required.map(nameOf).join(' + ')}${t.optional.length ? ' · BONUS: ' + t.optional.map(nameOf).join(' + ') : ''} · ${game.practice ? 'No deadline' : Math.ceil(game.orderRemainingMs / 1000) + 's'}`;
 }
@@ -328,12 +338,17 @@ $('mobile-action').onclick = () => {
   if (target === 'stop') act({type:'STOP_COOK'});
   else if (['next','serve','handoff'].includes(target)) $(target).click();
   else {
+    if (target === 'station' && game.chefMode && game.station === 'prep') { mobilePrepTasks = true; render(); }
     const region = $(target);
     region.scrollIntoView({block:'center',behavior:'instant'});
     const control = region.querySelector('button:not(:disabled)');
     control?.focus({preventScroll:true});
   }
 };
+$('learn').onclick = () => begin(true);
+$('mobile-edit').onclick = () => { mobilePrepTasks = false; render(); };
+$('mobile-clear').onclick = () => $('clear').click();
+$('mobile-panic').onclick = () => $('panic').click();
 function renderStation() {
   $('station').hidden = !game.chefMode;
   if (!game.chefMode) return;
