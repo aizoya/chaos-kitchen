@@ -4,6 +4,8 @@ Prepared October 22, 2026 Pacific. Preparation, not a completed playtest, organi
 
 ## Curriculum evidence — unresolved
 
+October 22 recovery update: skill-pack-provenance.md now records the original source archive and fresh 14/14 upstream curriculum blob matches. Original planning files and skills-lock.json are present in that archive. This substantially strengthens the early-use evidence; the remaining limit is the unrecovered step-by-step interview/installation transcript. Read that receipt before using the older provisional question below, and revise any organizer inquiry to include the recovered facts.
+
 spec.md records the installation command; scope.md and prd.md describe the original handoff and delegated decisions. These recovered documents do not establish the exact installation/interview chronology. Preserve authentic original records if located. Do not recreate or backdate evidence.
 
 If those records do not settle initial use, Franklyn can send this prepared question:

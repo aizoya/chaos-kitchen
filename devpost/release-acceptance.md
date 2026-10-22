@@ -1,6 +1,10 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
+## Original curriculum recovered — October 22
+
+Recovered the retained original source archive labeled 73e3b90 and inspected its original planning documents, decisions and skills-lock.json. Fresh comparison finds 14/14 installed curriculum files identical to pinned official tree 6984209dd33f12ab8781d8caf0c16a5de2343657. See skill-pack-provenance.md for archive SHA-256, six skill blob IDs, supported conclusions and limits. This supersedes the narrower earlier observation that only a later spec assertion was available. No original interview transcript, complete checkpoint execution or organizer eligibility clearance is claimed. The exact game remains 86aa9d20; documentation follow-up CI at 8f43cb9 also passed (run 39749715301). No runtime/build inputs change here.
+
 ## Inspection and replay goals — current tested game
 
 Candidate `86aa9d20c2eb518396799036010d4c45515321a2` passed [CI run 39749109317](https://github.com/aizoya/chaos-kitchen/actions/runs/39749109317): 59/59 Node tests, canonical checks/build and every browser step. Bundle SHA-256 `e0bd62c64ef9f9927dd89a21f089b8f3e04ab78150d80a5e8a0fae34c45d147c`. New public-action engine cases cover inspection success, missing bonuses, a timeout, early exit, three-ticket termination and replay; browser journeys complete the inspection at 320/390/430/1440px and verify earned star, replay reset and early-exit retry result. Browser clocks are controlled for these inspection cases; the separate real-clock smoke covers existing Easy journeys. Audio-signal/mute and online/offline media checks also pass. Visual steam/plate motion have implementation and page-error coverage, not retained-frame/human visual acceptance.

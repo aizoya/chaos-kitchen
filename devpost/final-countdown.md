@@ -1,5 +1,7 @@
 # Chaos Kitchen — final competition pass
 
+October 22 provenance recovery: genuine Skill Pack files and original planning artifacts were recovered with the original game archive; all 14 curriculum files match the pinned official tree. Read skill-pack-provenance.md. Earlier statements that only a late spec assertion was available are historical and superseded. The original step-by-step interview transcript remains unrecovered; final personal reflections and organizer eligibility decisions are not inferred.
+
 Updated October 22, 2026 Pacific; current tested game candidate 86aa9d20c2eb518396799036010d4c45515321a2. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
 
 ## Outcome
