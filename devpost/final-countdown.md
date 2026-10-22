@@ -86,7 +86,9 @@ Built with AI. Shaped by real chef experience. Made for play.”
 
 Do not add claims of measured education, retention, physical-controller acceptance or iPhone certification. Record actual iPhone results before describing them as tested. Reconcile Skill Pack use evidence before answering that required form field.
 
-### Chef Franklyn cinematic intro — production brief, not rendered
+### Chef Franklyn intro — animated poster delivered; cinematic expansion brief
+
+Franklyn supplied the authorized photograph. The review branch now includes a 12-second anime animated-poster MP4 with camera movement, captions and original synthesized music. Optional muted playback and online/offline decoding passed Chromium CI at ef62f590 (run 39736468559); actual iPhone controls and sound remain open. It contains no spoken voice or full-character motion. The storyboard below remains a future cinematic expansion, not a description of the delivered video.
 
 Target: an original optional 12–15-second clip. This intro is separate from the competition's under-three-minute demo. It must not delay Clock In or require an API call to play.
 
@@ -101,7 +103,7 @@ Reference prompt for an approved video-production route:
 
 Create an original, playful cinematic introduction for AIZOYA's Chaos Kitchen using the supplied authorized photograph/video of Franklyn Rosario as the identity reference. Preserve his likeness; do not invent a different face or imitate a celebrity. Show him as a composed, demanding fictional restaurant inspector arriving at a warm, energetic kitchen pass. Use stainless steel, cream paper tickets, orange heat, gentle steam and tactile kitchen details. Follow the four shots above. Humor comes from staff urgency and his calm expression. No movie footage, copied characters, restaurant-rating logos, branded uniforms, real certification claim or watermarks. Leave text/captions for local editing so spelling is exact. Deliver a clean master that can be cropped for portrait and landscape. Dialogue is the founder's approved recording if supplied; do not claim a cloned voice exists.
 
-Required input: a verified photo/clip selected by Franklyn. Choose an existing authorized production route and verify its cost/watermark limits before rendering. No paid rendering, subscription or new voice model has been authorized for this clip.
+Founder photo input has been supplied for the anime character. Any future full-motion expansion needs an authorized production route with verified cost/watermark limits. No paid rendering, subscription or new voice model has been authorized for this clip.
 
 Integration acceptance: local MP4 plus poster; user-initiated playback; inline phone playback; muted default with captions and explicit sound control; immediate Skip/Clock In; no repeated compulsory viewing on replay; poster fallback on unsupported playback; reduced-motion users can skip straight to play. Measure real-device startup and asset size before merging. These are future acceptance requirements, not shipped capabilities.
 

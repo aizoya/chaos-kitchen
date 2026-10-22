@@ -1,11 +1,13 @@
 # Chaos Kitchen — release acceptance
 Updated October 22, 2026 UTC.
 
-## Chef Franklyn animated poster video — current candidate pending CI
+## Chef Franklyn animated poster video — automated playback verified
 
 Founder supplied a photograph and requested an anime chef with playful, child-friendly energy. OpenAI image generation produced the character artwork. A local renderer created a 12-second H.264/AAC MP4 (540×720, 458,183 bytes) with camera motion, rasterized captions and original synthesized audio; no voice cloning or generated full-character motion. Sampled frame inspected; ffprobe verified format/duration and volumedetect reported peak -21 dBFS. This is a technical/sample-frame check, not a speaker or full human viewing acceptance.
 
-Welcome has a collapsed Watch Chef Franklyn control with native video controls, inline playback, muted default, no autoplay and no required viewing. Closing it, hiding the tab or starting gameplay pauses it. Poster and video are bundled for offline use; gameplay never calls a video API. Source photograph remains outside the public repository. Provenance and SHA-256 values are in chef-intro-assets.json. Full CI, actual phone media playback and sound acceptance are pending for this new candidate; prior receipts remain historical.
+Welcome has a collapsed Watch Chef Franklyn control with native video controls, inline playback, muted default, no autoplay and no required viewing. Closing it, hiding the tab or starting gameplay pauses it. Poster and video are bundled for offline use; gameplay never calls a video API. Source photograph remains outside the public repository. Provenance and SHA-256 values are in chef-intro-assets.json.
+
+Candidate `ef62f590ad51717bd086b088d27ad9164f66c000` passed [CI run 39736468559](https://github.com/aizoya/chaos-kitchen/actions/runs/39736468559): 54 Node tests, canonical checks/build, all existing browser journeys and actual Chromium video decoding online and offline. Video tests verified duration/dimensions, close-to-pause and Clock In pause. Bundle SHA-256: `35927a2533819776b0f00c00d64988d668f8ae7dac9885839c50dabf84dbcaaa`. This is automated playback, not native iPhone controls or speaker acceptance. Follow-up source-server byte-range support and its regression test passed locally; full CI for that follow-up remains pending. It changes no bundled game bytes.
 
 ## Phone playfield redesign — October 21 Pacific
 
