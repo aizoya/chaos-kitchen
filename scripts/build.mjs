@@ -48,7 +48,12 @@ for (const [name, mime] of [
 if(/(?:src|href)="(?:src\/|public\/|styles\.css)/.test(html))throw Error('Unbundled runtime resource');
 await mkdir(new URL('dist/', root), { recursive: true });
 await writeFile(new URL('dist/Chaos-Kitchen.html', root), html);
-await writeFile(new URL('dist/index.html', root), html);
+// Analytics is limited to the Vercel-hosted entry point. The downloadable
+// game remains self-contained and never includes the tracking script.
+const hosted = process.env.VERCEL === '1'
+  ? html.replace('</head>', '<script defer src="/_vercel/insights/script.js"></script>\n</head>')
+  : html;
+await writeFile(new URL('dist/index.html', root), hosted);
 console.log(
   'Built dist/Chaos-Kitchen.html — self-contained, no runtime network',
 );
