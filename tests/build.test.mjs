@@ -7,7 +7,8 @@ test('hosted root and downloadable game contain the same complete, parseable bun
   execFileSync(process.execPath, ['scripts/build.mjs'], {cwd: root});
   const hosted = readFileSync(new URL('dist/index.html', root), 'utf8');
   assert.equal(hosted, readFileSync(new URL('dist/Chaos-Kitchen.html', root), 'utf8'));
-  assert.ok(hosted.includes('WE WIN OR WE LEARN'));
+  assert.ok(hosted.includes('NEXT SHIFT'));
+  assert.equal(/we win.{0,15}learn/i.test(hosted), false, 'internal company motto is not shipped in the game');
   assert.ok(!/(?:src|href)="(?:src\/|public\/|styles\.css)/.test(hosted));
   const scripts = [...hosted.matchAll(/<script type="module">([\s\S]*?)<\/script>/g)];
   assert.equal(scripts.length, 1);
