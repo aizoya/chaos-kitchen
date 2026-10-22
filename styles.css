@@ -1989,4 +1989,5 @@ body[data-frenzy="true"] .rush-event { background:#f15425; color:#fff9e9; }
   body[data-screen="playing"] #mobile-plate:not(:empty) { display:flex; height:34px; gap:3px; margin-top:3px; }
   body[data-screen="playing"] #mobile-plate svg { width:34px; height:34px; }
   body[data-screen="playing"] #ticket:focus { outline-offset:-2px; }
+  body[data-screen="playing"] .controller-hint { display:none; }
 }

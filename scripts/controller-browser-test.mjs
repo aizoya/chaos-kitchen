@@ -43,6 +43,9 @@ try {
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  await page.setViewportSize({width:320,height:740});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight+1),true);
+ assert.equal(await page.locator('.controller-hint').isVisible(),false);
+ await page.locator('#pause').click();await page.locator('#quit').click();await page.locator('#home').click();
  const hintBox=await page.locator('.controller-hint').boundingBox();
  const headerBox=await page.locator('header').boundingBox();
  assert.ok(hintBox.y >= headerBox.y + headerBox.height);

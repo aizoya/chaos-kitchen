@@ -83,7 +83,7 @@ try {
       (await page.locator('#pause').boundingBox()).height >= 44,
       'pause touch target',
     );
-    await page.locator('#serve').click();
+    await page.locator(viewport.width <= 620 ? '#mobile-action' : '#serve').click();
     assert.equal(
       await page.locator('#reaction').textContent(),
       'He cried. She ordered another one.',
@@ -108,7 +108,7 @@ try {
     await page.keyboard.press('Tab');
     assert.equal(await page.evaluate(() => document.activeElement.id), 'quit');
     await page.locator('#resume').click();
-    await page.locator('#panic').click();
+    await page.locator(viewport.width <= 620 ? '#mobile-panic' : '#panic').click();
     assert.equal(await page.locator('#panic').isDisabled(), true);
     // Expiry is processed even if the browser was stalled between frames.
     await page.clock.runFor(24000);
@@ -151,7 +151,7 @@ try {
         await page
           .getByRole('button', { name: nameOf(id), exact: true })
           .click();
-      await page.locator('#serve').click();
+      await page.locator(viewport.width <= 620 ? '#mobile-action' : '#serve').click();
       await page.locator('#next').click();
     }
     assert.equal(await page.locator('#ending').isVisible(), true);
