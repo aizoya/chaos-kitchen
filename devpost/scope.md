@@ -50,3 +50,9 @@ More founder-authored stories and menu variations after feedback.
 ## Explicitly Cut
 
 Accounts, authentication, multiplayer, leaderboards, persistent backend, monetization, native app, large database, cloud services, multi-agent runtime and infinite AI content. No recipe advice, allergy-safety certification or restaurant training.
+
+## October 21 — Commercial follow-on authorization
+
+Founder requests an eventual paid App Store game and optional purchasable features. This supersedes the native-app/monetization exclusion for LATER planning and reversible engineering only; those remain outside the competition release. See commercial-roadmap.md. Prices, agreements, enrollment spending, purchase setup and store publication are not authorized by this amendment.
+
+Internal Codex peer challenge of 692922f: commercial direction is credible, but App Store/purchase readiness is not established. Open requirements: exact-candidate full mobile journey and sound acceptance; observed uncoached replay/value; durable versioned progress separate from verified entitlements; evaluated iOS delivery/lifecycle; rights, naming and intended-age review. This is not a Gemini, Claude or Perplexity review, and no willingness-to-pay or revenue evidence is claimed.
