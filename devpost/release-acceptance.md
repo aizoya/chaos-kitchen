@@ -11,6 +11,8 @@ New regression coverage uses one simulated second before each public action and 
 
 Claude also reported a feedback/banner overlap at 390px. This remains an open visual reproduction item, not fixed by the timing change. Demo, rights/Skill Pack evidence, judge access and real-device gates remain open.
 
+Internal read-only challenge found no blocking waiting-ticket logic defect; it identified misleading active-station copy, now corrected to explain that only the shift clock continues while waiting. Regression assertions also cover replacement waiting, invalid food not arming, all-waiting global expiry, and a started pan burning while another table waits. This internal check is not external-provider re-review of the fix.
+
 ## Candidate and artifact identity
 
 Review baseline: `1232641f79844550cac91748ecb1fc79096e5e10` on `release/chaos-star-review` (draft PR #1). This is a review candidate, not an approved production release.

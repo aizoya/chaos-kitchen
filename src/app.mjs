@@ -338,7 +338,7 @@ function renderStation() {
   const step = game.station;
   $('station-title').textContent = { prep: '01 · PREP CREW', cook: '02 · HOT LINE', plate: '03 · THE PASS' }[step];
   $('station-instruction').textContent = { prep: 'Choose the ticket ingredients, then finish both prep tasks for each.', cook: 'One pan. Start cooking, then STOP in READY. Too early? Restart. Too late? Remake.', plate: 'Tap each finished ingredient to assemble the plate. Then ring SERVICE!' }[step];
-  $('station-time').textContent = game.tutorial ? 'SAFE TUTORIAL · no deadline · food waits in READY' : game.practice ? 'PRACTICE · no station deadline · pans still burn' : `${Math.ceil(game.stationRemainingMs / 1000)}s AT THIS STATION · order clock keeps running`;
+  $('station-time').textContent = game.tutorial ? 'SAFE TUTORIAL · no deadline · food waits in READY' : game.practice ? 'PRACTICE · no station deadline · pans still burn' : game.waiting ? 'WAITING · select food to start · shift clock keeps running' : `${Math.ceil(game.stationRemainingMs / 1000)}s AT THIS STATION · order clock keeps running`;
   const key = `${game.index}:${step}:${game.selected.join(',')}`;
   if (key !== stationKey) {
     stationKey = key;
