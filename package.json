@@ -1,0 +1,26 @@
+{
+  "name": "chaos-kitchen",
+  "version": "1.0.0",
+  "description": "A restaurant-rush browser game with fictional customer requests",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "echo \"Checking project...\"",
+    "build": "echo \"Building project...\"",
+    "start": "echo \"Starting server...\"",
+    "dev": "echo \"Development server...\""
+  },
+  "keywords": [
+    "game",
+    "browser",
+    "restaurant"
+  ],
+  "author": "AIZOYA",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
