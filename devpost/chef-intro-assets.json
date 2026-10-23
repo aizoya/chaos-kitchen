@@ -1,0 +1,14 @@
+{
+  "kind": "animated-poster-video",
+  "durationSeconds": 12,
+  "dimensions": [540, 720],
+  "artwork": "OpenAI image generation from founder-supplied photograph; transformation and likeness authorized in chat",
+  "motion": "local ffmpeg camera zoom on generated poster",
+  "audio": "original mathematical synthesis; no voice",
+  "renderer": "scripts/render-chef-intro.mjs",
+  "assets": [
+    {"path":"public/chef-franklyn-anime-v1.webp","bytes":85210,"sha256":"519e965b24041a342c5d3720f79c3dd1f64d6928928cc6fd925bde1081ee45ad"},
+    {"path":"public/chef-franklyn-intro-v1.mp4","bytes":458183,"sha256":"c606985a4ad58f3f2d052708aa7d8312e87e21f35226b6f141337389bb203a3e"}
+  ],
+  "limits": "No cloned voice or full character animation. Actual iPhone playback and speaker acceptance pending."
+}

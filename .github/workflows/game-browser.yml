@@ -1,0 +1,59 @@
+name: Game browser acceptance
+on:
+  push:
+    branches: [release/chaos-star-review]
+    paths:
+      - '.github/workflows/game-browser.yml'
+      - 'src/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'public/**'
+      - 'index.html'
+      - 'styles.css'
+      - 'package.json'
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: game-browser-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  browser:
+    if: github.repository == 'aizoya/chaos-kitchen' && github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.19.0'
+      - name: Canonical assets, rules and bundled build
+        run: |
+          npm run check
+          npm test
+          npm run build
+      - name: Development-only browser dependency
+        run: npm install --no-save --package-lock=false --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Install Chromium
+        run: ./node_modules/.bin/playwright install --with-deps chromium
+      - name: Classic browser journey
+        run: node scripts/browser-test.mjs
+      - name: Simulated controller browser journey
+        if: ${{ !cancelled() && success() }}
+        run: node scripts/controller-browser-test.mjs
+      - name: Expanded cooking, tables, receipt and replay
+        if: ${{ !cancelled() && success() }}
+        run: node scripts/expanded-browser-test.mjs
+      - name: Real-clock touch cooking and replay
+        run: node scripts/real-clock-browser-test.mjs
+      - name: Optional Chef video playback online and offline
+        run: node scripts/video-browser-test.mjs
+      - name: Report bounded evidence
+        if: always()
+        run: |
+          echo "Source commit: $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          echo "Chromium automation only; not real iPhone, speaker or physical-controller acceptance." >> "$GITHUB_STEP_SUMMARY"
+          echo "No production deployment, provider API calls, caches or artifact uploads." >> "$GITHUB_STEP_SUMMARY"
