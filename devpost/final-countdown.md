@@ -2,7 +2,7 @@
 
 October 22 provenance recovery: genuine Skill Pack files and original planning artifacts were recovered with the original game archive; all 14 curriculum files match the pinned official tree. Read skill-pack-provenance.md. Earlier statements that only a late spec assertion was available are historical and superseded. The original step-by-step interview transcript remains unrecovered; final personal reflections and organizer eligibility decisions are not inferred.
 
-Updated October 22, 2026 Pacific; current tested game candidate 86aa9d20c2eb518396799036010d4c45515321a2. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
+Updated October 23, 2026 Pacific; current tested game/build candidate fd6d97b2fdef4b5d6c58bc124e7e8b2b8195118e. Later documentation commits do not change game bytes. See release-acceptance.md for exact commit/run/artifact mapping and historical evidence. This document does not approve production deployment or submission.
 
 ## Outcome
 
@@ -22,11 +22,11 @@ Design, Potential Impact, Innovation/Idea and Presentation are equally weighted.
 
 | Gate | Evidence now | Still needed |
 | --- | --- | --- |
-| Technical correctness | 59/59 Node tests, canonical checks/build, all browser journeys, inspection completion/replay/early-exit and audio/video checks passed in CI 39749109317; phone geometry at 320/390/430px × 650px | Actual iPhone/Safari and sound acceptance; real-time Medium/Hard fairness; hosted artifact/access verification |
+| Technical correctness | 59/59 Node tests, canonical checks/build, all browser journeys, inspection completion/replay/early-exit and audio/video checks passed in CI 39749109317; phone geometry at 320/390/430px × 650px | Actual iPhone/Safari and sound acceptance; real-time Medium/Hard fairness. Review preview access was verified October 22. |
 | Competitive strength | Founder reports children enjoyed earlier play; distinctive authored tickets, cooking, tables, Frenzy and receipt coaching in source | Observe new players completing first plate and replay without coaching; record failures as well as praise |
 | Valid submission | Public source on review branch; scope, PRD, spec, app map and license included | Approved functional judge-accessible source (default branch not itself a stated rules requirement), accessible judge play path, actual demo video, Skill Pack explanation, personal attestation and saved submission confirmation |
 
-At October 22 inspection, main had a substantial README but src/app.mjs and LICENSE returned 404; the review branch contains the working source and license. PR #1 is draft. Do not hand judges an unqualified main-branch link until approved integration is complete. A previous browser attempt hit Vercel sign-in and the latest public retrieval tool could not access the URL; a successful deployment is not proof of anonymous access. Do not disable preview protection to resolve this. Verify the approved production release anonymously after promotion.
+At October 22 inspection, main had a substantial README but src/app.mjs and LICENSE returned 404; the review branch contains the working source and license. PR #1 is draft. Do not hand judges an unqualified main-branch link until approved integration is complete. The prior preview login barrier was resolved October 22 with explicit owner approval of a single-domain exception. The review URL https://aizoya-chaos-kitchen-git-release-chaos-star-review-aizoya.vercel.app/ returned HTTP 200 with game content to an unauthenticated request. Vercel lists only that preview domain as unprotected. Production promotion remains separate and unapproved; verify access again after any later promotion.
 
 ## Product-first use of the stack
 
@@ -36,7 +36,7 @@ At October 22 inspection, main had a substantial README but src/app.mjs and LICE
 - Use actual game footage and an authentic founder explanation for the demo. No film footage, borrowed critic identity, unlicensed music, or paid avatar dependency.
 - Do not add AWS, NVIDIA, Supabase, runtime agents, analytics or authentication merely to display provider names. These are candidates only if a specific player outcome justifies them, their access/cost is verified, and they do not delay the complete loop. No new provider connections or spend are approved here.
 
-Current owner check sheet and demo plan: final-owner-check.md. Skill Pack chronology remains unsubstantiated by recovered documents alone; an organizer question is prepared, not sent. The optional inspection and replay-goal implementation do not resolve that gate.
+Current owner check sheet and demo plan: final-owner-check.md. The original source archive retains genuine Skill Pack files and planning artifacts; all 14 curriculum files match pinned official source. The original interview transcript and complete checkpoint execution remain unverified. An organizer question is prepared, not sent. The optional inspection and replay-goal implementation do not resolve that gate.
 
 ## Ordered remaining work
 
@@ -84,7 +84,7 @@ The phone layout keeps the order and current task together. New players can lear
 
 At the end, the receipt gives you one next step based on what happened. Then we clock in again.
 
-AI helped us plan, build, test and challenge the game. Our repository includes the scope, product requirements, technical specification and app map. Gameplay runs locally with authored tickets and original synthesized sound.
+AI helped us plan, build, test and challenge the game. Our repository includes the scope, product requirements, technical specification and app map. Gameplay uses local deterministic rules, authored tickets and original synthesized sound. The hosted page additionally requests approved visitor analytics; the downloadable game remains self-contained.
 
 Built with AI. Shaped by real chef experience. Made for play.”
 
@@ -115,7 +115,7 @@ Integration acceptance: local MP4 plus poster; user-initiated playback; inline p
 
 **Audience and value:** Casual phone and desktop players who want a short, funny challenge with adjustable difficulty and a guided first plate. Founder-reported informal feedback suggests the game appeals to children; this is qualitative feedback, not a retention study or a claim that it has been validated for every age group.
 
-**How AI helped:** AI assisted scoping, implementation, authored illustrations, tests and review. The repository contains scope, PRD, spec and an app map aligned with the Devpost Learn workflow. The technical spec records Skill Pack installation. Before using a stronger claim about when/how each artifact was generated, reconcile original workflow evidence; do not fabricate a tool transcript. Gameplay itself uses authored content and deterministic local rules rather than a paid model call.
+**How AI helped:** AI assisted scoping, implementation, authored illustrations, tests and review. The repository contains scope, PRD, spec and an app map aligned with the Devpost Learn workflow. The technical spec records Skill Pack installation. Before using a stronger claim about when/how each artifact was generated, reconcile original workflow evidence; do not fabricate a tool transcript. Gameplay itself uses authored content and deterministic local rules rather than a paid model call. Hosted visitor analytics is enabled; it measures pageviews and country aggregates, not completed shifts or retention.
 
 **Limits:** Fictional cooking and awards; no real food-safety advice, real-world prizes, accounts or runtime AI. Physical-controller and Mobile Safari claims must match completed acceptance evidence.
 
@@ -124,3 +124,7 @@ Integration acceptance: local MP4 plus poster; user-initiated playback; inline p
 tests/full-service.test.mjs uses public engine actions, with no injected plates, scores or results: three difficulties × four seeds × ten orders = 12 complete practice shifts / 120 successful Chef orders. It checks unique issued orders, table selection, prep/cook/plate/serve, duplicate-serve rejection, frozen paused clocks, aggregate scores, reward completion and fresh initial replay state. All three tests passed on Node 24.19.0. This is not browser evidence and does not establish timed-mode balance or enjoyment.
 
 Historical local recovery excluded the two canonical binary artwork files; no placeholders were substituted. That local pass could not repeat asset/build/server checks. Subsequent GitHub CI did run those checks against canonical assets and passed. See release-acceptance.md; do not treat the historical local limitation as the current CI status.
+
+## October 22 hosted verification — supersedes older access notes
+
+Candidate fd6d97b2 passed CI 39832924641 and 39832914732 plus Vercel deployment. Hosted-only analytics received the assistant's verification visit; no external-player traction is inferred. Live cloud desktop actions verified startup, pause/resume, timeout feedback, early shift end, receipt, and replay reset. This was not a successful complete shift or an iPhone acceptance test. Standard Analytics was explicitly approved; Plus remains off. The internal company motto is absent from public game copy. See release-acceptance.md for exact boundaries.
