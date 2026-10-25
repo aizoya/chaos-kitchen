@@ -75,6 +75,29 @@ try {
       await screenFits();
       await touchTargets('#station-items button, #handoff, #mobile-action');
       await handoff();
+      if (!tutorial) {
+        // Exercise actual visible controls; an engine-only CLEAR assertion misses disabled UI.
+        assert.equal(await page.locator('#clear').isEnabled(), true);
+        assert.equal(await page.locator('#mobile-clear').isEnabled(), true);
+        assert.equal(await page.locator('#pantry button').evaluateAll(nodes => nodes.every(n => n.disabled)), true, 'pantry locked outside prep');
+        const cookingId = ids[0];
+        const heat = await page.evaluate(id => window.expansionQA.heat(id), cookingId);
+        if (heat) await station(cookingId).click();
+        const beforeClear = (await state()).game;
+        await page.locator(width < 620 ? '#mobile-clear' : '#clear').click();
+        const recovered = (await state()).game;
+        assert.equal(recovered.station, 'prep');
+        assert.deepEqual(recovered.selected, []);
+        assert.equal(recovered.activePan, null);
+        assert.equal(recovered.orderRemainingMs, beforeClear.orderRemainingMs);
+        assert.equal(recovered.remainingMs, beforeClear.remainingMs);
+        assert.ok(recovered.stationRemainingMs <= beforeClear.stationRemainingMs);
+        await screenFits();
+        for (const id of ids) await pantry(id).click();
+        if (width < 620) await page.locator('#mobile-action').click();
+        for (const id of ids) { await station(id).click(); await station(id).click(); }
+        await handoff();
+      }
       for (const id of ids) {
         const heat = await page.evaluate(id => window.expansionQA.heat(id), id);
         if (!heat) continue;

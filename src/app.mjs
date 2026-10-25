@@ -215,9 +215,9 @@ function render() {
       'aria-pressed',
       String(game.selected.includes(button.dataset.ingredient)),
     );
-    button.disabled = status !== 'playing';
+    button.disabled = status !== 'playing' || (game.chefMode && game.station !== 'prep');
   }
-  $('clear').disabled = status !== 'playing' || !game.selected.length || (game.chefMode && game.station !== 'prep');
+  $('clear').disabled = status !== 'playing' || !game.selected.length;
   $('mobile-clear').disabled = $('clear').disabled;
   $('mobile-edit').hidden = !game.chefMode || game.station !== 'prep' || !mobilePrepTasks;
   $('mobile-edit').disabled = status !== 'playing';
