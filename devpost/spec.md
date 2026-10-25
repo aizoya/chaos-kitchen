@@ -9,7 +9,7 @@ Approval basis: user delegates safe implementation choices within a self-contain
 
 ## How This Works, In Plain Language
 
-Tickets are a small list we write. The browser keeps the current plate and clock in memory. A pure rules function checks the plate; the screen shows its result. Sound is made by the browser, not downloaded. Nothing is sent anywhere. Refreshing starts over.
+Tickets are a small list we write. The browser keeps the current plate and clock in memory. A pure rules function checks the plate; the screen shows its result. Sound is made by the browser, not downloaded. The local/offline build sends nothing. The approved Vercel-hosted build loads first-party Web Analytics; see analytics.md. No custom gameplay events are collected. Refreshing starts over.
 
 ## The Core Journey Through the System
 
@@ -52,7 +52,7 @@ scripts/server.mjs serves a fixed allowlist, GET/HEAD only, correct MIME and no 
 
 Chef mode adds difficulty, station, stationRemainingMs, per-item prep counts, cooking progress/state, activePan and plated IDs. Engine owns eligibility and deadlines; UI cannot bypass prep/cook/plating through Serve. pantryFor(seed,index) produces stable per-ticket order. Cooking elapsed is capped at the earliest active deadline. No timers continue in feedback or pause. DOM rows remain stable across gauge updates to preserve focus. Build allowlist includes new engine exports. Tests: tests/chef.test.mjs and scripts/chef-dom-test.mjs (development-only jsdom, no runtime dependency).
 
-In-memory status, mode, remainingMs, orderRemainingMs, index, selected IDs, score, streak, bestStreak, served, perfect, panicUsed and result. Paused remembers prior state. Nothing persists; no localStorage, cookies or telemetry. Tickets repeat in a shuffled authored deck after a fixed friendly opener; seed injected for reproducibility.
+In-memory status, mode, remainingMs, orderRemainingMs, index, selected IDs, score, streak, bestStreak, served, perfect, panicUsed and result. Paused remembers prior state. Nothing persists; no localStorage or game telemetry. The hosted build includes approved standard Vercel visitor analytics; the offline download does not. Tickets repeat in a shuffled authored deck after a fixed friendly opener; seed injected for reproducibility.
 
 ## File Structure
 
@@ -63,7 +63,7 @@ In-memory status, mode, remainingMs, orderRemainingMs, index, selected IDs, scor
 - src/art.mjs — original SVG ingredient and kitchen drawings
 - src/app.mjs — UI, input, timer and sound
 - src/controller.mjs — single-controller ownership and button edges; ownership retained over visibility/API interruptions
-- public/ — canonical logo and Grace portrait only
+- public/ — canonical logo, Grace portrait, founder anime poster and optional intro video (see LICENSE-SCOPE.md and chef-intro-assets.json)
 - scripts/ — local server, build, hygiene checks and browser test
 - tests/ — deterministic rule, content and server tests
 - devpost/ — scope, PRD, spec, checklist, decisions, review, app map

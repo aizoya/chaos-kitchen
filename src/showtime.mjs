@@ -1,7 +1,10 @@
 // Goals are fixed before play and use recorded counters only.
 export function nextShiftGoal(previous) {
   if (!previous || previous.tutorial) return { metric:'served', target:3, label:'Serve 3 plates' };
-  if (previous.missed || !previous.served) return { metric:'served', target:Math.min(3, Math.max(1, previous.served)), label:'Serve ' + Math.min(3, Math.max(1, previous.served)) + ' correct plates' };
+  if (previous.missed || !previous.served) {
+    const count = Math.min(3, Math.max(1, previous.served));
+    return { metric:'served', target:count, label:'Serve ' + count + ' correct plate' + (count === 1 ? '' : 's') };
+  }
   const target = Math.min(5, previous.perfect + 1);
   return { metric:'perfect', target, label:'Earn ' + target + ' flavor bonus' + (target === 1 ? '' : 'es') };
 }
@@ -15,7 +18,7 @@ export function shiftLesson({ served = 0, perfect = 0, missed = 0, tutorial = fa
   if (tutorial) return { title: 'FIRST PLATE. FIRST LESSON.', evidence: 'You tried the safe tutorial.', tip: 'Next: try a full shift on Easy. Read the ticket before touching the pantry.' };
   if (missed > 0) return { title: 'THE COMEBACK STARTS HERE.', evidence: `${missed} order${missed === 1 ? '' : 's'} sent back or timed out.`, tip: 'Next shift: focus on the required ingredients and exclusions first. Add the bonus once the order is under control.' };
   if (served === 0) return { title: 'YOUR FIRST PLATE IS WAITING.', evidence: 'No completed plates this shift.', tip: 'Try “Show me the ropes” from the menu. Practice one plate without a deadline, then come back for the rush.' };
-  if (perfect < served) return { title: 'GOOD SERVICE. NEXT: EXTRA FLAVOR.', evidence: `${served} happy table${served === 1 ? '' : 's'} · ${perfect} flavor bonus${perfect === 1 ? '' : 'es'}.`, tip: 'Next shift: spot the BONUS on each ticket and include it with the required ingredients.' };
+  if (perfect < served) return { title: 'GOOD SERVICE. NEXT: EXTRA FLAVOR.', evidence: `${served} happy table${served === 1 ? '' : 's'} · ${perfect} flavor bonus${perfect === 1 ? '' : 'es'}.`, tip: 'Next shift: look for BONUS when shown and include it with the required ingredients.' };
   return { title: 'MAKE THEM ASK FOR SECONDS.', evidence: `${served} happy table${served === 1 ? '' : 's'} · a flavor bonus on every completed plate.`, tip: 'Replay and build a longer streak, or choose a tougher difficulty from the menu.' };
 }
 
@@ -109,12 +112,12 @@ export function mountShowtime({ document: doc = globalThis.document, window: win
       }).catch(() => { unavailable = true; stop(); label(); });
     } catch { unavailable = true; stop(); label(); }
   };
-  trackButton.onclick = () => { track = (track + 1) % SHOWTIME_TRACKS.length; step = 0; stop(); sync(); };
+  trackButton.onclick = () => { unavailable = false; track = (track + 1) % SHOWTIME_TRACKS.length; step = 0; stop(); sync(); };
   const visibility = () => sync();
   doc.addEventListener('visibilitychange', visibility);
   label();
   showtimeInstance = {
-    setSound(value) { soundEnabled = value; sync(); },
+    setSound(value) { soundEnabled = value; if (value) unavailable = false; sync(); },
     setPaused(value) { if (paused !== value) { paused = value; trackButton.disabled = value; sync(); } },
     destroy() { stop(); context?.close().catch(() => {}); doc.removeEventListener('visibilitychange', visibility); music.remove(); style.remove(); showtimeInstance = null; },
   };

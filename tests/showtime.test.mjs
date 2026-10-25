@@ -77,3 +77,20 @@ test('audio unavailable remains a labelled non-fatal state', () => {
     assert.equal(f.timers.size, 0);
   } finally { instance.destroy(); }
 });
+
+test('explicit sound retry recovers from a rejected audio resume', async () => {
+  const f=fixture(); let reject=true;
+  const Audio=f.win.AudioContext;
+  f.win.AudioContext=class extends Audio {
+    resume() { if (reject) return Promise.reject(new Error('interrupted')); return super.resume(); }
+  };
+  const instance=mountShowtime({document:f.doc,window:f.win});
+  try {
+    instance.setSound(true); await Promise.resolve(); await Promise.resolve();
+    assert.equal(f.elements.get('music').querySelector('button').textContent,'Music unavailable');
+    assert.equal(f.timers.size,0);
+    reject=false; instance.setSound(true); await Promise.resolve();
+    assert.equal(f.timers.size,1);
+    assert.equal(f.elements.get('music').querySelector('button').textContent,'Music: Pass percussion');
+  } finally { instance.destroy(); }
+});

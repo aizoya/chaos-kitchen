@@ -188,7 +188,7 @@ export function dispatch(s, a) {
   if (a.type === 'PREP' && s.chefMode && s.station === 'prep' && s.selected.includes(a.id))
     return { ...s, prepped: { ...s.prepped, [a.id]: Math.min(2, (s.prepped[a.id] || 0) + 1) } };
   if (a.type === 'HANDOFF' && s.chefMode) {
-    if (s.station === 'prep' && s.selected.length && s.selected.every(id => s.prepped[id] === 2))
+    if (s.station === 'prep' && s.selected.length && (!s.tutorial || judgePlate(ticketFor(s), s.selected, 0, 0, true).correct) && s.selected.every(id => s.prepped[id] === 2))
       return { ...s, station: 'cook', stationRemainingMs: DIFFICULTY[s.difficulty][1] };
     if (s.station === 'cook' && s.selected.every(id => !HEAT[id] || s.cooking[id]?.state === 'done'))
       return { ...s, station: 'plate', stationRemainingMs: DIFFICULTY[s.difficulty][2] };
@@ -215,7 +215,8 @@ export function dispatch(s, a) {
     if (s.selected.length === 4) return s;
     return { ...s, selected: [...s.selected, a.id] };
   }
-  if (a.type === 'CLEAR' && (!s.chefMode || s.station === 'prep')) return { ...s, selected: [], prepped: {}, plated: [], cooking: {}, activePan: null };
+  if (a.type === 'CLEAR') return { ...s, selected: [], prepped: {}, plated: [], cooking: {}, activePan: null,
+    station: 'prep', stationRemainingMs: Math.min(s.stationRemainingMs, DIFFICULTY[s.difficulty][0]) };
   if (a.type === 'PANIC' && !s.panicUsed && !s.practice)
     return {
       ...s,

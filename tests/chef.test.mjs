@@ -89,3 +89,21 @@ test('practice freezes deadlines but not the cooking gauge; removed prep is disc
   s=act(s,'COOK',{id:'rice'}); s=act(s,'TICK',{ms:3000});
   assert.equal(s.remainingMs,time); assert.equal(s.cooking.rice.state,'ready');
 });
+
+test('Chef clear recovers from cooking without restoring deadlines', () => {
+  let s=prep(createGame({chefMode:true}));
+  s=act(s,'COOK',{id:'chicken'}); s=act(s,'TICK',{ms:1000});
+  const cleared=act(s,'CLEAR');
+  assert.equal(cleared.station,'prep'); assert.deepEqual(cleared.selected,[]);
+  assert.equal(cleared.activePan,null); assert.deepEqual(cleared.cooking,{});
+  assert.equal(cleared.remainingMs,s.remainingMs);
+  assert.equal(cleared.orderRemainingMs,s.orderRemainingMs);
+  assert.ok(cleared.stationRemainingMs<=s.stationRemainingMs);
+});
+test('tutorial blocks incomplete and extra selections before cooking', () => {
+  let s=createGame({tutorial:true});
+  s=act(s,'TOGGLE',{id:'chicken'}); s=act(s,'PREP',{id:'chicken'}); s=act(s,'PREP',{id:'chicken'});
+  assert.equal(act(s,'HANDOFF'),s);
+  s=act(s,'TOGGLE',{id:'rice'}); s=act(s,'PREP',{id:'rice'}); s=act(s,'PREP',{id:'rice'});
+  assert.equal(act(s,'HANDOFF').station,'cook');
+});

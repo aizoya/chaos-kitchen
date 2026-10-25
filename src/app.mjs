@@ -4,6 +4,7 @@ import { createService, dispatchService, serviceView } from './service.mjs';
 import { mountShowtime, setShowtimePaused, setShowtimeSound, shiftLesson, nextShiftGoal, inspectionResult } from './showtime.mjs';
 import {
   createGame,
+  judgePlate,
   dispatch,
   ticketFor,
   stageFor,
@@ -214,7 +215,7 @@ function render() {
       'aria-pressed',
       String(game.selected.includes(button.dataset.ingredient)),
     );
-    button.disabled = status !== 'playing' || (game.chefMode && game.station !== 'prep');
+    button.disabled = status !== 'playing';
   }
   $('clear').disabled = status !== 'playing' || !game.selected.length || (game.chefMode && game.station !== 'prep');
   $('mobile-clear').disabled = $('clear').disabled;
@@ -258,6 +259,8 @@ function render() {
       const verdict = inspectionResult(game);
       $('end-title').textContent = verdict.title;
       $('lesson-tip').textContent = verdict.tip;
+      $('lesson-title').textContent = verdict.title;
+      $('lesson-evidence').textContent = `${game.served}/3 plates · ${game.perfect} flavor bonuses · ${game.missed} misses`;
     } else {
       const goal = nextShiftGoal(game);
       $('lesson-tip').textContent = lesson.tip + ' Next goal: ' + goal.label + '.';
@@ -377,7 +380,7 @@ function renderStation() {
   if (!game.chefMode) return;
   const step = game.station;
   $('station-title').textContent = { prep: '01 · PREP CREW', cook: '02 · HOT LINE', plate: '03 · THE PASS' }[step];
-  $('station-instruction').textContent = { prep: 'Choose the ticket ingredients, then finish both prep tasks for each.', cook: 'One pan. Start cooking, then STOP in READY. Too early? Restart. Too late? Remake.', plate: 'Tap each finished ingredient to assemble the plate. Then ring SERVICE!' }[step];
+  $('station-instruction').textContent = { prep: game.tutorial && !judgePlate(ticketFor(game), game.selected, 0, 0, true).correct ? 'Choose all required ingredients and remove extras before cooking. Ingredients ↩ lets you edit.' : 'Choose the ticket ingredients, then finish both prep tasks for each.', cook: 'One pan. Start cooking, then STOP in READY. Too early? Restart. Too late? Remake.', plate: 'Tap each finished ingredient to assemble the plate. Then ring SERVICE!' }[step];
   $('station-time').textContent = game.tutorial ? 'SAFE TUTORIAL · no deadline · food waits in READY' : game.practice ? 'PRACTICE · no station deadline · pans still burn' : game.waiting ? 'WAITING · select food to start · shift clock keeps running' : `${Math.ceil(game.stationRemainingMs / 1000)}s AT THIS STATION · order clock keeps running`;
   $('station-time').dataset.compact = game.tutorial ? 'TRAINING · no rush' : game.practice ? 'PRACTICE · pans can burn' : game.waiting ? 'WAITING · choose ingredients' : `${Math.ceil(game.stationRemainingMs / 1000)}s · ${step.toUpperCase()}`;
   const key = `${game.index}:${step}:${game.selected.join(',')}`;
@@ -401,12 +404,12 @@ function renderStation() {
     gauge.hidden = step !== 'cook' || !HEAT[id];
     gauge.value = HEAT[id] ? (pan?.ms || 0) / (HEAT[id] + 1600) * 100 : 0;
     const task = COOKING[id]?.prep ?? ['GATHER', 'PREP'];
-    button.textContent = step === 'prep' ? `${task[Math.min(1, game.prepped[id] || 0)]} ${nameOf(id)}` : step === 'plate' ? `PLATE ${nameOf(id)}` : game.activePan === id ? `STOP ${nameOf(id)}` : `${pan ? 'REMAKE' : (COOKING[id]?.method ?? 'COOK').toUpperCase()} ${nameOf(id)}`;
+    button.textContent = step === 'prep' ? `${task[Math.min(1, game.prepped[id] || 0)]} · ${nameOf(id)} (${Math.min(2, game.prepped[id] || 0)}/2)` : step === 'plate' ? `PLATE ${nameOf(id)}` : game.activePan === id ? `STOP ${nameOf(id)}` : pan?.state === 'done' ? `DONE · ${nameOf(id)}` : `${pan ? 'REMAKE' : (COOKING[id]?.method ?? 'COOK').toUpperCase()} ${nameOf(id)}`;
     button.disabled = game.status !== 'playing' || (step === 'prep' ? game.prepped[id] === 2 : step === 'plate' ? game.plated.includes(id) : !HEAT[id] || pan?.state === 'done' || Boolean(game.activePan && game.activePan !== id));
   }
   $('handoff').hidden = step === 'plate';
   $('handoff').textContent = step === 'prep' ? 'HAND TO THE HOT LINE →' : 'HAND TO PLATING →';
-  $('handoff').disabled = game.status !== 'playing' || !game.selected.length || !game.selected.every(id => step === 'prep' ? game.prepped[id] === 2 : !HEAT[id] || game.cooking[id]?.state === 'done');
+  $('handoff').disabled = (game.tutorial && step === 'prep' && !judgePlate(ticketFor(game), game.selected, 0, 0, true).correct) || game.status !== 'playing' || !game.selected.length || !game.selected.every(id => step === 'prep' ? game.prepped[id] === 2 : !HEAT[id] || game.cooking[id]?.state === 'done');
   const notice = Object.entries(game.cooking).map(([id, pan]) => `${id}:${pan.state}`).join(',');
   if (notice !== panNotice) {
     panNotice = notice;
