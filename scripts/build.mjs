@@ -50,9 +50,27 @@ await mkdir(new URL('dist/', root), { recursive: true });
 await writeFile(new URL('dist/Chaos-Kitchen.html', root), html);
 // Analytics is limited to the Vercel-hosted entry point. The downloadable
 // game remains self-contained and never includes the tracking script.
+// Server-rendered sharing metadata is hosted-only; offline play remains network-free.
+const share = `<!-- hosted-share -->
+<meta name="description" content="Read it. Cook it. Serve it. Survive the rush. Play AIZOYA’s Chaos Kitchen free." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Chaos Kitchen — AIZOYA" />
+<meta property="og:description" content="Can you survive the dinner rush? Play free." />
+<meta property="og:url" content="https://play.aizoya.com/" />
+<meta property="og:site_name" content="AIZOYA" />
+<meta property="og:image" content="https://play.aizoya.com/aizoya-share-logo.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="AIZOYA logo — Chaos Kitchen" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Chaos Kitchen — AIZOYA" />
+<meta name="twitter:description" content="Can you survive the dinner rush? Play free." />
+<meta name="twitter:image" content="https://play.aizoya.com/aizoya-share-logo.png" />
+<!-- /hosted-share -->
+`;
 const hosted = process.env.VERCEL === '1'
-  ? html.replace('</head>', '<script defer src="/_vercel/insights/script.js"></script>\n</head>')
+  ? html.replace('</head>', share + '<script defer src="/_vercel/insights/script.js"></script>\n</head>')
   : html;
+await writeFile(new URL('dist/aizoya-share-logo.png', root), await readFile(new URL('public/aizoya-master-logo.png', root)));
 await writeFile(new URL('dist/index.html', root), hosted);
 console.log(
   'Built dist/Chaos-Kitchen.html — self-contained, no runtime network',

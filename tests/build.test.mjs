@@ -22,7 +22,11 @@ test('Vercel hosted analytics does not leak into the downloadable game', () => {
     const offline = readFileSync(new URL('dist/Chaos-Kitchen.html', root), 'utf8');
     const tag = '<script defer src="/_vercel/insights/script.js"></script>\n';
     assert.equal(hosted.split(tag).length, 2);
-    assert.equal(hosted.replace(tag, ''), offline);
+    assert.equal(hosted.replace(tag, '').replace(/<!-- hosted-share -->[\s\S]*?<!-- \/hosted-share -->\n/, ''), offline);
+    assert.ok(hosted.includes('property="og:title" content="Chaos Kitchen — AIZOYA"'));
+    assert.ok(hosted.includes('property="og:image" content="https://play.aizoya.com/aizoya-share-logo.png"'));
+    assert.equal(offline.includes('<!-- hosted-share -->'), false);
+    assert.deepEqual(readFileSync(new URL('dist/aizoya-share-logo.png', root)), readFileSync(new URL('public/aizoya-master-logo.png', root)));
     assert.equal(offline.includes('/_vercel/insights'), false);
     assert.ok(hosted.includes('id="start"') && hosted.includes('id="restart"'));
   } finally {
