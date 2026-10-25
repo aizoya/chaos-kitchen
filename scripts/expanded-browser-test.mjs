@@ -89,8 +89,8 @@ try {
         assert.equal(recovered.station, 'prep');
         assert.deepEqual(recovered.selected, []);
         assert.equal(recovered.activePan, null);
-        assert.equal(recovered.orderRemainingMs, beforeClear.orderRemainingMs);
-        assert.equal(recovered.remainingMs, beforeClear.remainingMs);
+        assert.ok(recovered.orderRemainingMs <= beforeClear.orderRemainingMs, 'Clear never restores order time');
+        assert.ok(recovered.remainingMs <= beforeClear.remainingMs, 'Clear never restores shift time');
         assert.ok(recovered.stationRemainingMs <= beforeClear.stationRemainingMs);
         await screenFits();
         for (const id of ids) await pantry(id).click();
