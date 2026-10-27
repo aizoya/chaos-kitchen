@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ee582d" />
+    <title>Chaos Kitchen — AIZOYA</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-stage="0" data-screen="welcome">
+    <div class="app-shell">
+      <header class="masthead">
+        <a class="maker" href="#" aria-label="AIZOYA Chaos Kitchen"
+          ><img src="public/aizoya-master-logo.png" alt="" /><span
+            >AIZOYA<span class="arcade">AFTER HOURS / 001</span></span
+          ></a
+        >
+        <div class="edition">CHAOS KITCHEN.<br />BIG DINNER ENERGY.</div>
+        <button id="sound" class="utility" aria-pressed="false">
+          ♪ SOUND OFF
+        </button>
+      </header>
+      <main id="main">
+        <section id="welcome" class="welcome">
+          <div class="welcome-copy">
+            <p class="eyebrow">
+              <span class="dot"></span> TONIGHT’S SPECIAL: SURVIVAL
+            </p>
+            <h1>CHAOS<br /><span>KITCHEN</span><i>!</i></h1>
+            <div class="handwritten intro-note">Yes, chef. Oh no, chef.</div>
+            <p class="intro">
+              Read it. Cook it. Serve it. Survive the rush.
+            </p>
+            <button id="start" class="start-button" disabled aria-describedby="startup-status">
+              CLOCK IN <span>↗</span>
+            </button>
+            <p id="startup-status" class="startup-status" role="status">Opening the kitchen… If this stays here, open the game in Safari or Chrome; a file preview may not run it.</p>
+            <button id="learn" class="plain-button" type="button">Show me the ropes →</button>
+            <button id="inspection" class="plain-button" type="button">★ Chef Franklyn’s inspection · 3 tickets</button>
+            <p class="inspection-brief">Earn a fictional Chaos Star: 3 correct plates, 2 flavor bonuses, no missed orders. Chef Easy · one table · up to 3:36.</p>
+            <details id="chef-video-panel" class="chef-video-panel">
+              <summary>Watch Chef Franklyn · 12 seconds</summary>
+              <video id="chef-intro" controls playsinline muted preload="none" poster="public/chef-franklyn-anime-v1.webp" aria-label="Chef Franklyn animated poster introduction">
+                <source src="public/chef-franklyn-intro-v1.mp4" type="video/mp4" />
+                Your browser cannot play this video. Clock In to start the game.
+              </video>
+              <p>Animated poster intro · starts muted. Use the video’s sound control.</p>
+            </details>
+            <div class="start-meta">90 SECONDS. MAKE EVERY PLATE COUNT.</div>
+            <details class="game-options"><summary>Game options · modes &amp; difficulty</summary>
+            <label class="practice-option"
+              ><input id="practice" type="checkbox" /> Just browsing the menu?
+              Play untimed.</label
+            >
+            <p class="howto">
+              <b>01</b> Read the ticket. <b>02</b> Build the plate.
+              <b>03</b> Ring for glory.
+            </p>
+            <label class="practice-option"><input id="chef-mode" type="checkbox" /> CHEF MODE · Prep. Cook. Plate. Beat the clock.</label>
+            <p class="howto">Chef mode: one pan at a time. Practice removes deadlines, but food can still burn. Fictional game gauges—not cooking instructions.</p>
+            <button id="difficulty" class="plain-button" type="button">Chef difficulty: EASY · 72s per order</button>
+            <label class="practice-option"><input id="expanded-mode" type="checkbox" /> CHAOS STAR SERVICE · More tables, frenzy &amp; prizes</label>
+            <p class="howto">Expanded service: Easy 1 table / 3:30. Medium 2 / 3:00. Hard 3 / 2:30. Every table has its own clock. Start with Easy to learn the new menu. Cosmetic prizes last this shift; no money or purchases.</p>
+            <label class="practice-option"><input id="backwards" type="checkbox" /> Silly tickets: backwards ingredient names on Hard</label>
+            </details>
+          </div>
+          <div class="welcome-art" aria-hidden="true">
+            <div class="circle-sticker">
+              HOT<br />MESS<br /><span>EXPRESS</span>
+            </div>
+            <div class="hanging-ticket">
+              <span>TABLE 11 / 2 GUESTS</span>
+              <h2>THE FIRST<br />DATE.</h2>
+              <p>“We both love spicy food.”</p>
+              <strong>One of them is lying.</strong>
+              <div class="ticket-dashes"></div>
+              <p>CHICKEN + RICE<br />NO DAIRY<br />18 SECONDS</p>
+              <div class="scribble">no pressure ↙</div>
+            </div>
+            <div class="hero-plate">
+              <div class="hero-food" id="hero-food"></div>
+            </div>
+            <div class="steam steam-one">〰</div>
+            <div class="steam steam-two">〰</div>
+            <div class="hero-bell" id="hero-bell"></div>
+            <div class="marker-note">the pass is yours.</div>
+            <div class="scatter scatter-one">ORDER UP!</div>
+            <div class="scatter scatter-two">86 my patience</div>
+          </div>
+        </section>
+        <section id="game" class="game" hidden aria-label="Dinner service">
+          <div class="game-top">
+            <h2>CHAOS <span>KITCHEN</span></h2>
+            <button id="pause" class="utility">Ⅱ PAUSE</button>
+          </div>
+          <div class="scoreboard">
+            <div>
+              <span class="label">ON THE HOUSE</span
+              ><strong id="score">00000</strong>
+            </div>
+            <div class="service-clock">
+              <span class="label" id="clock-label">SERVICE LEFT</span
+              ><strong id="clock">1:30</strong>
+            </div>
+            <div class="combo-cell">
+              <span class="label">RUSH COMBO</span
+              ><strong id="combo">×1</strong>
+            </div>
+          </div>
+          <div class="rush-strip">
+            <span id="stage-name">CALM. FOR NOW.</span>
+            <div class="heat-meter" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <span id="round-count">TICKET 01</span>
+          </div>
+          <div id="table-rail" class="table-rail" role="group" aria-label="Choose a table" hidden></div>
+          <p id="rush-event" class="rush-event" hidden></p>
+          <div class="pass">
+            <div class="plating-zone">
+              <div class="plate-caption">
+                <span>MAKE SOMETHING LEGENDARY.</span
+                ><span class="handwritten">or at least edible.</span>
+              </div>
+              <div class="plate" id="plate">
+                <div class="plate-inner">
+                  <span id="empty-plate">YOUR MASTERPIECE<br />GOES HERE.</span>
+                  <div id="plate-food" aria-hidden="true"></div>
+                </div>
+                <span class="rim-mark" aria-hidden="true"
+                  >CHAOS KITCHEN • EST. FIVE MINUTES AGO</span
+                >
+              </div>
+              <div class="plate-bottom">
+                <span id="plate-count">0 / 4 ON THE PLATE</span
+                ><button id="clear" class="clear-button">Clear plate ↺</button>
+              </div>
+              <div class="chef-line">
+                <img src="public/grace-avatar.webp" alt="Grace" />
+                <p>
+                  <b>GRACE, ON THE PASS</b
+                  ><span id="chef-comment">What could possibly go wrong?</span>
+                </p>
+              </div>
+              <div class="ambient-steam" aria-hidden="true">
+                <i></i><i></i><i></i>
+              </div>
+            </div>
+            <article
+              class="order-ticket"
+              id="ticket"
+              aria-label="Current order"
+            >
+              <p id="shift-goal" class="shift-goal"></p>
+              <div class="ticket-top">
+                <span id="ticket-number">ORDER #001</span
+                ><span id="table">TABLE 11</span>
+              </div>
+              <h3 id="ticket-title">THE FIRST DATE</h3>
+              <p id="character" class="character"></p>
+              <p id="order-copy" class="order-copy"></p>
+              <div class="restriction" id="restriction"></div>
+              <div class="recipe">
+                <span class="label">ON THE TICKET</span>
+                <div id="needs"></div>
+                <div id="mobile-plate" aria-hidden="true"></div>
+                <p id="bonus"></p>
+              </div>
+              <div class="ticket-footer">
+                <span>TIME TO PLATE</span
+                ><strong id="order-clock">18<span>s</span></strong>
+                <strong id="compact-clock" aria-label="Next deadline"></strong>
+              </div>
+              <div class="ticket-timebar" aria-hidden="true">
+                <i id="order-bar"></i>
+              </div>
+              <span class="ticket-tear" aria-hidden="true"></span>
+            </article>
+          </div>
+          <div class="workbench">
+          <div class="pantry-label">
+            <span
+              >THE LINEUP <small>Tap to add. Tap again to remove.</small></span
+            ><span>FRESHLY FICTIONAL.</span>
+          </div>
+          <div
+            id="pantry"
+            class="pantry"
+            role="group"
+            aria-label="Ingredients"
+          ></div>
+          <section id="station" class="station" hidden aria-label="Kitchen station">
+            <h2 id="station-title"></h2><p id="station-instruction"></p>
+            <p id="station-time"></p><div id="station-items"></div>
+            <button id="handoff" class="start-button" type="button">HAND IT OVER →</button>
+          </section>
+          </div>
+          <div class="mobile-tools">
+            <button id="mobile-edit" type="button">Ingredients ↩</button>
+            <button id="mobile-clear" type="button">Clear plate</button>
+            <button id="mobile-panic" type="button">Panic +5s</button>
+          </div>
+          <div class="actions">
+            <button id="panic" class="panic-button">
+              <strong>DON’T PANIC</strong
+              ><small>actually, panic. +5s · once</small></button
+            ><button id="serve" class="serve-button" disabled>
+              <span id="serve-bell"></span
+              ><span>SERVE PLATE<small>RING THE BELL. SEND THE PLATE.</small></span
+              ><span class="serve-arrow">↗</span>
+            </button>
+          </div>
+          <div
+            id="feedback"
+            class="feedback"
+            hidden
+            role="region"
+            aria-label="Customer reaction"
+            tabindex="-1"
+          >
+            <div class="feedback-stamp" id="feedback-title"></div>
+            <p id="reaction"></p>
+            <p id="reason"></p>
+            <p id="feedback-rush" class="feedback-rush" hidden></p>
+            <div class="feedback-bottom">
+              <strong id="points"></strong
+              ><button id="next">NEXT TICKET →</button>
+            </div>
+            <small>Take a breath. The clocks are paused.</small>
+          </div>
+        </section>
+        <section
+          id="ending"
+          class="ending"
+          hidden
+          tabindex="-1"
+          aria-label="Shift results"
+        >
+          <p class="eyebrow">THE PRINTER HAS ONE LAST THING TO SAY.</p>
+          <div class="receipt">
+            <div class="receipt-heading">CHAOS<br />KITCHEN</div>
+            <p>END OF SERVICE / YOU SURVIVED</p>
+            <div class="ticket-dashes"></div>
+            <h2 id="end-title">YES, CHEF.</h2>
+            <div class="total">
+              <span>TOTAL GLORY</span><strong id="end-score">0</strong>
+            </div>
+            <dl id="end-stats"></dl>
+            <p id="end-comment"></p>
+            <section class="shift-lesson" aria-labelledby="lesson-title">
+              <p class="lesson-label">NEXT SHIFT</p>
+              <h3 id="lesson-title"></h3>
+              <p id="lesson-evidence"></p>
+              <p id="lesson-tip"></p>
+            </section>
+            <div class="ticket-dashes"></div>
+            <p class="receipt-signoff">
+              THANK YOU FOR YOUR SERVICE.<br />AND FOR NOT QUITTING AT TABLE 11.
+            </p>
+            <div class="barcode" aria-hidden="true"></div>
+            <span class="ticket-tear" aria-hidden="true"></span>
+          </div>
+          <button id="restart" class="start-button">
+            ONE MORE SHIFT <span>↻</span></button
+          ><button id="home" class="plain-button" aria-describedby="mode-change-help">Back to the menu</button>
+          <p id="mode-change-help" class="howto">Want a different mode or difficulty? Go back to the main screen and open Game options.</p>
+        </section>
+        <div id="pause-layer" class="pause-layer" hidden>
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pause-title"
+          >
+            <p class="eyebrow">BEHIND! TAKING A BREATHER.</p>
+            <h2 id="pause-title">HOLD<br />THE PASS.</h2>
+            <p>Your plate and clocks are exactly where you left them.</p>
+            <button id="resume" class="start-button">BACK TO IT →</button
+            ><button id="quit" class="plain-button">End this shift</button>
+          </section>
+        </div>
+        <nav id="mobile-dock" class="mobile-dock" aria-label="Current game action" hidden>
+          <p id="mobile-summary"></p>
+          <button id="mobile-action" type="button">Choose ingredients ↓</button>
+        </nav>
+        <p
+          class="sr-only"
+          id="announcement"
+          role="status"
+          aria-live="polite"
+        ></p>
+        <noscript
+          ><p class="no-js">
+            This game needs JavaScript to run. No account, API or internet
+            connection is required by the game.
+          </p></noscript
+        >
+      </main>
+      <footer>
+        <span>A LITTLE CHAOS. BY AIZOYA.</span
+        ><span
+          >FICTIONAL FOOD. REAL BUTTONS.
+          <span class="footer-fine">Not food-safety advice.</span></span
+        >
+      </footer>
+    </div>
+    <script type="module" src="src/app.mjs"></script>
+  </body>
+</html>
