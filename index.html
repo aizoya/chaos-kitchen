@@ -57,11 +57,11 @@
               <b>03</b> Ring for glory.
             </p>
             <label class="practice-option"><input id="chef-mode" type="checkbox" /> CHEF MODE · Prep. Cook. Plate. Beat the clock.</label>
+            <p class="howto">Chef mode: one pan at a time. Practice removes deadlines, but food can still burn. Fictional game gauges—not cooking instructions.</p>
             <button id="difficulty" class="plain-button" type="button">Chef difficulty: EASY · 72s per order</button>
             <label class="practice-option"><input id="expanded-mode" type="checkbox" /> CHAOS STAR SERVICE · More tables, frenzy &amp; prizes</label>
             <p class="howto">Expanded service: Easy 1 table / 3:30. Medium 2 / 3:00. Hard 3 / 2:30. Every table has its own clock. Start with Easy to learn the new menu. Cosmetic prizes last this shift; no money or purchases.</p>
             <label class="practice-option"><input id="backwards" type="checkbox" /> Silly tickets: backwards ingredient names on Hard</label>
-            <p class="howto">Chef mode: one pan at a time. Practice removes deadlines, but food can still burn. Fictional game gauges—not cooking instructions.</p>
             </details>
           </div>
           <div class="welcome-art" aria-hidden="true">
@@ -262,7 +262,8 @@
           </div>
           <button id="restart" class="start-button">
             ONE MORE SHIFT <span>↻</span></button
-          ><button id="home" class="plain-button">Back to the menu</button>
+          ><button id="home" class="plain-button" aria-describedby="mode-change-help">Back to the menu</button>
+          <p id="mode-change-help" class="howto">Want a different mode or difficulty? Go back to the main screen and open Game options.</p>
         </section>
         <div id="pause-layer" class="pause-layer" hidden>
           <section
